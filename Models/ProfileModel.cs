@@ -15,9 +15,6 @@ namespace AFI_Project.Models
         public string Pr_PostalCode { get; set; } = String.Empty;
         public string Pr_City { get; set; } = String.Empty;
         public string Pr_Img { get; set; } = String.Empty;
-        [ForeignKey("Pr_Disability")]
-        public IEnumerable<DisabilityModel> Pr_Disabilities { get; set; }
-
     }
 
 }
