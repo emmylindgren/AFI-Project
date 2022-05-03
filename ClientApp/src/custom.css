@@ -42,3 +42,9 @@ code {
   text-align: center;
   color: black;
 }
+
+.google-button{
+  display: flex;
+  justify-content: center;
+
+}
