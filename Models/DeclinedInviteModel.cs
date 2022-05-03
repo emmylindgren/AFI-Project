@@ -8,6 +8,10 @@ namespace AFI_Project.Models
     {
         public EventModel Dec_Event { get; set; }
         public ProfileModel Dec_Profile { get; set; }
+
+        public int Ev_Id { get; set; }
+
+        public int Pr_Id { get; set; }
     }
 
 }

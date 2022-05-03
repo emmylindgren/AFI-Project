@@ -7,7 +7,9 @@ namespace AFI_Project.Models
     public class RequestedInviteModel
     {
         public EventModel Req_Event { get; set; }
+        public int Ev_Id { get; set; }
         public ProfileModel Req_Profile { get; set; }
+        public int Pr_Id { get; set; }
     }
 
 }
