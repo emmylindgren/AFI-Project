@@ -20,6 +20,7 @@ namespace AFI_Project.Models
         public virtual ICollection<DeclinedInviteModel> Pr_DeclinedInviteModel { get; set; }
         public virtual ICollection<InterestedModel> Pr_InterestedModel { get; set; }
         public virtual ICollection<AttendingModel> Pr_AttendingModel { get; set; }
+        public virtual ICollection<ProfileDisabilityModel> Pr_Disabilities { get; set; }
     }
 
 }
