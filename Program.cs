@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<Database>(options =>
-    options.UseMySql(connectionString: @"server=localhost;database=GreetUpDB;uid=root;password=sten1234;", 
+    options.UseMySql(connectionString: @Config.ConnectionString, 
             new MySqlServerVersion(new Version(8, 0, 27))));
 
 var app = builder.Build();
