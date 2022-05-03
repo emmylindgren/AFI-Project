@@ -16,6 +16,13 @@ namespace AFI_Project.Models
         public string Ev_Description { get; set; } = String.Empty;
         [Column(TypeName="Date")]
         public DateTime Ev_DateTime { get; set; }
+        public virtual ICollection<RequestedInviteModel> Ev_RequestedInviteModel { get; set; }
+        public virtual ICollection<DeclinedInviteModel> Ev_DeclinedInviteModel { get; set; }
+        public virtual ICollection<InterestedModel> Ev_InterestedModel { get; set; }
+        public virtual ICollection<AttendingModel> Ev_AttendingModel { get; set; }
+        public virtual ICollection<EventCategoryModel> Ev_Categories{ get; set; }
+
+        public virtual ICollection<EventDisabilityModel> Ev_Disabilities{ get; set; }
         public ProfileModel Ev_Owner { get; set; }
     }
 

@@ -7,7 +7,10 @@ namespace AFI_Project.Models
     public class AttendingModel
     {
         public EventModel At_Event { get; set; }
-        public ProfileModel At_Profile { get; set; }
-    }
 
+        public ProfileModel At_Profile { get; set; }
+        public int Ev_Id { get; set; }
+
+        public int Pr_Id { get; set; }
+    }
 }
