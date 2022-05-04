@@ -6,7 +6,7 @@ const style = {
     width: '200px',
     display: 'flex',
     flexDirection: 'row',
-    paddingBottom: '10px'
+    paddingBottom: '10px',
 }
 const textStyle = {
     marginBottom : '0px',
