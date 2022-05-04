@@ -20,7 +20,9 @@ class GoogleLoginComponent extends Component {
 
   // Success Handler
   responseGoogleSuccess = (response) => {
+    console.log();
     console.log(response.profileObj);
+    console.log(response);
     let userInfo = {
       name: response.profileObj.name,
       emailId: response.profileObj.email,
@@ -49,8 +51,8 @@ class GoogleLoginComponent extends Component {
         <div className="col-md-12">
           {this.state.isLoggedIn ? (
             <div >
-              <h1>Welcome, {this.state.userInfo.name}</h1>
-              
+              <h5>Welcome, {this.state.userInfo.name}</h5>
+              <p>{}</p>
                <div class="google-button">
                    <GoogleLogout
                     clientId={CLIENT_ID}

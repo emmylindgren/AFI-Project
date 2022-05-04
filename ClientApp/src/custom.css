@@ -1,8 +1,8 @@
 /* Provide sufficient contrast against white background */
 
-.container{
+.container {
   padding: 0;
-  margin:0;
+  margin: 0;
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -14,7 +14,7 @@ a {
 }
 
 code {
-  color: #E01A76;
+  color: #e01a76;
 }
 
 .btn-primary {
@@ -23,12 +23,14 @@ code {
   border-color: #1861ac;
 }
 
+/*------LOG IN----------------------------------------------------------------*/
+
 #login-page {
-  background-image: linear-gradient(to bottom, #f1f9f6 , #fbfdfd ); 
-  height:100vh;
+  background-image: linear-gradient(to bottom, #f1f9f6, #fbfdfd);
+  height: 100vh;
 }
 
-#logo{
+#logo {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -37,13 +39,19 @@ code {
   padding-top: 10vh;
 }
 
-#login-text{
+#login-text {
   padding-top: 2vh;
   text-align: center;
   color: black;
 }
 
-.google-button{
+#sign-up-text {
+  text-align: center;
+  font-size: 1.15rem;
+  padding-top: 7vh;
+}
+
+.google-button {
   display: flex;
   justify-content: center;
   padding-top: 1vh;
@@ -53,4 +61,10 @@ code {
 #login-or{
   display: flex;
   flex-direction: column;
+}
+}
+
+/*------SIGN UP----------------------------------------------------------------*/
+
+#sign-up {
 }
