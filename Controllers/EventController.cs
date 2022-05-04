@@ -23,10 +23,26 @@ namespace AFI_Project.Controllers
         }
 
         // GET: api/Event
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<EventModel>>> GetEvents()
+        [HttpGet("{disabilities?}")]
+        public async Task<ActionResult<IEnumerable<EventModel>>> GetEvents([FromQuery] string disabilities)
         {
-            return await _context.Events.ToListAsync();
+            if(disabilities is not null){
+                // Make disabilities into a list of int
+                var disabilitiesList = disabilities.Split(',').Select(int.Parse).ToList();
+                return await _context.Events
+                .Where(e => e.Ev_Disabilities.Any(d => disabilitiesList.Contains(d.Dis_Id)))
+                .Include(e => e.Ev_Owner)
+                .Include(e => e.Ev_AttendingModel)
+                .ThenInclude(a => a.At_Profile)
+                .ToListAsync();
+            }
+            else{
+                return await _context.Events
+                .Include(e => e.Ev_Owner)
+                .Include(e => e.Ev_AttendingModel)
+                .ThenInclude(a => a.At_Profile)
+                .ToListAsync();
+            }
         }
 
         // GET: api/Event/5
