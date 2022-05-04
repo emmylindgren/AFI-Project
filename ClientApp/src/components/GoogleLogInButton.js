@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-
+import axios from 'axios';
 import '../custom.css';
 
 const CLIENT_ID =
@@ -14,7 +14,6 @@ class GoogleLoginComponent extends Component {
       userInfo: {
         name: "",
         emailId: "",
-        googleId: "",
       },
     };
   }
@@ -24,12 +23,25 @@ class GoogleLoginComponent extends Component {
     console.log();
     console.log(response.profileObj);
     console.log(response);
+    let id = response.profileObj.googleId;
     let userInfo = {
       name: response.profileObj.name,
       emailId: response.profileObj.email,
-      googleId: response.profileObj.googleId,
     };
     this.setState({ userInfo, isLoggedIn: true });
+
+    //Skapa ett API anrop
+     
+    
+    //axios.get('https://jec.fyi.com/unknown-url/')
+    axios.get('https://localhost:5180/api/Profile/googleID=' + id)
+    .then(res => {
+        const profileId = res.data;
+        this.setState({ profileId });
+      })
+      .catch(function (error){
+        console.log(error);
+      });
   };
 
   // Error Handler
@@ -52,18 +64,9 @@ class GoogleLoginComponent extends Component {
     return (
       <div className="row mt-5">
         <div className="col-md-12">
-          {this.state.isLoggedIn ? (
+          {this.state.profileId === 0 ?(
             <div >
-              <h5>Welcome, {this.state.userInfo.name}</h5>
-              <p>{}</p>
-               <div class="google-button">
-                   <GoogleLogout
-                    clientId={CLIENT_ID}
-                    buttonText={"Logout"}
-                    onLogoutSuccess={this.logout}
-                    ></GoogleLogout>
-              </div> 
-              
+              <h5>You are not a registered user.</h5>
             </div>
           ) : (
             <GoogleLogin

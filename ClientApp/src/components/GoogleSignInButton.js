@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-import axios from 'axios';
+
 
 import '../custom.css';
 
@@ -31,9 +31,7 @@ class GoogleSignInComponent extends Component {
       googleId: response.profileObj.googleId,
     };
     this.setState({ userInfo, isLoggedIn: true });
-    
-    //Skapa ett API anrop
-    axios.get('')
+   
   };
 
   // Error Handler

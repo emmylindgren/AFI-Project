@@ -16,11 +16,11 @@ export class LogIn extends Component {
                 <SignUp/>
                 <img src={logo} id="logo"></img>
                 <h4 id="login-text">Explore your neighbourhood today!</h4>
-                <div class="google-button"><GoogleLogInButton /></div>
+                <div className="google-button"><GoogleLogInButton /></div>
 
                 <div id="sign-up-text">
                     <p>Not a member yet? &nbsp;
-                    <div class="google-button"><GoogleSignInButton /></div>
+                    <div className="google-button"><GoogleSignInButton /></div>
                     </p>
                 </div>
             </div>
