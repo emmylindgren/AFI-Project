@@ -1,10 +1,13 @@
 global using Microsoft.EntityFrameworkCore;
 using AFI_Project.Data;
+using  Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+.AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddDbContext<Database>(options =>
     options.UseMySql(connectionString: @Config.ConnectionString, 
