@@ -13,6 +13,11 @@ export class LogIn extends Component {
                 <img src={logo} id="logo"></img>
                 <h4 id="login-text">Explore your neighbourhood today!</h4>
                 <div class="google-button"><GoogleButton /></div>
+                <div id="login-or">
+                    <hr></hr>
+                    <p>OR</p>
+                    <hr></hr>
+                </div>
             </div>
     );
   }
