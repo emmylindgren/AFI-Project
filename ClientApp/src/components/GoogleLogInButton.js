@@ -14,6 +14,7 @@ class GoogleLoginComponent extends Component {
       userInfo: {
         name: "",
         emailId: "",
+        googleId: "",
       },
     };
   }
@@ -26,6 +27,7 @@ class GoogleLoginComponent extends Component {
     let userInfo = {
       name: response.profileObj.name,
       emailId: response.profileObj.email,
+      googleId: response.profileObj.googleId,
     };
     this.setState({ userInfo, isLoggedIn: true });
   };
@@ -41,6 +43,7 @@ class GoogleLoginComponent extends Component {
     let userInfo = {
       name: "",
       emailId: "",
+      googleId:"",
     };
     this.setState({ userInfo, isLoggedIn: false });
   };
