@@ -43,6 +43,21 @@ namespace AFI_Project.Controllers
             return profileModel;
         }
 
+        // GET: api/Profile/googleID=string
+        [HttpGet("{googleID}")]
+        public async Task<ActionResult<int>> GetProfileModel(string googleID)
+        {
+
+            var profileModel = await _context.Profiles.Where(p => p.GoogleId == googleID).ToListAsync();
+
+            if (profileModel == null)
+            {
+                return 0;
+            }
+
+            return profileModel[0].Pr_Id;
+        }
+
         // PUT: api/Profile/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
