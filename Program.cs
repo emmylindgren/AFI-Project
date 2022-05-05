@@ -1,7 +1,21 @@
 global using Microsoft.EntityFrameworkCore;
 using AFI_Project.Data;
 using  Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("https://localhost:44413",
+                                              "https://localhost:7259",
+                                              "https://localhost:5180");
+                      });
+});
 
 // Add services to the container.
 
@@ -26,10 +40,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
+
 
 app.MapFallbackToFile("index.html");
 
