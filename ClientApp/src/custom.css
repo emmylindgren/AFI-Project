@@ -1,15 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Arvo&family=Inter:wght@400;700&display=swap");
 /* Provide sufficient contrast against white background */
-:root {
-  --white: #fdfdff;
-  --black: #393d3f;
-  --deep-green: #167f56;
-  --medium-green: #1eae75;
-  --light-green: #79c2a5;
-  --superlight-green: #cae8dc;
-  --light-gray: #e1e1e1;
-  --gray: #798286;
-  --red-button: #971818;
+:root{
+    --white: #FDFDFF;
+    --black: #393D3F;
+    --deep-green: #167F56;
+    --medium-green: #1EAE75;
+    --light-green: #79C2A5;
+    --superlight-green: #CAE8DC;
+    --light-gray: #E1E1E1;
+    --gray: #798286;
+    --red-button: #971818;
+    --grey-text: #6A6A6A;
 }
 
 .container {
@@ -37,15 +38,44 @@
 a {
   color: #0366d6;
 }
+p{
+  font-family: 'Inter';
+  font-size: 1rem;
+}
+.clickable-text{
+  color: var(--deep-green);
+}
 
 code {
   color: #e01a76;
 }
-h1 {
+
+h1{
   font-size: 2rem;
   font-weight: 700;
   font-family: "Inter";
   margin-bottom: 1rem;
+}
+
+h2{
+  font-Family: Inter;
+  font-Weight: 700;
+}
+
+h3{
+  font-Family: Inter;
+  font-Weight: 700;
+}
+
+h4{
+  font-Family: Inter;
+  font-Weight: 700;
+
+}
+
+p{
+  font-Family: Inter;
+  font-size: 14px;
 }
 
 .btn-primary {
@@ -93,10 +123,6 @@ h1 {
   flex-direction: column;
 }
 
-/*------SIGN UP----------------------------------------------------------------*/
-
-#sign-up {
-}
 
 /*------EVENT CARD----------------------------------------------------------------*/
 

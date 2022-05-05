@@ -3,7 +3,7 @@ import '../custom.css'
 
 //Format: 
 //<Button text="hej" onclick ={() => {console.log("hej!")}} buttonColorChoice ="green" iconChoice ="add" /> 
-// IconChoice: add, accept and decline. Leave out if no icon is needed. 
+// IconChoice: add, accept,decline, post,comment and like. Leave out if no icon is needed. 
 
 const buttonstyleGreen = { 
     backgroundColor: 'var(--deep-green)',
@@ -13,7 +13,7 @@ const buttonstyleGreen = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
     cursor:'pointer',
 }
 
@@ -52,6 +52,12 @@ function Button({text, onClick, buttonColorChoice, iconChoice}) {
             return "icons/AcceptIcon.svg"
         case "decline":
             return "icons/DeclineIcon.svg"
+        case "post":
+            return "icons/PostIcon.svg"
+        case "like":
+            return "icons/LikeIcon.svg"
+        case "comment":
+            return "icons/CommentIcon.svg"
         default:
             return "icons/addIcon.svg"
     }
