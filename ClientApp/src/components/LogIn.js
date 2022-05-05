@@ -22,8 +22,6 @@ export class LogIn extends Component {
                     <div className="google-button"><GoogleSignInButton /></div>
                     </p>
                 </div>
-
-                <Link className='login-text' to='./sign-up'> Signup Page </Link>
             </div>
     );
   }
