@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import '../custom.css'
 import './InputStyle.css'
 import BackButton from './BackButton';
-import Disability from './form/Disability'
-import { Button } from './';
+import Button from './Button';
+import axios from 'axios';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -17,11 +17,31 @@ function SignUp() {
     const [postalcode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
 
+    const submitProfile = () =>{
+        axios.post('https://localhost:7259/api/profile/',
+        {
+            Pr_Firstname: firstname,
+            Pr_Lastname: lastname,
+            Pr_BirthDate: birthdate,
+            Pr_Adress: adress,
+            Pr_PostalCode: postalcode,
+            Pr_City: city,
+        })
+        .then(res => {
+            console.log(res);
+          })
+        .catch(function (error){
+        console.log(error);
+        });
+    }
+
     return (
         <div style={style}className='page-container'>
             <div className='page-content'>
                 <BackButton text="Back" to='/' onClick={() => {console.log("hej!")}}/>
                 <h1>Create New Profile</h1>
+
+                {getProfilePicture()}
                 
                 {getInput('Firstname','Emma...',firstname,setFirstname)}
                 {getInput('Lastname','Hornham...',lastname,setLastname)}
@@ -29,9 +49,8 @@ function SignUp() {
                 {getInput('Adress','Gnejs 1...',adress,setAdress)}
                 {getInput('Postal Code','907 40.',postalcode,setPostalCode)}
                 {getInput('City','Umea...',city,setCity)}
-                {getProfilePicture()}
 
-                <Button></Button>
+                <Button text='Sign up' buttonColorChoice='green' onClick={() => submitProfile()}/>
 
             </div>
         </div>
