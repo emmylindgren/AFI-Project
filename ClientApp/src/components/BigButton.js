@@ -1,10 +1,20 @@
 import React, { Component } from 'react'
-import './BigButton.css'
 import '../custom.css'
 
 
-const buttonstyle = { 
+const buttonstyleGreen = { 
     backgroundColor: 'var(--deep-green)',
+    height: '59px',
+    padding: '1rem',
+    borderRadius: '15px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+}
+
+const buttonstyleRed = { 
+    backgroundColor: 'var(--red-button)',
     height: '59px',
     padding: '1rem',
     borderRadius: '15px',
@@ -27,10 +37,10 @@ const buttonIconStyle = {
     marginRight: '1rem',
 }
 
-function BigButton({text,addIcon, onClick}) {
+function BigButton({text,addIcon, onClick, buttonColorChoice}) {
  
     return (
-        <div style={buttonstyle} onClick={() => onClick()}>
+        <div onClick={() => onClick()} style={buttonColorChoice ==="green"? buttonstyleGreen:buttonstyleRed}>
             {addIcon ? <img  style ={buttonIconStyle} src="icons/addIcon.svg"/> : ""}
             <p style ={buttonTextStyle}> {text}</p>
         </div>
