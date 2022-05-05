@@ -23,6 +23,8 @@ export class LogIn extends Component {
                     <div className="google-button"><GoogleSignInButton /></div>
                     </p>
                 </div>
+                
+                <Link to='./event-card'>Event card</Link>
             </div>
     );
   }
