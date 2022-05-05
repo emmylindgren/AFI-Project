@@ -14,6 +14,7 @@ const buttonstyleGreen = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
+    cursor:'pointer',
 }
 
 const buttonstyleRed = { 
@@ -25,6 +26,7 @@ const buttonstyleRed = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
+    cursor:'pointer',
 }
 
 const buttonTextStyle = {
