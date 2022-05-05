@@ -5,7 +5,6 @@ import GoogleSignInButton from "./GoogleSignInButton.js";
 import { Link } from "react-router-dom";
 
 import '../custom.css';
-import SignUp from './SignUp';
 
 export class LogIn extends Component {
     static displayName = LogIn.name;
@@ -22,6 +21,7 @@ export class LogIn extends Component {
                     <div className="google-button"><GoogleSignInButton /></div>
                     </p>
                 </div>
+                <Link to='./sign-up'>Sign In!</Link>
             </div>
     );
   }
