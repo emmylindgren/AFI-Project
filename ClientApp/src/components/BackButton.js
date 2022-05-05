@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Link } from "react-router-dom";
 import '../custom.css'
 
 const style = {
@@ -14,15 +14,16 @@ const style = {
 const textStyle = {
     marginBottom : '0px',
     fontSize: '1rem',
+    fontFamily: 'Inter',
     color: 'var(--deep-green)',
     userSelect: 'none',
     webkitUserSelect: 'none',
 }
-function BackButton({text, onClick}) {
+function BackButton({text, onClick,to}) {
     return (
         <div style={style} onClick={() => onClick()}>
-            <img src='/icons/chevron-green.svg'/>
-            <p style={textStyle}>{text}</p>
+            <img src='/icons/chevron-green.svg' alt='<'/>
+            <Link style={textStyle} to={to}>{text}</Link>
         </div>
     )
 }
