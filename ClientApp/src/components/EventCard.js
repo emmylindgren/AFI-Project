@@ -3,29 +3,33 @@ import axios from 'axios'
 
 import '../custom.css'
 
-const getEventInfo = () => {
-    axios.get('https://localhost:7259/api/event/'+ 1)
-    .then(res => {
-        const variable = res.data;
-        console.log(variable)
-        //this.setState({ profileId });
-        //console.log(profileId);
-    })
-    .catch(function (error){
+const getEventInfo = async (eventid) => {
+    let res = await axios.get('https://localhost:7259/api/event/'+ eventid)
+    return res.data
+    /*.catch(function (error){
         console.log(error);
-    });
+    });*/
 };
+
+/*function getEventInfo(eventid) {
+    return axios.get('https://localhost:7259/api/event/'+ eventid).then(res => res.data)
+}*/
+
 
 function EventCard({eventid}) {
 
-    const data = getEventInfo();
+    const data = getEventInfo(1);
+    console.log("dajwd");
+    console.log(data);
+    console.log("asd");
+    console.log(data.ev_Title)
 
     return (
         <div className="page-container">
             <div className="page-content">
                 <div className="event-card">
+                    <p>res: {getEventInfo(1).ev_Title}</p>
                     <p>Hej</p>
-                    console.log({data})
                     
                 </div>
             </div>

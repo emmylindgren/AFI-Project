@@ -46,7 +46,7 @@ namespace AFI_Project.Controllers
         }
 
         // GET: api/Event/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<EventModel>> GetEventModel(int id)
         {
             var eventModel = await _context.Events.FindAsync(id);
