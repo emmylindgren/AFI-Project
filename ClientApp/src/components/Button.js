@@ -13,7 +13,7 @@ const buttonstyleGreen = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
     cursor:'pointer',
 }
 
