@@ -38,6 +38,13 @@
 a {
   color: #0366d6;
 }
+p{
+  font-family: 'Inter';
+  font-size: 1rem;
+}
+.clickable-text{
+  color: var(--deep-green);
+}
 
 code {
   color: #e01a76;
