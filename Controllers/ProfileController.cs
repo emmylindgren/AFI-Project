@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AFI_Project.Data;
 using AFI_Project.Models;
+using System.Net;
 
 namespace AFI_Project.Controllers
 {
@@ -44,18 +45,18 @@ namespace AFI_Project.Controllers
         }
 
         // GET: api/Profile/googleID=string
-        [HttpGet("{googleID}")]
-        public async Task<ActionResult<int>> GetProfileModel(string googleID)
+        [HttpGet("googleID/{googleID}")]
+        public async Task<ActionResult<int>> GetWithGId(string googleID)
         {
 
-            var profileModel = await _context.Profiles.Where(p => p.GoogleId == googleID).ToListAsync();
+            var list = await _context.Profiles.Where(p => p.GoogleId == googleID).ToListAsync();
 
-            if (profileModel == null)
+            if (list.Count == 0)
             {
-                return 0;
+                return NotFound();
             }
 
-            return profileModel[0].Pr_Id;
+            return list[0].Pr_Id;
         }
 
         // PUT: api/Profile/5

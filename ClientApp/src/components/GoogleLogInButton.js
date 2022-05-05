@@ -34,10 +34,11 @@ class GoogleLoginComponent extends Component {
      
     
     //axios.get('https://jec.fyi.com/unknown-url/')
-    axios.get('https://localhost:5180/api/Profile/googleID=' + id)
+    axios.get('https://localhost:7259/api/profile/googleID/'+id)
     .then(res => {
         const profileId = res.data;
         this.setState({ profileId });
+        console.log(profileId);
       })
       .catch(function (error){
         console.log(error);
