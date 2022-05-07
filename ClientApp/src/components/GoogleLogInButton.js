@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import axios from 'axios';
+
+import { API_ADRESS } from '../config';
+
 import '../custom.css';
 
 const CLIENT_ID =
@@ -34,7 +37,7 @@ class GoogleLoginComponent extends Component {
      
     
     //axios.get('https://jec.fyi.com/unknown-url/')
-    axios.get('https://localhost:7259/api/profile/googleID/'+id)
+    axios.get(API_ADRESS + '/api/profile/googleID/' + id)
     .then(res => {
         const profileId = res.data;
         this.setState({ profileId });
