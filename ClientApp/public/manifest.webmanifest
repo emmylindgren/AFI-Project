@@ -3,7 +3,7 @@
   "name": "GreetUp",
   "theme_color": "#167f56",
   "background_color": "#cae8dc",
-  "display": "fullscreen",
+  "display": "standalone",
   "icons": [
     {
       "src": "GreetUp.png",
@@ -16,5 +16,5 @@
       "type": "image/x-icon"
     }
   ],
-  "start_url": "./index.html"
+  "start_url": "./"
 }
