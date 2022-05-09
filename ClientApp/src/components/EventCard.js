@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 
+import { API_ADRESS } from '../config';
+
 import '../custom.css'
 
 const getEventInfo = async (eventid) => {
-    let res = await axios.get('https://localhost:7259/api/event/'+ eventid)
+    let res = await axios.get(API_ADRESS + '/api/event/'+ eventid)
     return res.data
     /*.catch(function (error){
         console.log(error);

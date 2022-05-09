@@ -4,6 +4,7 @@ import './InputStyle.css'
 import BackButton from './BackButton';
 import Button from './Button';
 import axios from 'axios';
+import { APIAdress, API_ADRESS } from '../config';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -18,7 +19,7 @@ function SignUp() {
     const [city, setCity] = useState('');
 
     const submitProfile = () =>{
-        axios.post('https://localhost:7259/api/profile/',
+        axios.post(API_ADRESS + '/api/profile/',
         {
             Pr_Firstname: firstname,
             Pr_Lastname: lastname,
