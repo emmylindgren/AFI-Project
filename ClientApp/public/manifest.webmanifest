@@ -1,0 +1,20 @@
+{
+  "short_name": "GreetUp",
+  "name": "GreetUp",
+  "theme_color": "#167f56",
+  "background_color": "#cae8dc",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "GreetUp.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "GreetUp512.png",
+      "sizes": "512x512",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "./index.html"
+}
