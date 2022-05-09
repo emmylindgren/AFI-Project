@@ -26,6 +26,7 @@ const timeWrapper ={
     justifyContent: 'center',
     alignItems: 'center',
     marginRight:'2rem',
+    color: 'var(--black)',
 }
 
 const textStyle ={
