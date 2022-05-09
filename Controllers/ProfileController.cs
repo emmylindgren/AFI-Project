@@ -31,6 +31,14 @@ namespace AFI_Project.Controllers
             return await _context.Profiles.ToListAsync();
         }
 
+        // GET: api/Profile/attendeesEventId=3
+        [HttpGet("attendeesEventId/{attendeesEventId}")]
+        public async Task<ActionResult<IEnumerable<int>>> GetProfiles(int attendeesEventId)
+        {
+            var list = await _context.Attendees.Where(a => a.Ev_Id == attendeesEventId).Select( a => a.Pr_Id).ToListAsync();
+            return list;
+        }
+
         // GET: api/Profile/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProfileModel>> GetProfileModel(int id)

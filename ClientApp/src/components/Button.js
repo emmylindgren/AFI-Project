@@ -25,7 +25,7 @@ const buttonstyleRed = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
     cursor:'pointer',
 }
 
@@ -35,6 +35,7 @@ const buttonTextStyle = {
     fontWeight: '700',
     margin: '0px',
     lineHeight: '20px',
+    marginRight:'1rem',
 }
 
 const buttonIconStyle = {
