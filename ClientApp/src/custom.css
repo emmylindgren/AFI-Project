@@ -77,6 +77,12 @@ p{
   font-Family: Inter;
   font-size: 14px;
 }
+.err-text{
+  color: var(--red-button)
+}
+.success-text{
+  color: var(--deep-green)
+}
 
 .btn-primary {
   color: #fff;
