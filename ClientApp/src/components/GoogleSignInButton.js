@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
-
+import { withRouter } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import '../custom.css';
 
 const CLIENT_ID =
   "194796801307-sho8o1p4mvfp445ej4eibo4utlphkbbb.apps.googleusercontent.com";
 
-class GoogleSignInComponent extends Component {
+function GoogleSignInComponent (){
+
+  const history = useHistory();
+
+  /*
   constructor() {
     super();
     this.state = {
@@ -18,10 +23,13 @@ class GoogleSignInComponent extends Component {
         googleId: "",
       },
     };
-  }
+  }*/
+
+  const [isLoggedIn,setIsLoggedIn]= useState(false);
+  const [userInfo,setUserInfo] = useState();
 
   // Success Handler
-  responseGoogleSuccess = (response) => {
+  let responseGoogleSuccess = (response) => {
     console.log();
     console.log(response.profileObj);
     console.log(response);
@@ -30,39 +38,46 @@ class GoogleSignInComponent extends Component {
       emailId: response.profileObj.email,
       googleId: response.profileObj.googleId,
     };
-    this.setState({ userInfo, isLoggedIn: true });
+    setUserInfo(userInfo);
+    setIsLoggedIn(true);
+
+    history.push('/sign-up',userInfo);
+
+    //MUST Check if user already is member before
+
    
   };
 
   // Error Handler
-  responseGoogleError = (response) => {
+  let responseGoogleError = (response) => {
     console.log(response);
   };
 
   // Logout Session and Update State
-  logout = (response) => {
+  let logout = (response) => {
     console.log(response);
     let userInfo = {
       name: "",
       emailId: "",
       googleId:"",
     };
-    this.setState({ userInfo, isLoggedIn: false });
+    setUserInfo(userInfo);
+    setIsLoggedIn(false)
   };
 
-  render() {
+
     return (
       <div className="row mt-5">
         <div className="col-md-12">
-          {this.state.isLoggedIn ? (
+          {isLoggedIn ? (
             <div >
-              <h5>Welcome, {this.state.userInfo.name}</h5>
+              <h5>Welcome, {userInfo.name}</h5>
               <p>{}</p>
                <div class="google-button">
                    <GoogleLogout
                     clientId={CLIENT_ID}
                     buttonText={"Logout"}
-                    onLogoutSuccess={this.logout}
+                    onLogoutSuccess={logout}
                     ></GoogleLogout>
               </div> 
               
@@ -71,8 +86,8 @@ class GoogleSignInComponent extends Component {
             <GoogleLogin
               clientId={CLIENT_ID}
               buttonText="Sign Up with Google"
-              onSuccess={this.responseGoogleSuccess}
-              onFailure={this.responseGoogleError}
+              onSuccess={responseGoogleSuccess}
+              onFailure={responseGoogleError}
               isSignedIn={true}
               cookiePolicy={"single_host_origin"}
             />
@@ -81,5 +96,5 @@ class GoogleSignInComponent extends Component {
       </div>
     );
   }
-}
+
 export default GoogleSignInComponent;
