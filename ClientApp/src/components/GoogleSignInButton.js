@@ -30,13 +30,13 @@ function GoogleSignInComponent (){
 
   // Success Handler
   let responseGoogleSuccess = (response) => {
-    console.log();
-    console.log(response.profileObj);
-    console.log(response);
+
     let userInfo = {
-      name: response.profileObj.name,
+      firstname: response.profileObj.givenName,
+      lastname: response.profileObj.familyName,
       emailId: response.profileObj.email,
       googleId: response.profileObj.googleId,
+      imgUrl: response.profileObj.imageUrl,
     };
     setUserInfo(userInfo);
     setIsLoggedIn(true);
