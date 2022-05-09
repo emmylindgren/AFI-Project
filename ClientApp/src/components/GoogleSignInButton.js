@@ -1,16 +1,12 @@
 import React, { Component, useState } from 'react';
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-
-import { withRouter } from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../custom.css';
 
 const CLIENT_ID =
   "194796801307-sho8o1p4mvfp445ej4eibo4utlphkbbb.apps.googleusercontent.com";
 
 function GoogleSignInComponent (){
-
-  const history = useHistory();
 
   /*
   constructor() {
@@ -27,6 +23,7 @@ function GoogleSignInComponent (){
 
   const [isLoggedIn,setIsLoggedIn]= useState(false);
   const [userInfo,setUserInfo] = useState();
+  const navigate = useNavigate();
 
   // Success Handler
   let responseGoogleSuccess = (response) => {
@@ -40,8 +37,8 @@ function GoogleSignInComponent (){
     };
     setUserInfo(userInfo);
     setIsLoggedIn(true);
-
-    history.push('/sign-up',userInfo);
+    console.log("sucess! Redirect now!")
+    navigate('/sign-up');
 
     //MUST Check if user already is member before
 

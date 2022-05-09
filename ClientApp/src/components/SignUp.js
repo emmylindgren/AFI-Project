@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../custom.css'
 import './InputStyle.css'
 import BackButton from './BackButton';
@@ -9,22 +10,25 @@ import { API_ADRESS } from '../config';
 const style = {
     backgroundColor: 'rgb(240,240,240)',
 }
-function SignUp(props) {
+function SignUp() {
 
-    const [firstname, setFirstname] = useState(props.location.state.firstname);
-    const [lastname, setLastname] = useState(props.location.state.lastname);
+    const location = useLocation();
+
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
     const [birthdate, setBirthdate] = useState('');
     const [adress, setAdress] = useState('');
     const [postalcode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
 
+    const [profilePicture, setProfilePicture] = useState('plant.png');
+
     const [error, setError] = useState('');
 
     useEffect(() =>{
-        let propic = document.getElementById('propic')
         const filepicker = document.getElementById('propicker');
         filepicker.addEventListener('change', (e) => {
-            propic.src = URL.createObjectURL(e.target.files[0]);
+            setProfilePicture(URL.createObjectURL(e.target.files[0]));
         })
     },[])
 
@@ -76,7 +80,9 @@ function SignUp(props) {
                 <BackButton text="Back" to='/' onClick={() => {console.log("hej!")}}/>
                 <h1>Create New Profile</h1>
 
-                {getProfilePicture(props.location.state.imgUrl)}
+                
+                {
+                getProfilePicture(profilePicture)}
                 
                 {getInput('Firstname','Emma...',firstname,setFirstname)}
                 {getInput('Lastname','Hornham...',lastname,setLastname)}
