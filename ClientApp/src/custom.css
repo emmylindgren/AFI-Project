@@ -42,6 +42,13 @@ p{
   font-family: 'Inter';
   font-size: 1rem;
 }
+
+.gray-body-text{
+  font-family: 'Inter';
+  font-size: 1rem;
+  color: var(--grey-text);
+}
+
 .clickable-text{
   color: var(--deep-green);
 }
@@ -60,10 +67,12 @@ h1{
 h2{
   font-Family: Inter;
   font-Weight: 700;
+  font-size: 1rem;
 }
 
 h3{
   font-Family: Inter;
+  color: var(--black);
   font-Weight: 700;
 }
 
@@ -137,4 +146,20 @@ p{
   height: 30vw;
   max-height: 200px;
   background-color: lightpink;
+}
+
+#clock-icon, #location-icon {
+  width: 1.4rem;
+  
+}
+
+#event-image {
+  display: flex;
+  float: right;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.event-information-block{
+  padding: 0 7px 7px 0;
 }
