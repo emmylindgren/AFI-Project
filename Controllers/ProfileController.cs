@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AFI_Project.Data;
 using AFI_Project.Models;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace AFI_Project.Controllers
 {
@@ -28,6 +29,14 @@ namespace AFI_Project.Controllers
         public async Task<ActionResult<IEnumerable<ProfileModel>>> GetProfiles()
         {
             return await _context.Profiles.ToListAsync();
+        }
+
+        // GET: api/Profile/attendeesEventId=3
+        [HttpGet("attendeesEventId/{attendeesEventId}")]
+        public async Task<ActionResult<IEnumerable<int>>> GetProfiles(int attendeesEventId)
+        {
+            var list = await _context.Attendees.Where(a => a.Ev_Id == attendeesEventId).Select( a => a.Pr_Id).ToListAsync();
+            return list;
         }
 
         // GET: api/Profile/5
@@ -93,8 +102,11 @@ namespace AFI_Project.Controllers
         // POST: api/Profile
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ProfileModel>> PostProfileModel(ProfileModel profileModel)
+        public async Task<ActionResult<ProfileModel>> PostProfileModel([FromForm] IFormFile uploadFile,[FromForm] string userdata)
         {
+            ProfileModel profileModel = JsonConvert.DeserializeObject<ProfileModel>(userdata);
+            await RecieveFile(uploadFile, profileModel);
+
             _context.Profiles.Add(profileModel);
             await _context.SaveChangesAsync();
 
@@ -121,5 +133,58 @@ namespace AFI_Project.Controllers
         {
             return _context.Profiles.Any(e => e.Pr_Id == id);
         }
+
+        /// <summary>
+		/// Saves the provided IFormFile into the directory
+		/// wwwroot/uploadedfiles and sets this file as
+        /// the profile picture of the provided ProfileModel.
+		/// </summary>
+		/// <param name="uploadFile"></param>
+		private async Task RecieveFile(IFormFile uploadFile,ProfileModel pm)
+        {
+			if (uploadFile != null && uploadFile.Length > 0)
+			{
+				// Get the type of file (png, jpeg, webp, etc...)
+				string fileExtension = System.IO.Path.GetExtension(
+					uploadFile.FileName);
+
+				// The purpose of count.txt is to keep track of how many
+				// images have been uploaded and to make sure no duplicate
+				// file names exist. New files are namned to the next index.
+
+				int index;
+				try
+				{
+					// Try to read the first line of file count.txt.
+					index = int.Parse(System.IO.File.ReadLines(
+					"Profilepictures/count.txt")
+					.First());
+				}
+				// If the file does not exist, start index from 0.
+				catch (FileNotFoundException)
+				{
+					index = 0;
+				}
+
+				index++;
+
+				// Write index to count.txt. If count.txt does not
+				// exist, WriteAllText creates a file and writes to it.
+				System.IO.File.WriteAllText(
+					"Profilepictures/count.txt",
+					index.ToString());
+
+				// Set the name of the incoming file to index.
+				string fileName = index.ToString() + fileExtension;
+				string filePath = Path.Combine("Profilepictures/", fileName);
+
+				pm.Pr_Img = "/Profilepictures/" + fileName;
+
+				using (var fileSrteam = new FileStream(filePath, FileMode.Create))
+				{
+					await uploadFile.CopyToAsync(fileSrteam);
+				}
+			}
+		}
     }
 }
