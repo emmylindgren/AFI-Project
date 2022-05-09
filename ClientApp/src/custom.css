@@ -51,6 +51,8 @@ p{
 
 .clickable-text{
   color: var(--deep-green);
+  font-weight: 700;
+  cursor: pointer;
 }
 
 code {
