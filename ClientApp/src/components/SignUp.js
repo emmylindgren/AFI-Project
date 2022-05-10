@@ -6,7 +6,7 @@ import BackButton from './BackButton';
 import Button from './Button';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
-import DisabilityInput from './form/DisabilityInput';
+import Disability from './form/Disability';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -16,22 +16,29 @@ function SignUp() {
 
     const location = useLocation();
 
-    const [firstname, setFirstname] = useState(location.state.firstname);
-    const [lastname, setLastname] = useState(location.state.lastname);
+    const [firstname, setFirstname] = useState(location.state ? location.state.firstname : '');
+    const [lastname, setLastname] = useState(location.state ? location.state.lastname: '');
     const [birthdate, setBirthdate] = useState('');
     const [adress, setAdress] = useState('');
     const [postalcode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
 
-    const [profilePicture, setProfilePicture] = useState(location.state.imgUrl);
+    const [profilePicture, setProfilePicture] = useState(location.state ? location.state.imgUrl : 'plant.png');
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const [data, setData] = useState([]);
 
     useEffect(() =>{
         const filepicker = document.getElementById('propicker');
         filepicker.addEventListener('change', (e) => {
             setProfilePicture(URL.createObjectURL(e.target.files[0]));
+        })
+
+        axios.get(API_ADRESS + '/api/disability')
+        .then(res =>{
+            setData(res.data)
         })
     },[])
 
@@ -48,6 +55,7 @@ function SignUp() {
             Pr_Adress: adress,
             Pr_PostalCode: postalcode,
             Pr_City: city,
+            GoogleId: location.state.googleId,
         }));
 
         let blob
@@ -68,6 +76,9 @@ function SignUp() {
             if(res.status >= 200 && res.status < 300){
                 setError('');
                 setSuccess('Successfully created profile.');
+                //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
+                // Be post att returnera den nya användarens profilId samt API nyckel.
+                localStorage.setItem("profileId", location.state.profileId);
                 // Redirect to homepage.
             }
             else{
@@ -97,6 +108,8 @@ function SignUp() {
                 {getInput('Postal Code','907 40.',postalcode,setPostalCode)}
                 {getInput('City','Umea...',city,setCity)}
 
+                {renderDisabilityInput(data)}
+
                 <Button text='Sign up' buttonColorChoice='green' onClick={() => submitProfile()}/>
                 
                 <div style={{margin: '20px 0 20px 0'}}></div>
@@ -118,6 +131,33 @@ function getInput(label, placeholder,state,setState){
                     value={state}
                     onChange={(e) =>{setState(e.target.value)}}
                 />
+        </div>
+    )
+}
+
+function renderDisabilities(d) {
+    return d.map(disability => {
+        return (<div key={disability.di_Id}><Disability name={disability.di_Name}/></div>)
+    })
+}
+const disabilityStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: '10px',
+    backgroundColor: 'var(--white)',
+    borderRadius: '10px',
+    padding: '10px',
+    margin: '0 0 20px 0',
+}
+
+function renderDisabilityInput(data) {
+    return (
+        <div>
+            <label>Disabilities</label>
+            <div style={disabilityStyle}>
+                {renderDisabilities(data)}
+            </div>
         </div>
     )
 }

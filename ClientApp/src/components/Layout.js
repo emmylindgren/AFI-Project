@@ -7,7 +7,7 @@ export class Layout extends Component {
 
   render () {
     return (
-      <div>
+      <div className='APP-CONTAINER'>
      
         <Container>
           <div className='notch-bg'></div>
