@@ -212,3 +212,12 @@ p{
     position: fixed;
   }
 }
+@media only screen and (min-width: 600px) {
+  .APP-CONTAINER{
+    margin: 0 auto;
+    width: 500px;
+  }
+  body{
+    background-image: linear-gradient(to bottom, #f1f9f6, #fbfdfd);
+  }
+}
