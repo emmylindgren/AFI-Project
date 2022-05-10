@@ -5,6 +5,7 @@ import clockIcon from '../img/clock-icon.svg';
 import locationIcon from '../img/location-icon.svg';
 import eventImage from '../img/event-image.png';
 import '../custom.css'
+import AttendingPreview from './AttendingPreview';
 
 
 /*const getEventInfo = async (eventid) => {
@@ -96,25 +97,25 @@ function EventCard(/*{eventid}*/) {
     }
 
     return (
-        <div className="page-container">
-            <div className="page-content">
-                <div className="event-card">
-                    <span> <img src={eventImage} id="event-image"></img>
-                        <h3>{eventInfo[0]} </h3>
-                        <div className = "event-information-block">
-                            <img src={locationIcon} id="location-icon"></img>
-                            <span className="gray-body-text">&nbsp; {eventInfo[1]}</span>
-                        </div>
 
-                        <div className = "event-information-block">
-                            <img src={clockIcon} id="clock-icon"></img>
-                            <span className="gray-body-text">&nbsp; {day + " " + functionWithSwitch(month) + ", " + hours + ":" + minutes + " " + timeVar}</span>
-                        </div>
-                    </span>
-
+        <div className="event-card">
+            <span> <img src={eventImage} id="event-image"></img>
+                <h3>{eventInfo[0]} </h3>
+                <div className = "event-information-block">
+                    <img src={locationIcon} id="location-icon"></img>
+                    <span className="gray-body-text">&nbsp; {eventInfo[1]}</span>
                 </div>
-            </div>
+
+                <div className = "event-information-block">
+                    <img src={clockIcon} id="clock-icon"></img>
+                    <span className="gray-body-text">&nbsp; {day + " " + functionWithSwitch(month) + ", " + hours + ":" + minutes + " " + timeVar}</span>
+                    <AttendingPreview/>
+                </div>
+                
+            </span>
+            
         </div>
+
     );
 }
 
