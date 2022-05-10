@@ -8,6 +8,15 @@
     padding-left: 20px;
     margin-bottom: 20px;
 }
+input
+::file-selector-button {
+    display: none;
+    width: 110px;
+} 
+::-webkit-file-upload-button {
+    display: none;
+    width: 110px;
+}
 label{
     color: var(--black);
     margin-bottom: 5px;

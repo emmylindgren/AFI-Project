@@ -51,6 +51,8 @@ p{
 
 .clickable-text{
   color: var(--deep-green);
+  font-weight: 700;
+  cursor: pointer;
 }
 
 code {
@@ -162,4 +164,14 @@ p{
 
 .event-information-block{
   padding: 0 7px 7px 0;
+}
+
+/* For PWA */
+@media all and (display-mode: standalone) {
+  .notch-bg{
+    background-color: var(--deep-green);
+    width: 100%;
+    height: 50px;
+    position: fixed;
+  }
 }

@@ -13,135 +13,151 @@ using Newtonsoft.Json;
 
 namespace AFI_Project.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProfileController : ControllerBase
-    {
-        private readonly Database _context;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class ProfileController : ControllerBase
+	{
+		private readonly Database _context;
 
-        public ProfileController(Database context)
-        {
-            _context = context;
-        }
+		public ProfileController(Database context)
+		{
+			_context = context;
+		}
 
-        // GET: api/Profile
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProfileModel>>> GetProfiles()
-        {
-            return await _context.Profiles.ToListAsync();
-        }
+		// GET: api/Profile
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<ProfileModel>>> GetProfiles()
+		{
+			return await _context.Profiles.ToListAsync();
+		}
 
-        // GET: api/Profile/attendeesEventId=3
-        [HttpGet("attendeesEventId/{attendeesEventId}")]
-        public async Task<ActionResult<IEnumerable<int>>> GetProfiles(int attendeesEventId)
-        {
-            var list = await _context.Attendees.Where(a => a.Ev_Id == attendeesEventId).Select( a => a.Pr_Id).ToListAsync();
-            return list;
-        }
+		// GET: api/Profile/attendeesEventId=3
+		[HttpGet("attendeesEventId/{attendeesEventId}")]
+		public async Task<ActionResult<IEnumerable<int>>> GetProfiles(int attendeesEventId)
+		{
+			var list = await _context.Attendees.Where(a => a.Ev_Id == attendeesEventId).Select(a => a.Pr_Id).ToListAsync();
+			return list;
+		}
 
-        // GET: api/Profile/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ProfileModel>> GetProfileModel(int id)
-        {
-            var profileModel = await _context.Profiles.FindAsync(id);
+		[HttpGet("image/{id}")]
+		public async Task<IActionResult> GetProfilePicture(int id)
+		{
+			var profileModel = await _context.Profiles.FindAsync(id);
 
-            if (profileModel == null)
-            {
-                return NotFound();
-            }
+			if (profileModel == null)
+			{
+				return NotFound();
+			}
 
-            return profileModel;
-        }
+			// Using '+'-operator on paths is bad practice.
+			var img = System.IO.File.OpenRead(System.IO.Directory.GetCurrentDirectory() + profileModel.Pr_Img);
 
-        // GET: api/Profile/googleID/string
-        [HttpGet("googleID/{googleID}")]
-        public async Task<ActionResult<int>> GetWithGId(string googleID)
-        {
+			return File(img, "image/jpeg");
+		}
 
-            var list = await _context.Profiles.Where(p => p.GoogleId == googleID).ToListAsync();
+		// GET: api/Profile/5
+		[HttpGet("{id}")]
+		public async Task<ActionResult<ProfileModel>> GetProfileModel(int id)
+		{
+			var profileModel = await _context.Profiles.FindAsync(id);
 
-            if (list.Count == 0)
-            {
-                return NotFound();
-            }
+			if (profileModel == null)
+			{
+				return NotFound();
+			}
 
-            return list[0].Pr_Id;
-        }
+			return profileModel;
+		}
 
-        // PUT: api/Profile/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfileModel(int id, ProfileModel profileModel)
-        {
-            if (id != profileModel.Pr_Id)
-            {
-                return BadRequest();
-            }
+		// GET: api/Profile/googleID=string
+		[HttpGet("googleID/{googleID}")]
+		public async Task<ActionResult<int>> GetWithGId(string googleID)
+		{
 
-            _context.Entry(profileModel).State = EntityState.Modified;
+			var list = await _context.Profiles.Where(p => p.GoogleId == googleID).ToListAsync();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProfileModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			if (list.Count == 0)
+			{
+				return NotFound();
+			}
 
-            return NoContent();
-        }
+			return list[0].Pr_Id;
+		}
 
-        // POST: api/Profile
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<ProfileModel>> PostProfileModel([FromForm] IFormFile uploadFile,[FromForm] string userdata)
-        {
-            ProfileModel profileModel = JsonConvert.DeserializeObject<ProfileModel>(userdata);
-            await RecieveFile(uploadFile, profileModel);
+		// PUT: api/Profile/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutProfileModel(int id, ProfileModel profileModel)
+		{
+			if (id != profileModel.Pr_Id)
+			{
+				return BadRequest();
+			}
 
-            _context.Profiles.Add(profileModel);
-            await _context.SaveChangesAsync();
+			_context.Entry(profileModel).State = EntityState.Modified;
 
-            return CreatedAtAction("GetProfileModel", new { id = profileModel.Pr_Id }, profileModel);
-        }
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!ProfileModelExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-        // DELETE: api/Profile/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProfileModel(int id)
-        {
-            var profileModel = await _context.Profiles.FindAsync(id);
-            if (profileModel == null)
-            {
-                return NotFound();
-            }
+			return NoContent();
+		}
 
-            _context.Profiles.Remove(profileModel);
-            await _context.SaveChangesAsync();
+		// POST: api/Profile
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost]
+		public async Task<ActionResult<ProfileModel>> PostProfileModel([FromForm] IFormFile uploadFile, [FromForm] string userdata)
+		{
+			ProfileModel profileModel = JsonConvert.DeserializeObject<ProfileModel>(userdata);
+			await RecieveFile(uploadFile, profileModel);
 
-            return NoContent();
-        }
+			_context.Profiles.Add(profileModel);
+			await _context.SaveChangesAsync();
 
-        private bool ProfileModelExists(int id)
-        {
-            return _context.Profiles.Any(e => e.Pr_Id == id);
-        }
+			return CreatedAtAction("GetProfileModel", new { id = profileModel.Pr_Id }, profileModel);
+		}
 
-        /// <summary>
+		// DELETE: api/Profile/5
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteProfileModel(int id)
+		{
+			var profileModel = await _context.Profiles.FindAsync(id);
+			if (profileModel == null)
+			{
+				return NotFound();
+			}
+
+			_context.Profiles.Remove(profileModel);
+			await _context.SaveChangesAsync();
+
+			return NoContent();
+		}
+
+		private bool ProfileModelExists(int id)
+		{
+			return _context.Profiles.Any(e => e.Pr_Id == id);
+		}
+
+		/// <summary>
 		/// Saves the provided IFormFile into the directory
 		/// wwwroot/uploadedfiles and sets this file as
-        /// the profile picture of the provided ProfileModel.
+		/// the profile picture of the provided ProfileModel.
 		/// </summary>
 		/// <param name="uploadFile"></param>
-		private async Task RecieveFile(IFormFile uploadFile,ProfileModel pm)
-        {
+		private async Task RecieveFile(IFormFile uploadFile, ProfileModel pm)
+		{
 			if (uploadFile != null && uploadFile.Length > 0)
 			{
 				// Get the type of file (png, jpeg, webp, etc...)
@@ -180,11 +196,11 @@ namespace AFI_Project.Controllers
 
 				pm.Pr_Img = "/Profilepictures/" + fileName;
 
-				using (var fileSrteam = new FileStream(filePath, FileMode.Create))
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
-					await uploadFile.CopyToAsync(fileSrteam);
+					await uploadFile.CopyToAsync(fileStream);
 				}
 			}
 		}
-    }
+	}
 }
