@@ -42,7 +42,13 @@ const textStyle ={
 function ScheduleEventCard({event}) {
 
     const [eventInfo, setEventInfo] = useState([]);
+    var date2 = new Date(event.ev_DateTime);
 
+    
+    console.log(date2);
+    var date3 = date2.getHours();
+    
+    console.log(date3);
 
     let hours = "12";
     let minutes = "12";

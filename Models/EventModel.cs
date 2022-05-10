@@ -14,7 +14,7 @@ namespace AFI_Project.Models
         public string Ev_PostalCode { get; set; } = String.Empty;
         public string Ev_City { get; set; } = String.Empty;
         public string Ev_Description { get; set; } = String.Empty;
-        [Column(TypeName="Date")]
+        [Column("Ev_DateTime",TypeName="DateTime")]
         public DateTime Ev_DateTime { get; set; }
         public virtual ICollection<RequestedInviteModel>? Ev_RequestedInviteModel { get; set; }
         public virtual ICollection<DeclinedInviteModel>? Ev_DeclinedInviteModel { get; set; }

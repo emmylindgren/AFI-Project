@@ -25,39 +25,28 @@ import AttendingPreview from './AttendingPreview';
 
 
 
-function EventCard(/*{eventid}*/) {
-    console.clear();
-    const [eventInfo, setEventInfo] = useState([]);
+function EventCard({event}) {
+
     //const data = axios.get(API_ADRESS + '/api/event/'+ 1);
     
-    //console.log(result);
-    useEffect(() => {
-    const getEventInfo = async (eventid) => {
-
-        let res = await axios.get(API_ADRESS + '/api/event/'+ eventid)
-        .then(function(res) {
-            setEventInfo([res.data.ev_Title, res.data.ev_Street, res.data.ev_DateTime]);
-        })    
-        } 
-        getEventInfo(1);
-    }, [])
-
-    /*let date = eventInfo[2];
+    console.log(event);
+    let date = event.ev_DateTime;
+    console.log(date);
     let month = date.slice(5,7);
     let day = date.slice(8,10);
     let hours = date.slice(11,13);
     let minutes = date.slice(14,16);
     let hoursToInt = parseInt(hours);
-    let timeVar = "AM";*/
+    let timeVar = "AM";
 
-    let date = eventInfo[2];
+    /*
     let month = "12";
     let day = 12;
     let hours = 12;
     let minutes = 12;
     let hoursToInt = parseInt(hours);
     let timeVar = "AM";
-    
+    */
     if(hoursToInt > 12 && hoursToInt < 24) {
         hours = hoursToInt % 12;
         timeVar = "PM";
@@ -100,10 +89,10 @@ function EventCard(/*{eventid}*/) {
 
         <div className="event-card">
             <span> <img src={eventImage} id="event-image"></img>
-                <h3>{eventInfo[0]} </h3>
+                <h3>{event.ev_Title}</h3>
                 <div className = "event-information-block">
                     <img src={locationIcon} id="location-icon"></img>
-                    <span className="gray-body-text">&nbsp; {eventInfo[1]}</span>
+                    <span className="gray-body-text">&nbsp; {event.ev_Street}</span>
                 </div>
 
                 <div className = "event-information-block">
@@ -111,7 +100,6 @@ function EventCard(/*{eventid}*/) {
                     <span className="gray-body-text">&nbsp; {day + " " + functionWithSwitch(month) + ", " + hours + ":" + minutes + " " + timeVar}</span>
                     <AttendingPreview/>
                 </div>
-                
             </span>
             
         </div>
