@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {useState } from 'react';
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import { API_ADRESS } from '../config';
 
 import '../custom.css';
@@ -9,8 +9,8 @@ import '../custom.css';
 const CLIENT_ID =
   "194796801307-sho8o1p4mvfp445ej4eibo4utlphkbbb.apps.googleusercontent.com";
 
-class GoogleLoginComponent extends Component {
-  constructor() {
+function GoogleLoginComponent() {
+  /*constructor() {
     super();
     this.state = {
       isLoggedIn: false,
@@ -18,73 +18,91 @@ class GoogleLoginComponent extends Component {
         name: "",
         emailId: "",
       },
+      isUser: false,
+      profileId: "",
     };
-  }
+  }*/
 
+  const [isLoggedIn , setIsLoggedIn] = useState(false);
+  const [isUser, setIsUser] = useState();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+
+
+  let redirect = () => {
+    console.log("redirect");  
+    if(isUser){
+        navigate('/sign-up');
+      }
+  }
   // Success Handler
-  responseGoogleSuccess = (response) => {
+  let responseGoogleSuccess = (response) => {
     console.log();
     console.log(response.profileObj);
     console.log(response);
     let id = response.profileObj.googleId;
-    let userInfo = {
-      name: response.profileObj.name,
-      emailId: response.profileObj.email,
-    };
-    this.setState({ userInfo, isLoggedIn: true });
+
+    setIsLoggedIn(true);
 
     //Skapa ett API anrop
-     
+    
+    
     
     //axios.get('https://jec.fyi.com/unknown-url/')
-    axios.get(API_ADRESS + '/api/profile/googleID/' + id)
+    axios.get(API_ADRESS + '/api/profile/googleID/' + 11)
     .then(res => {
-        const profileId = res.data;
-        this.setState({ profileId });
-        console.log(profileId);
+      console.log(res);
+      setIsUser(true);
+
+      // --------------- Borde redirecta till explore, sätt id till global varabel?----------------
+      const profileId = res.data;
+      redirect();
+       
+     
+
       })
       .catch(function (error){
-        console.log(error);
+          //console.log(error);
+          if(error.response.status === 404){
+            //console.log("vi är här");
+           setIsUser(false);
+            //skriva ut att man inte har en användare.
+            console.log("hej");
+            setError("You are not a registered user.");
+          }
       });
   };
 
   // Error Handler
-  responseGoogleError = (response) => {
-    console.log(response);
+  let responseGoogleError = (response) => {
+    //console.log(response);
   };
 
   // Logout Session and Update State
-  logout = (response) => {
+  //inte säkert att vi ska använda denna!
+  let logout = (response) => {
     console.log(response);
-    let userInfo = {
-      name: "",
-      emailId: "",
-      googleId:"",
-    };
-    this.setState({ userInfo, isLoggedIn: false });
+    setIsLoggedIn(false);
   };
 
-  render() {
+
     return (
       <div className="row mt-5">
         <div className="col-md-12">
-          {this.state.profileId === 0 ?(
-            <div >
-              <h5>You are not a registered user.</h5>
-            </div>
-          ) : (
+        <p>{error}</p>
+          
             <GoogleLogin
               clientId={CLIENT_ID}
               buttonText="Sign In with Google"
-              onSuccess={this.responseGoogleSuccess}
-              onFailure={this.responseGoogleError}
+              onSuccess={responseGoogleSuccess}
+              onFailure={responseGoogleError}
               isSignedIn={true}
               cookiePolicy={"single_host_origin"}
             />
-          )}
+          
         </div>
       </div>
     );
   }
-}
 export default GoogleLoginComponent;
