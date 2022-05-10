@@ -29,7 +29,7 @@ function GoogleSignInComponent (){
   const navigate = useNavigate();
 
 
-
+  
   // Success Handler
   let responseGoogleSuccess = (response) => {
     let id = response.profileObj.googleId;
@@ -58,7 +58,7 @@ function GoogleSignInComponent (){
             };
             setUserInfo(userInfo);
             console.log("sucess! Redirect now!")
-            navigate('/sign-up');
+            navigate('/sign-up', { state: { ...userInfo } });
           }
       });
    

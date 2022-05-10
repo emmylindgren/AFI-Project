@@ -22,7 +22,7 @@ const wrapperScheduleEventStyle ={
 const timeWrapper ={
     background:'var(--light-green)',
     height:'100%',
-    width:'80px',
+    width:'90px',
     borderRadius:'10px',
     display:'flex',
     flexDirection: 'column',
@@ -36,33 +36,36 @@ const textStyle ={
     margin: '0px',
 }
 
-// Use eventID to get time, title and address to display. Also make 
-// first div onlick go to that event information site. 
-function ScheduleEventCard({eventId}) {
+// TODO: 
+// Get information from event regarding time, address, title. 
+// first div onlick go to that event information site! 
+function ScheduleEventCard({event}) {
 
     const [eventInfo, setEventInfo] = useState([]);
-    //const data = axios.get(API_ADRESS + '/api/event/'+ 1);
 
-    //console.log(result);
-    useEffect(() => {
-    const getEventInfo = async (eventid) => {
 
-        let res = await axios.get(API_ADRESS + '/api/event/'+ eventId)
-        .then(function(res) {
-            setEventInfo([res.data.ev_Title, res.data.ev_Street, res.data.ev_DateTime]);
-        })    
-        } 
-        getEventInfo(1);
-    }, [])
+    let hours = "12";
+    let minutes = "12";
+    let hoursToInt = parseInt(hours);
+    let timeVar = "AM";
+
+    if(hoursToInt > 12 && hoursToInt < 24) {
+        hours = hoursToInt % 12;
+        timeVar = "PM";
+    }
+    else if(hours === "24" || hours === "00") {
+        hours = 12;
+        timeVar = "PM";
+    }
 
   return (
     <div style={wrapperScheduleEventStyle}>
         <div style={timeWrapper}>
-            <h4 style={textStyle}>1:30</h4>
-            <p style={textStyle}>AM</p>
+            <h4 style={textStyle}>{hours}:{minutes}</h4>
+            <p style={textStyle}>{timeVar}</p>
         </div>
         <div>
-            <h4 style={textStyle}>Title for the event</h4>
+            <h4 style={textStyle}>Namn på eventet</h4>
             <p style={textStyle}>Address</p>
         </div>
         <img height='25rem' src='icons/GoToIcon.svg'/>

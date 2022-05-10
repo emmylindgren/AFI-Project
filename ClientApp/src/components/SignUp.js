@@ -6,6 +6,7 @@ import BackButton from './BackButton';
 import Button from './Button';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
+import DisabilityInput from './form/DisabilityInput';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -15,14 +16,14 @@ function SignUp() {
 
     const location = useLocation();
 
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
+    const [firstname, setFirstname] = useState(location.state.firstname);
+    const [lastname, setLastname] = useState(location.state.lastname);
     const [birthdate, setBirthdate] = useState('');
     const [adress, setAdress] = useState('');
     const [postalcode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
 
-    const [profilePicture, setProfilePicture] = useState('plant.png');
+    const [profilePicture, setProfilePicture] = useState(location.state.imgUrl);
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -35,8 +36,6 @@ function SignUp() {
     },[])
 
     const submitProfile = async () =>{
-
-        const reader = new FileReader();
 
         let form = new FormData();
 
@@ -51,21 +50,18 @@ function SignUp() {
             Pr_City: city,
         }));
 
-        let result;
+        let blob
         // If a file is selected
         if(propicker.files[0]) {
             // Get from user selection.
-            result = await FileReaderPromised(propicker.files[0])
+            blob = await FileReaderPromised(propicker.files[0])
         }
         else{
             // Get from Google/default.
-            setError('Select a profile picture. Default from google not working yet.')
-            setSuccess('')
-            result = await FileReaderPromised(profilePicture)
+            blob = await fetch(profilePicture).then(r => r.blob())
         }
-
-        let file = new File([result],'uploadFile.jpg',{type: 'image/jpeg'})
-        form.append('uploadFile', file);
+        let binaryImg = new File([blob],'uploadFile.jpg',{type: 'image/jpeg'})
+        form.append('uploadFile', binaryImg);
 
         axios.post(API_ADRESS + '/api/profile', form)
         .then(res => {
@@ -74,14 +70,16 @@ function SignUp() {
                 setSuccess('Successfully created profile.');
                 // Redirect to homepage.
             }
+            else{
+                setError('Something went wrong. Try again later.');
+                setSuccess('');
+            }
         })
         .catch( err => {
             setSuccess('')
-            setError('Something went wrong! Try again later.')
+            setError('Something went REALLY wrong! Try again later.')
             console.error(err);
         });
-
-        reader.readAsArrayBuffer(propicker.files[0]);
     }
 
     return (
