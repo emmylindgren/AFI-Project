@@ -57,6 +57,16 @@ namespace AFI_Project.Controllers
             return eventModel;
         }
 
+
+        // GET: api/Event/profileID/1
+        [HttpGet("profileID/{profileID}")]
+        public async Task<ActionResult<IEnumerable<EventModel>>> GetAttendingEvent(int profileID)
+        {
+            return await _context.Events
+            .Where(e => e.Ev_Owner.Pr_Id == profileID || e.Ev_AttendingModel.Any(a => a.Pr_Id == profileID))
+            .ToListAsync();
+        }
+
         // PUT: api/Event/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
