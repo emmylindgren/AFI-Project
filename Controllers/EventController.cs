@@ -33,14 +33,12 @@ namespace AFI_Project.Controllers
                 .Where(e => e.Ev_Disabilities.Any(d => disabilitiesList.Contains(d.Dis_Id)))
                 .Include(e => e.Ev_Owner)
                 .Include(e => e.Ev_AttendingModel)
-                .ThenInclude(a => a.At_Profile)
                 .ToListAsync();
             }
             else{
                 return await _context.Events
-                .Include(e => e.Ev_Owner)
                 .Include(e => e.Ev_AttendingModel)
-                .ThenInclude(a => a.At_Profile)
+                .Include(e => e.Ev_Owner)
                 .ToListAsync();
             }
         }
@@ -57,6 +55,16 @@ namespace AFI_Project.Controllers
             }
 
             return eventModel;
+        }
+
+
+        // GET: api/Event/profileID/1
+        [HttpGet("profileID/{profileID}")]
+        public async Task<ActionResult<IEnumerable<EventModel>>> GetAttendingEvent(int profileID)
+        {
+            return await _context.Events
+            .Where(e => e.Ev_Owner.Pr_Id == profileID || e.Ev_AttendingModel.Any(a => a.Pr_Id == profileID))
+            .ToListAsync();
         }
 
         // PUT: api/Event/5

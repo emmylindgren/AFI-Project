@@ -1,8 +1,11 @@
 import React from 'react'
-
+import axios from 'axios'
+import { useEffect } from 'react'
+import { API_ADRESS } from '../config'
+import { useState } from 'react'
 /**
  * Format: 
- * <ScheduleEventCard {eventId=5]/>
+ * <ScheduleEventCard {eventId=5}/>
  */
 
 const wrapperScheduleEventStyle ={
@@ -36,6 +39,22 @@ const textStyle ={
 // Use eventID to get time, title and address to display. Also make 
 // first div onlick go to that event information site. 
 function ScheduleEventCard({eventId}) {
+
+    const [eventInfo, setEventInfo] = useState([]);
+    //const data = axios.get(API_ADRESS + '/api/event/'+ 1);
+
+    //console.log(result);
+    useEffect(() => {
+    const getEventInfo = async (eventid) => {
+
+        let res = await axios.get(API_ADRESS + '/api/event/'+ eventId)
+        .then(function(res) {
+            setEventInfo([res.data.ev_Title, res.data.ev_Street, res.data.ev_DateTime]);
+        })    
+        } 
+        getEventInfo(1);
+    }, [])
+
   return (
     <div style={wrapperScheduleEventStyle}>
         <div style={timeWrapper}>
