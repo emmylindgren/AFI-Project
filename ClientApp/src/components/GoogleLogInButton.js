@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { GoogleLogin } from "react-google-login";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
@@ -13,35 +13,26 @@ function GoogleLoginComponent() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-
-
-  
   // Success Handler
   let responseGoogleSuccess = (response) => {
     console.log();
     console.log(response.profileObj);
     console.log(response);
     let id = response.profileObj.googleId;
-  
     //kollar om användaren som försöker logga in är medlem
     axios.get(API_ADRESS + '/api/profile/googleID/' + id)
     .then(res => {
       console.log(res);
-      
       // --------------- Borde redirecta till explore, sätt id till global varabel?----------------
       const profileId = res.data;
       localStorage.setItem("profileId", profileId);
+      //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
+      // Be den här get funktionen att också returnera api nyckeln. 
       navigate('/sign-up');
-      
       })
 
       .catch(function (error){
-          //console.log(error);
           if(error.response.status === 404){
-            //console.log("vi är här");
-          
-            //skriva ut att man inte har en användare.
             console.log("hej");
             setError("You are not a registered user.");
           }
@@ -63,7 +54,7 @@ function GoogleLoginComponent() {
               buttonText="Log In with Google"
               onSuccess={responseGoogleSuccess}
               onFailure={responseGoogleError}
-              isSignedIn={true}
+              isSignedIn={false}
               cookiePolicy={"single_host_origin"}
             />
           

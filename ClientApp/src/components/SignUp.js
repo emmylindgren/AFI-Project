@@ -48,6 +48,7 @@ function SignUp() {
             Pr_Adress: adress,
             Pr_PostalCode: postalcode,
             Pr_City: city,
+            GoogleId: location.state.googleId,
         }));
 
         let blob
@@ -68,6 +69,9 @@ function SignUp() {
             if(res.status >= 200 && res.status < 300){
                 setError('');
                 setSuccess('Successfully created profile.');
+                //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
+                // Be post att returnera den nya användarens profilId samt API nyckel.
+                localStorage.setItem("profileId", location.state.profileId);
                 // Redirect to homepage.
             }
             else{
