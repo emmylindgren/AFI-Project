@@ -38,7 +38,7 @@ function GoogleSignInComponent (){
     setUserInfo(userInfo);
     setIsLoggedIn(true);
     console.log("sucess! Redirect now!")
-    navigate('/sign-up');
+    navigate('/sign-up', { state: { ...userInfo } });
 
     //MUST Check if user already is member before
 
