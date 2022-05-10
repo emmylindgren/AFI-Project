@@ -11,7 +11,8 @@ const style = {
     borderRadius: '200px',
     padding: '15px',
     width: 'fit-content',
-    transitionDuration: '200ms'
+    transitionDuration: '200ms',
+    cursor: 'pointer',
 }
 const selectedStyle = {
     borderStyle: 'solid',
@@ -20,7 +21,7 @@ const selectedStyle = {
     transitionDuration: '200ms'
 }
 
-function Disability({name, icon}) {
+function Disability({name}) {
 
     const [selected, setSelected] = useState(false)
 
