@@ -11,7 +11,7 @@ export class LogIn extends Component {
 
     render () {
         return (
-            <div id="login-page">
+            <div id="login-page">    
                 <img src={logo} id="logo"></img>
                 <h4 id="login-text">Explore your neighbourhood today!</h4>
                 <div className="google-button"><GoogleLogInButton /></div>
@@ -23,6 +23,7 @@ export class LogIn extends Component {
                 </div>
                 <Link to='./event-card'>Event card</Link>
                 <Link to='./sign-up'>Sign In!</Link>
+                <Link to ='./schedule'>Schedule</Link>
             </div>
             
     );
