@@ -2,6 +2,8 @@ import React, { Component, useState } from 'react';
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { useNavigate } from 'react-router-dom';
 import '../custom.css';
+import axios from 'axios';
+import { API_ADRESS } from '../config';
 
 const CLIENT_ID =
   "194796801307-sho8o1p4mvfp445ej4eibo4utlphkbbb.apps.googleusercontent.com";
@@ -21,27 +23,44 @@ function GoogleSignInComponent (){
     };
   }*/
 
-  const [isLoggedIn,setIsLoggedIn]= useState(false);
+
   const [userInfo,setUserInfo] = useState();
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+
 
   // Success Handler
   let responseGoogleSuccess = (response) => {
+    let id = response.profileObj.googleId;
+  
+    //kollar om användaren som försöker logga in är medlem
+    axios.get(API_ADRESS + '/api/profile/googleID/' + 11)
+    .then(res => {
+     
+            //skriva ut att man inte har en användare.
+            console.log("hej");
+            setError("You already have an account, please Log In.");
+      
+      
+      })
 
-    let userInfo = {
-      firstname: response.profileObj.givenName,
-      lastname: response.profileObj.familyName,
-      emailId: response.profileObj.email,
-      googleId: response.profileObj.googleId,
-      imgUrl: response.profileObj.imageUrl,
-    };
-    setUserInfo(userInfo);
-    setIsLoggedIn(true);
-    console.log("sucess! Redirect now!")
-    navigate('/sign-up');
-
-    //MUST Check if user already is member before
-
+      .catch(function (error){
+          //console.log(error);
+          if(error.response.status === 404){
+            //console.log("vi är här");
+            let userInfo = {
+              firstname: response.profileObj.givenName,
+              lastname: response.profileObj.familyName,
+              emailId: response.profileObj.email,
+              googleId: response.profileObj.googleId,
+              imgUrl: response.profileObj.imageUrl,
+            };
+            setUserInfo(userInfo);
+            console.log("sucess! Redirect now!")
+            navigate('/sign-up');
+          }
+      });
    
   };
 
@@ -50,36 +69,12 @@ function GoogleSignInComponent (){
     console.log(response);
   };
 
-  // Logout Session and Update State
-  let logout = (response) => {
-    console.log(response);
-    let userInfo = {
-      name: "",
-      emailId: "",
-      googleId:"",
-    };
-    setUserInfo(userInfo);
-    setIsLoggedIn(false)
-  };
 
 
     return (
       <div className="row mt-5">
         <div className="col-md-12">
-          {isLoggedIn ? (
-            <div >
-              <h5>Welcome, {userInfo.name}</h5>
-              <p>{}</p>
-               <div class="google-button">
-                   <GoogleLogout
-                    clientId={CLIENT_ID}
-                    buttonText={"Logout"}
-                    onLogoutSuccess={logout}
-                    ></GoogleLogout>
-              </div> 
-              
-            </div>
-          ) : (
+            <p className='err-text'>{error}</p>
             <GoogleLogin
               clientId={CLIENT_ID}
               buttonText="Sign Up with Google"
@@ -88,7 +83,7 @@ function GoogleSignInComponent (){
               isSignedIn={true}
               cookiePolicy={"single_host_origin"}
             />
-          )}
+          
         </div>
       </div>
     );
