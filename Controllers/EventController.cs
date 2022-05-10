@@ -33,14 +33,12 @@ namespace AFI_Project.Controllers
                 .Where(e => e.Ev_Disabilities.Any(d => disabilitiesList.Contains(d.Dis_Id)))
                 .Include(e => e.Ev_Owner)
                 .Include(e => e.Ev_AttendingModel)
-                .ThenInclude(a => a.At_Profile)
                 .ToListAsync();
             }
             else{
                 return await _context.Events
-                .Include(e => e.Ev_Owner)
                 .Include(e => e.Ev_AttendingModel)
-                .ThenInclude(a => a.At_Profile)
+                .Include(e => e.Ev_Owner)
                 .ToListAsync();
             }
         }

@@ -53,7 +53,7 @@ namespace AFI_Project.Controllers
             return profileModel;
         }
 
-        // GET: api/Profile/googleID=string
+        // GET: api/Profile/googleID/string
         [HttpGet("googleID/{googleID}")]
         public async Task<ActionResult<int>> GetWithGId(string googleID)
         {
