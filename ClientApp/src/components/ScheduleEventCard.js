@@ -36,22 +36,15 @@ const textStyle ={
     margin: '0px',
 }
 
-// TODO: 
-// Get information from event regarding time, address, title. 
+// TODO:  
 // first div onlick go to that event information site! 
 function ScheduleEventCard({event}) {
 
     const [eventInfo, setEventInfo] = useState([]);
-    var date2 = new Date(event.ev_DateTime);
+    var date = new Date(event.ev_DateTime);
 
-    
-    console.log(date2);
-    var date3 = date2.getHours();
-    
-    console.log(date3);
-
-    let hours = "12";
-    let minutes = "12";
+    let hours = date.getHours();
+    let minutes = ((date.getMinutes()<10?'0':'') + date.getMinutes());
     let hoursToInt = parseInt(hours);
     let timeVar = "AM";
 
@@ -71,8 +64,8 @@ function ScheduleEventCard({event}) {
             <p style={textStyle}>{timeVar}</p>
         </div>
         <div>
-            <h4 style={textStyle}>Namn på eventet</h4>
-            <p style={textStyle}>Address</p>
+            <h4 style={textStyle}>{event.ev_Title}</h4>
+            <p style={textStyle}>{event.ev_Street + ', ' + event.ev_City}</p>
         </div>
         <img height='25rem' src='icons/GoToIcon.svg'/>
     </div>
