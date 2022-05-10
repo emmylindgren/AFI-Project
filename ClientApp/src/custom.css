@@ -27,7 +27,7 @@
   display: grid;
   grid-template-columns: 20px auto 20px;
   /*We need to fix the rows, 100vh rn is not good!!*/
-  grid-template-rows: 20px auto 100vh;
+  grid-template-rows: 20px auto 20px;
 }
 /* All content should be place within this class. */
 .page-content {
