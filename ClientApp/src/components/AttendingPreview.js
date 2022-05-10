@@ -11,10 +11,11 @@ import eventImage from '../img/event-image.png';
 // Hämta hostens bild
 
 
-function AttendingPreview(/*{eventid, attendeeid}*/) {
-
-    console.clear();
+function AttendingPreview({event}) {
     
+    
+    let nrOfAttendees = Object.keys(event.ev_AttendingModel).length -3;
+
     const [eventAttendees, setEventAttendees] = useState([]);
     //const data = axios.get(API_ADRESS + '/api/event/'+ 1);
     
@@ -29,17 +30,22 @@ function AttendingPreview(/*{eventid, attendeeid}*/) {
         } 
         getEventInfo(1);
     }, [])*/
+    console.clear();
+    console.log(event);
 
-//api/events
+    if(event.ev_AttendingModel === undefined) {
+        //Kod för att kolla om det finns attendees. Ska användas för att
+        //Visa rätt info i event-card-attendees-image nedan.
+    }
 
     return (
         <div className="event-card-attendees">
                 <img src={eventImage} className="event-card-host-image"></img>
                 <div className="event-card-attendees-image">
-                    <img src={eventImage} className="event-card-attendees-images-1"></img>
+                    <img src={API_ADRESS/"api/profile/image/" + event.ev_AttendingModel[0].pr_Id} className="event-card-attendees-images-1"></img>
                     <img src={eventImage} className="event-card-attendees-images-2"></img>
                     <img src={eventImage} className="event-card-attendees-images-3"></img>
-                    <span className="gray-body-text">+5 more</span>
+                    {nrOfAttendees > 0 ? <span className="gray-body-text">+{nrOfAttendees} more</span> : <span style={{opacity: 0}}>{nrOfAttendees} more</span> }
                 </div>
         </div>
     );
