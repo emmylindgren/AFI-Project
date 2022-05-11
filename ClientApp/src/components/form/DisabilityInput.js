@@ -1,38 +1,69 @@
-import axios from 'axios';
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
+import axios from 'axios';
 import { API_ADRESS } from '../../config';
-import '../../custom.css';
 import Disability from './Disability';
 
-const style = {
-
+const disabilityStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: '10px',
+    backgroundColor: 'var(--white)',
+    borderRadius: '10px',
+    padding: '10px',
+    margin: '0 0 20px 0',
 }
 
-function DisabilityInput({name, icon}) {
+const DisabilityInput = forwardRef((props, _ref) => {
 
     const [disabilities, setDisabilities] = useState([]);
 
-    const getDisabilities = async (diabilities) => {
-        disabilities.map((disability) =>{
-            return(
-                <div>
-                    <Disability name={disability.Di_Name} icon={disability.Di_Icon}/>
-                </div>
-                )
+    const pills = useRef([]);
+
+    useEffect(() => {
+        axios.get(API_ADRESS + '/api/disability')
+        .then(res => {
+            setDisabilities(res.data);
+        })
+    }, []);
+
+    // useImperativeHabdle makes "getPillStates" visible from child reference in parent component. 
+    // from: ref.current.getPillStates()
+    useImperativeHandle(_ref, () => ({
+        // Toss child state into parent component
+        getPillStates: () => {
+
+            let selections = [];
+            pills.current.forEach(pill => {
+                selections.push(pill.getSelected())
+            })
+            let disabilities = [];
+            console.log(selections);
+            for(let i = 0; i < selections.length; i++){
+                if(selections[i] === true){
+                    console.log(i)
+                    disabilities.push({Dis_Id: i+1})
+                }
+            }
+            return disabilities;
+        }
+    }));
+
+    const renderPills = (d) => {
+        return d.map(disability => {
+            return (<div key={disability.di_Id}><Disability name={disability.di_Name} ref={el => pills.current[disability.di_Id] = el}/></div>)
         })
     }
 
-    useEffect(() => {
-        axios.get(API_ADRESS + '/api/disability').then(res => {
-            setDisabilities(res.data)
-        })
-    },[])
-
     return (
         <div>
+            <label>Disabilities</label>
+            <div style={disabilityStyle}>
+            {renderPills(disabilities)}
+            </div>
         </div>
     )
-}
+})
 
 export default DisabilityInput;

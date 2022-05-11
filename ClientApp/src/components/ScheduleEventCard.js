@@ -6,6 +6,7 @@ import { useState } from 'react'
 /**
  * Format: 
  * <ScheduleEventCard {eventId=5}/>
+ * Use two styles on one object: style={{...textStyle, marginBottom:'0.5rem'}}
  */
 
 const wrapperScheduleEventStyle ={
@@ -34,24 +35,18 @@ const timeWrapper ={
 
 const textStyle ={
     margin: '0px',
+    marginBottom:'0px',
 }
 
-// TODO: 
-// Get information from event regarding time, address, title. 
+// TODO:  
 // first div onlick go to that event information site! 
 function ScheduleEventCard({event}) {
 
     const [eventInfo, setEventInfo] = useState([]);
-    var date2 = new Date(event.ev_DateTime);
+    var date = new Date(event.ev_DateTime);
 
-    
-    console.log(date2);
-    var date3 = date2.getHours();
-    
-    console.log(date3);
-
-    let hours = "12";
-    let minutes = "12";
+    let hours = date.getHours();
+    let minutes = ((date.getMinutes()<10?'0':'') + date.getMinutes());
     let hoursToInt = parseInt(hours);
     let timeVar = "AM";
 
@@ -71,8 +66,8 @@ function ScheduleEventCard({event}) {
             <p style={textStyle}>{timeVar}</p>
         </div>
         <div>
-            <h4 style={textStyle}>Namn på eventet</h4>
-            <p style={textStyle}>Address</p>
+            <h4 style={{marginBottom:'0.5rem',}}>{event.ev_Title}</h4>
+            <p style={textStyle}>{event.ev_Street}</p>
         </div>
         <img height='25rem' src='icons/GoToIcon.svg'/>
     </div>

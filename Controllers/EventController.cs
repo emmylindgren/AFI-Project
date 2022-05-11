@@ -64,6 +64,7 @@ namespace AFI_Project.Controllers
         {
             return await _context.Events
             .Where(e => e.Ev_Owner.Pr_Id == profileID || e.Ev_AttendingModel.Any(a => a.Pr_Id == profileID))
+            .OrderBy(e => e.Ev_DateTime)
             .ToListAsync();
         }
 

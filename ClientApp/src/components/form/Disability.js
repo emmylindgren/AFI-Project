@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useImperativeHandle, forwardRef } from 'react';
 import '../../custom.css';
 
 const style = {
@@ -20,9 +20,18 @@ const selectedStyle = {
     transitionDuration: '200ms'
 }
 
-function Disability({name, icon}) {
+const Disability = forwardRef((props, _ref) =>{
 
     const [selected, setSelected] = useState(false)
+
+    // useImperativeHandle makes "getSelected" visible from child reference in parent component.
+    // from: ref.current.getSelected()
+    useImperativeHandle(_ref, () => ({
+        // Toss child state into parent component
+        getSelected: () => {
+            return selected
+        },
+    }));
 
     return (
         <div
@@ -30,9 +39,9 @@ function Disability({name, icon}) {
             onClick={() =>{setSelected(!selected)}}
         >
             <img src='icons/addIconBlack.svg'/>
-            <p style={{marginBottom: 0, marginLeft: '10px'}}>{name}</p>
+            <p style={{marginBottom: 0, marginLeft: '10px'}}>{props.name}</p>
         </div>
     )
-}
+})
 
 export default Disability;

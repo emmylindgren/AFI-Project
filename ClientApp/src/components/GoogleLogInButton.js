@@ -25,7 +25,6 @@ function GoogleLoginComponent() {
       localStorage.setItem("profileId", profileId);
       //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
       // Be den här get funktionen att också returnera api nyckeln. 
-
       navigate('/explore');
       })
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../custom.css'
 import './InputStyle.css'
@@ -16,17 +16,19 @@ function SignUp() {
 
     const location = useLocation();
 
-    const [firstname, setFirstname] = useState(location.state.firstname);
-    const [lastname, setLastname] = useState(location.state.lastname);
+    const [firstname, setFirstname] = useState(location.state ? location.state.firstname : '');
+    const [lastname, setLastname] = useState(location.state ? location.state.lastname: '');
     const [birthdate, setBirthdate] = useState('');
     const [adress, setAdress] = useState('');
     const [postalcode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
 
-    const [profilePicture, setProfilePicture] = useState(location.state.imgUrl);
+    const [profilePicture, setProfilePicture] = useState(location.state ? location.state.imgUrl : 'plant.png');
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const disabilityRef = useRef(null);
 
     useEffect(() =>{
         const filepicker = document.getElementById('propicker');
@@ -48,8 +50,20 @@ function SignUp() {
             Pr_Adress: adress,
             Pr_PostalCode: postalcode,
             Pr_City: city,
-            GoogleId: location.state.googleId,
+            GoogleId: location.state ? location.state.googleId: null,
+            Pr_Disabilities: disabilityRef.current.getPillStates()
         }));
+
+        console.log(JSON.stringify({
+            Pr_Firstname: firstname,
+            Pr_Lastname: lastname,
+            Pr_BirthDate: birthdate,
+            Pr_Adress: adress,
+            Pr_PostalCode: postalcode,
+            Pr_City: city,
+            GoogleId: location.state ? location.state.googleId: null,
+            Pr_Disabilities: disabilityRef.current.getPillStates()
+        }))
 
         let blob
         // If a file is selected
@@ -92,7 +106,7 @@ function SignUp() {
                 <BackButton text="Back" to='/' onClick={() => {console.log("hej!")}}/>
                 <h1>Create New Profile</h1>
 
-                {getProfilePicture(profilePicture)}
+                {renderProfilePicture(profilePicture)}
                 
                 {getInput('Firstname','Emma...',firstname,setFirstname)}
                 {getInput('Lastname','Hornham...',lastname,setLastname)}
@@ -100,6 +114,8 @@ function SignUp() {
                 {getInput('Adress','Gnejs 1...',adress,setAdress)}
                 {getInput('Postal Code','907 40.',postalcode,setPostalCode)}
                 {getInput('City','Umea...',city,setCity)}
+
+                <DisabilityInput ref={disabilityRef}/>
 
                 <Button text='Sign up' buttonColorChoice='green' onClick={() => submitProfile()}/>
                 
@@ -133,7 +149,7 @@ const propicStyle={
     objectFit: 'cover',
 }
 
-function getProfilePicture(picture){
+function renderProfilePicture(picture){
     return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <img src={picture} id='propic' alt='propic' style={propicStyle}/>
