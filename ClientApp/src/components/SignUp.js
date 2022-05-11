@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../custom.css'
 import './InputStyle.css'
@@ -6,7 +6,7 @@ import BackButton from './BackButton';
 import Button from './Button';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
-import Disability from './form/Disability';
+import DisabilityInput from './form/DisabilityInput';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -28,17 +28,14 @@ function SignUp() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [data, setData] = useState([]);
+    const disabilityRef = useRef(null);
+
+    const [disabilities, setDisabilities] = useState([]);
 
     useEffect(() =>{
         const filepicker = document.getElementById('propicker');
         filepicker.addEventListener('change', (e) => {
             setProfilePicture(URL.createObjectURL(e.target.files[0]));
-        })
-
-        axios.get(API_ADRESS + '/api/disability')
-        .then(res =>{
-            setData(res.data)
         })
     },[])
 
@@ -55,8 +52,20 @@ function SignUp() {
             Pr_Adress: adress,
             Pr_PostalCode: postalcode,
             Pr_City: city,
-            GoogleId: location.state.googleId,
+            GoogleId: location.state ? location.state.googleId: null,
+            Pr_Disabilities: disabilityRef.current.getPillStates()
         }));
+
+        console.log(JSON.stringify({
+            Pr_Firstname: firstname,
+            Pr_Lastname: lastname,
+            Pr_BirthDate: birthdate,
+            Pr_Adress: adress,
+            Pr_PostalCode: postalcode,
+            Pr_City: city,
+            GoogleId: location.state ? location.state.googleId: null,
+            Pr_Disabilities: disabilityRef.current.getPillStates()
+        }))
 
         let blob
         // If a file is selected
@@ -99,7 +108,7 @@ function SignUp() {
                 <BackButton text="Back" to='/' onClick={() => {console.log("hej!")}}/>
                 <h1>Create New Profile</h1>
 
-                {getProfilePicture(profilePicture)}
+                {renderProfilePicture(profilePicture)}
                 
                 {getInput('Firstname','Emma...',firstname,setFirstname)}
                 {getInput('Lastname','Hornham...',lastname,setLastname)}
@@ -108,7 +117,7 @@ function SignUp() {
                 {getInput('Postal Code','907 40.',postalcode,setPostalCode)}
                 {getInput('City','Umea...',city,setCity)}
 
-                {renderDisabilityInput(data)}
+                <DisabilityInput ref={disabilityRef}/>
 
                 <Button text='Sign up' buttonColorChoice='green' onClick={() => submitProfile()}/>
                 
@@ -135,33 +144,6 @@ function getInput(label, placeholder,state,setState){
     )
 }
 
-function renderDisabilities(d) {
-    return d.map(disability => {
-        return (<div key={disability.di_Id}><Disability name={disability.di_Name}/></div>)
-    })
-}
-const disabilityStyle = {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: '10px',
-    backgroundColor: 'var(--white)',
-    borderRadius: '10px',
-    padding: '10px',
-    margin: '0 0 20px 0',
-}
-
-function renderDisabilityInput(data) {
-    return (
-        <div>
-            <label>Disabilities</label>
-            <div style={disabilityStyle}>
-                {renderDisabilities(data)}
-            </div>
-        </div>
-    )
-}
-
 const propicStyle={
     width: '20rem',
     height: '20rem',
@@ -169,7 +151,7 @@ const propicStyle={
     objectFit: 'cover',
 }
 
-function getProfilePicture(picture){
+function renderProfilePicture(picture){
     return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <img src={picture} id='propic' alt='propic' style={propicStyle}/>
