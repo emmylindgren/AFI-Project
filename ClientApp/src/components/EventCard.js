@@ -27,26 +27,14 @@ import AttendingPreview from './AttendingPreview';
 
 function EventCard({event}) {
 
-    //const data = axios.get(API_ADRESS + '/api/event/'+ 1);
-    
-    console.log(event);
-    let date = event.ev_DateTime;
-    console.log(date);
-    let month = date.slice(5,7);
-    let day = date.slice(8,10);
-    let hours = date.slice(11,13);
-    let minutes = date.slice(14,16);
+    let date = new Date(event.ev_DateTime);
+    let month = ((date.getMonth()<10?'0':'') + date.getMonth());
+    let day = date.getDate();
+    let hours = date.getHours();
+    let minutes = ((date.getMinutes()<10?'0':'') + date.getMinutes());
     let hoursToInt = parseInt(hours);
     let timeVar = "AM";
 
-    /*
-    let month = "12";
-    let day = 12;
-    let hours = 12;
-    let minutes = 12;
-    let hoursToInt = parseInt(hours);
-    let timeVar = "AM";
-    */
     if(hoursToInt > 12 && hoursToInt < 24) {
         hours = hoursToInt % 12;
         timeVar = "PM";
@@ -98,7 +86,7 @@ function EventCard({event}) {
                 <div className = "event-information-block">
                     <img src={clockIcon} id="clock-icon"></img>
                     <span className="gray-body-text">&nbsp; {day + " " + functionWithSwitch(month) + ", " + hours + ":" + minutes + " " + timeVar}</span>
-                    <AttendingPreview/>
+                    <AttendingPreview event={event}/>
                 </div>
             </span>
             
