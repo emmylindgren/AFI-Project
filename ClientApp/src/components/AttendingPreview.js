@@ -33,13 +33,13 @@ function AttendingPreview({event}) {
     
     return (
         <div className="event-card-attendees">
-                <img src={API_ADRESS + "/api/profile/image/" + event.ev_Owner.pr_Id} className="event-card-host-image"></img>
-                <div className="event-card-attendees-image">
-                    {event.ev_AttendingModel[0] === undefined || event.ev_Private === true ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[0].pr_Id } className="event-card-attendees-images-1"></img>}
-                    {event.ev_AttendingModel[1] === undefined || event.ev_Private === true ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[1].pr_Id } className="event-card-attendees-images-2"></img>}
-                    {event.ev_AttendingModel[2] === undefined || event.ev_Private === true ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[2].pr_Id } className="event-card-attendees-images-3"></img>}
-                    {displayMoreAttendees()}
-                </div>
+            <img src={API_ADRESS + "/api/profile/image/" + event.ev_Owner.pr_Id} className="event-card-host-image"></img>
+            <div className="event-card-attendees-image">
+                {event.ev_AttendingModel[0] === undefined || event.ev_Private === true ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[0].pr_Id } className="event-card-attendees-images-1"></img>}
+                {event.ev_AttendingModel[1] === undefined || event.ev_Private === true ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[1].pr_Id } className="event-card-attendees-images-2"></img>}
+                {event.ev_AttendingModel[2] === undefined || event.ev_Private === true ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[2].pr_Id } className="event-card-attendees-images-3"></img>}
+                {displayMoreAttendees()}
+            </div>
         </div>
     );
 }
