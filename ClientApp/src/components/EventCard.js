@@ -80,7 +80,7 @@ function EventCard({event}) {
                 <h3>{event.ev_Title}</h3>
                 <div className = "event-information-block">
                     <img src={locationIcon} id="location-icon"></img>
-                    <span className="gray-body-text">&nbsp; {event.ev_Street}</span>
+                    {event.ev_Private ? <span className="gray-body-text">&nbsp; Undisclosed</span> : <span className="gray-body-text">&nbsp; {event.ev_Street}</span>}
                 </div>
 
                 <div className = "event-information-block">
