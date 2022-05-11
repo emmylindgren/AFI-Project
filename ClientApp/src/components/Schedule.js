@@ -4,13 +4,22 @@ import ScheduleEventCard from './ScheduleEventCard'
 import axios from 'axios'
 import { API_ADRESS } from '../config'
 
+
+const eventCardStyle = {
+    marginBottom:'0.8rem',
+}
+
+const dateTextStyle = {
+    display:'flex',
+    flexDirection:'row',
+    gap:'0.5rem',
+    marginTop:'2rem',
+    marginBottom:'0.5rem',
+}
+
 function Schedule() {
 
     const [events, setEvents] = useState([]);
-
-
-    console.log("idag:" + new Date(Date.now()).toDateString());
-
     useEffect(()=>{
         axios.get(API_ADRESS + '/api/event/profileID/'+ 1)
         .then(res =>{
@@ -19,48 +28,51 @@ function Schedule() {
     },[])
 
     let renderEvents = (events) =>{
+        let currentDate = new Date(Date.now());
+        let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'];
+        let todayhasbeen = false;
+
         return events.map(event => {
             console.log(event)
-            var currentDate = new Date(Date.now());
-            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'];
-            var todayhasbeen = false;
-   
-/*
-            if(currentDate.toDateString() == new Date(Date.now()).toDateString()){
-                console.log("idag");
-            }*/
+            let eventDate = new Date(event.ev_DateTime);
 
-            if(currentDate.toDateString() == new Date(event.ev_DateTime).toDateString()){
-                /*Något sådant för att skriva ut idag eller ej idag också? 
-                if(new Date(event.ev_DateTime).toDateString() == new Date(Date.now()).toDateString()){
-                    todayhasbeen = true;
-                }*/
-                console.log("samma dag")
+            if(currentDate.toDateString() == eventDate.toDateString()){
                 
+                if(currentDate.toDateString() == new Date(Date.now()).toDateString()){
+                    //Today
+                    todayhasbeen = true;
+                    return (
+                        <div>
+                            <div style={dateTextStyle}>
+                                <h2 style = {{textAlign:'left', fontSize:'1.3rem',}}>Today</h2>
+                                <h2 style={{fontWeight:'200', fontSize:'1.3rem',}}>{eventDate.getDate() + " " + months[eventDate.getMonth()]}</h2>
+                            </div>
+                            <div key={event.ev_Id} style={eventCardStyle}><ScheduleEventCard event={event}/></div>
+                        </div>
+                    )
+                }
+            
+                //Same day as the last one
                 return (
                     <div>
-                        <div key={event.ev_Id}><ScheduleEventCard event={event}/></div>
+                        <div key={event.ev_Id} style={eventCardStyle}><ScheduleEventCard event={event}/></div>
                     </div>
                 )
             }
             else{
-                console.log("inte samma dag")
-                currentDate = new Date(event.ev_DateTime);
-                var eventDate = new Date(event.ev_DateTime);
+                // Another day than the last one
+                currentDate = eventDate;
                 return (
                     <div>
-                        <h2>{days[(eventDate.getDay())]}</h2>
-                        <h2 style={{fontWeight:'200',}}>{eventDate.getDate() + " " + months[eventDate.getMonth()]}</h2>
-                        <div key={event.ev_Id}><ScheduleEventCard event={event}/></div>
+                        <div style={dateTextStyle}>
+                            <h2 style = {{textAlign:'left', fontSize:'1.3rem',}}>{days[(eventDate.getDay())]}</h2>
+                            <h2 style={{fontWeight:'200', fontSize:'1.3rem',}}>{eventDate.getDate() + " " + months[eventDate.getMonth()]}</h2>
+                        </div>
+                        <div style ={eventCardStyle} key={event.ev_Id}><ScheduleEventCard event={event}/></div>
                     </div>
-                )
-                    
+                )        
             }
-
-
-
-          /*  return (<div key={event.ev_Id}><ScheduleEventCard event={event}/></div>)*/
         })
     }
 

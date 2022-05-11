@@ -28,7 +28,6 @@ function GoogleSignInComponent (){
     .then(res => {
      
             //skriva ut att man inte har en användare.
-            console.log("hej");
             setError("You already have an account, please Log In.");
       
       
@@ -50,8 +49,6 @@ function GoogleSignInComponent (){
   let responseGoogleError = (response) => {
     console.log(response);
   };
-
-
 
     return (
       <div className="row mt-5">
