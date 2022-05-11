@@ -30,8 +30,6 @@ function SignUp() {
 
     const disabilityRef = useRef(null);
 
-    const [disabilities, setDisabilities] = useState([]);
-
     useEffect(() =>{
         const filepicker = document.getElementById('propicker');
         filepicker.addEventListener('change', (e) => {
