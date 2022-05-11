@@ -15,27 +15,25 @@ function GoogleLoginComponent() {
   const navigate = useNavigate();
   // Success Handler
   let responseGoogleSuccess = (response) => {
-    console.log();
-    console.log(response.profileObj);
-    console.log(response);
     let id = response.profileObj.googleId;
     //kollar om användaren som försöker logga in är medlem
     axios.get(API_ADRESS + '/api/profile/googleID/' + id)
     .then(res => {
-      console.log(res);
+      
       // --------------- Borde redirecta till explore, sätt id till global varabel?----------------
       const profileId = res.data;
       localStorage.setItem("profileId", profileId);
       //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
       // Be den här get funktionen att också returnera api nyckeln. 
-      navigate('/sign-up');
+
+      navigate('/explore');
       })
 
       .catch(function (error){
           if(error.response.status === 404){
-            console.log("hej");
             setError("You are not a registered user.");
           }
+          console.log(error);
       });
   };
 

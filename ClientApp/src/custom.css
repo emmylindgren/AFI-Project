@@ -212,3 +212,22 @@ p{
     position: fixed;
   }
 }
+
+/*-------EVENT SHORT DETAILS----------------------------------------------------------------------------*/
+
+.event-details{
+  background-image: url("../src/img/event-image.png");
+  
+}
+
+
+#event-img-details{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+#clock-icon-white, #location-icon-white {
+  width: 1.2rem;  
+ 
+}
