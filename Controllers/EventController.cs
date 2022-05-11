@@ -57,6 +57,25 @@ namespace AFI_Project.Controllers
             return eventModel;
         }
 
+        // GET: api/Event/latest/5
+        [HttpGet("latest/{personID}")]
+        public async Task<ActionResult<EventModel>> GetLatestEvent(int personID)
+        {
+            var eventModel = await _context.Events.Where(e => e.Ev_Owner.Pr_Id == personID || e.Ev_AttendingModel.Any(a => a.Pr_Id == personID))
+            .OrderBy(e => e.Ev_DateTime)
+            .Include(e => e.Ev_Owner)
+            .Include(e => e.Ev_AttendingModel)
+            .FirstOrDefaultAsync();
+
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+
+            return eventModel;
+        }
+
+
 
         // GET: api/Event/profileID/1
         [HttpGet("profileID/{profileID}")]
