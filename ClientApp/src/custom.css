@@ -95,6 +95,9 @@ p{
 .success-text{
   color: var(--deep-green)
 }
+.muted-text{
+  color: var(--gray)
+}
 
 .btn-primary {
   color: #fff;
