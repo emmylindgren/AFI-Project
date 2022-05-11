@@ -8,6 +8,7 @@ const style = {
     flexDirection: 'row',
     paddingBottom: '10px',
     userSelect: 'none',
+    lineHeight: '20px',
     webkitUserSelect: 'none',
     cursor: 'pointer',
 }
