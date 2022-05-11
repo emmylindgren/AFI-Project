@@ -67,9 +67,9 @@ h1{
 }
 
 h2{
-  font-Family: Inter;
-  font-Weight: 700;
-  font-size: 1rem;
+  font-Family: "Inter";
+  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 h3{
@@ -173,7 +173,6 @@ p{
   display: flex;
   width: 60%;
   max-width: 13rem;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -201,6 +200,13 @@ p{
   border-radius: 100%;
   z-index: 3;
   transform: translateX(-50%);
+}
+
+.event-card-more-text{
+  font-family: 'Inter';
+  font-size: 1rem;
+  color: var(--grey-text);
+  justify-content: end;
 }
 
 /* For PWA */

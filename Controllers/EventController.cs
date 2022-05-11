@@ -57,6 +57,21 @@ namespace AFI_Project.Controllers
             return eventModel;
         }
 
+        [HttpGet("image/{id}")]
+		public async Task<IActionResult> GetEventPicture(int id)
+		{
+			var eventModel = await _context.Events.FindAsync(id);
+
+			if (eventModel == null)
+			{
+				return NotFound();
+			}
+
+			// Using '+'-operator on paths is bad practice.
+			var img = System.IO.File.OpenRead(System.IO.Directory.GetCurrentDirectory() + eventModel.Ev_Img);
+
+			return File(img, "image/jpeg");
+		}
 
         // GET: api/Event/profileID/1
         [HttpGet("profileID/{profileID}")]

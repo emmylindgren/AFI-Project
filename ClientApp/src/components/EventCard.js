@@ -76,11 +76,12 @@ function EventCard({event}) {
     return (
 
         <div className="event-card">
-            <span> <img src={eventImage} id="event-image"></img>
+            <span> 
+                <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
                 <h3>{event.ev_Title}</h3>
                 <div className = "event-information-block">
                     <img src={locationIcon} id="location-icon"></img>
-                    <span className="gray-body-text">&nbsp; {event.ev_Street}</span>
+                    {event.ev_Private ? <span className="gray-body-text">&nbsp; Undisclosed</span> : <span className="gray-body-text">&nbsp; {event.ev_Street}</span>}
                 </div>
 
                 <div className = "event-information-block">
