@@ -36,7 +36,6 @@ function Explore(){
         })
     }
 
-    //Test
     return (
         <div className="page-container">
             <div className="page-content">
