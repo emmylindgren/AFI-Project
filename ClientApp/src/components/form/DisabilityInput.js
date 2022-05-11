@@ -21,7 +21,7 @@ const DisabilityInput = forwardRef((props, _ref) => {
 
     const pills = useRef([]);
 
-    useEffect(async () => {
+    useEffect(() => {
         axios.get(API_ADRESS + '/api/disability')
         .then(res => {
             setDisabilities(res.data);
