@@ -6,6 +6,7 @@ import locationIcon from '../img/location-icon.svg';
 import eventImage from '../img/event-image.png';
 import '../custom.css'
 import AttendingPreview from './AttendingPreview';
+import LoadingCard from './LoadingCard';
 
 
 /*const getEventInfo = async (eventid) => {
@@ -25,7 +26,7 @@ import AttendingPreview from './AttendingPreview';
 
 
 
-function EventCard({event}) {
+function EventCard({event,state}) {
 
     let date = new Date(event.ev_DateTime);
     let month = ((date.getMonth()<10?'0':'') + date.getMonth());
@@ -76,7 +77,9 @@ function EventCard({event}) {
     return (
 
         <div className="event-card">
-            <span> 
+            {state === 'loaded' ?
+            (
+            <span>
                 <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
                 <h3>{event.ev_Title}</h3>
                 <div className = "event-information-block">
@@ -90,9 +93,10 @@ function EventCard({event}) {
                     <AttendingPreview event={event}/>
                 </div>
             </span>
-            
+            ) : (
+                <LoadingCard/>
+            )}
         </div>
-
     );
 }
 

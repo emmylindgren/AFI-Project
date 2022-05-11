@@ -8,16 +8,18 @@ import '../custom.css'
 function Explore(){
 
     const [events, setEvents] = useState([]);
+    const [state, setState] = useState('loading');  
     useEffect(()=>{
         axios.get(API_ADRESS + '/api/event')
         .then(res =>{
             setEvents(res.data)
+            setState('loaded')
         })
     },[])
 
     let renderEvents = (events) =>{
         return events.map(event => {
-            return (<div key={event.ev_Id}><EventCard event={event}/></div>)
+            return (<div key={event.ev_Id}><EventCard event={event} state={state}/></div>)
         })
     }
 
@@ -35,6 +37,7 @@ function Explore(){
                 <h1>Hello, {userInfo.pr_Firstname}!</h1>
                 <h2>Your next event</h2>
                 <br></br>
+                
                 {renderEvents(events)}
             </div>
         </div>

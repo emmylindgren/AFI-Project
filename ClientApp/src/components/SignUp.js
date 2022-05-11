@@ -8,7 +8,7 @@ import axios from 'axios';
 import { API_ADRESS } from '../config';
 import DisabilityInput from './form/DisabilityInput';
 import TextInput from './form/TextInput';
-import FileInput from './form/FileInput';
+import DateInput from './form/DateInput';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -101,11 +101,10 @@ function SignUp() {
 
                 <TextInput value={firstname} onChange={setFirstname} label="Firstname" placeholder="Emma..."/>
                 <TextInput value={lastname} onChange={setLastname} label="Lastname" placeholder="Emma..."/>
+                <DateInput value={birthdate} onChange={setBirthdate} label='Birthday' placeholder='2022-02-02'/>
                 <TextInput value={adress} onChange={setAdress} label="Adress" placeholder="Gnejsvägen 1..."/>
                 <TextInput value={postalcode} onChange={setPostalCode} label="Postal Code" placeholder="12345..."/>
                 <TextInput value={city} onChange={setCity} label="City" placeholder="Stockholm..."/>
-
-                <FileInput/>
 
                 <DisabilityInput ref={disabilityRef}/>
 
