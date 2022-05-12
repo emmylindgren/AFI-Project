@@ -30,7 +30,8 @@ namespace AFI_Project.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ProfileModel>>> GetProfiles()
 		{
-			if(!(await _authHandler.Authenticate(HttpContext))) return Unauthorized();
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			return await _context.Profiles.ToListAsync();
 		}
 
@@ -38,7 +39,8 @@ namespace AFI_Project.Controllers
 		[HttpGet("attendeesEventId/{attendeesEventId}")]
 		public async Task<ActionResult<IEnumerable<int>>> GetProfiles(int attendeesEventId)
 		{
-			if(!(await _authHandler.Authenticate(HttpContext))) return Unauthorized();
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			var list = await _context.Attendees.Where(a => a.Ev_Id == attendeesEventId).Select(a => a.Pr_Id).ToListAsync();
 			return list;
 		}
@@ -46,7 +48,7 @@ namespace AFI_Project.Controllers
 		[HttpGet("image/{id}")]
 		public async Task<IActionResult> GetProfilePicture(int id)
 		{
-			if(!(await _authHandler.Authenticate(HttpContext))) return Unauthorized();
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
 
 			var profileModel = await _context.Profiles.FindAsync(id);
 
@@ -65,8 +67,7 @@ namespace AFI_Project.Controllers
 		[HttpGet("{id}")]
 		public async Task<ActionResult<ProfileModel>> GetProfileModel(int id)
 		{
-
-			if(!(await _authHandler.Authenticate(HttpContext))) return Unauthorized();
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
 
 			var profileModel = await _context.Profiles.FindAsync(id);
 
@@ -97,7 +98,7 @@ namespace AFI_Project.Controllers
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutProfileModel(int id, ProfileModel profileModel)
 		{
-			if(!(await _authHandler.Authenticate(HttpContext))) return Unauthorized();
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
 
 			if (id != profileModel.Pr_Id)
 			{
@@ -130,7 +131,7 @@ namespace AFI_Project.Controllers
 		[HttpPost]
 		public async Task<ActionResult<ProfileModel>> PostProfileModel([FromForm] IFormFile uploadFile, [FromForm] string userdata)
 		{
-			ProfileModel pm= JsonConvert.DeserializeObject<ProfileModel>(userdata);
+			ProfileModel pm = JsonConvert.DeserializeObject<ProfileModel>(userdata);
 			await RecieveFile(uploadFile, pm);
 
 			pm.Pr_GoogleIdSalt = _authHandler.GetRandomSalt();
@@ -146,8 +147,8 @@ namespace AFI_Project.Controllers
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteProfileModel(int id)
 		{
-			if(!(await _authHandler.Authenticate(HttpContext))) return Unauthorized();
-			
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			var profileModel = await _context.Profiles.FindAsync(id);
 			if (profileModel == null)
 			{
