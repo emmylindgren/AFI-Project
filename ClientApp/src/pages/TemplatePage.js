@@ -1,7 +1,7 @@
 import '../custom.css'
-import BackButton from './BackButton';
-import Button from './Button';
-import EventTemplate from './EventTemplate';
+import BackButton from '../components/BackButton';
+import Button from '../components/Button';
+import Preset from '../components/Preset';
 
 const EventTemplates = {
     display: 'flex',
@@ -20,20 +20,20 @@ function TemplatePage() {
 
             <div style={EventTemplates}>
             <h3>Presets</h3>
-            <EventTemplate title='Promenade'
-                description='A stroll in the park.'
+            <Preset title='Promenade'
+                infotext='A stroll in the park.'
                 suitableFor={["Test", "Test3"]}
-                icon='icons/PromenadeIcon.svg'
+                iconSrc='icons/PromenadeIcon.svg'
             />
-            <EventTemplate title='Knitting party'
-                description='Hang on to your knitting skills!'
+            <Preset title='Knitting party'
+                infotext='Hang on to your knitting skills!'
                 suitableFor={["Test", "Test3"]}
-                icon='icons/KnittingIcon.svg'
+                iconSrc='icons/KnittingIcon.svg'
             />
-            <EventTemplate title='Card Game'
-                description='Play a card game with your friends!'
+            <Preset title='Card Game'
+                infotext='Play a card game with your friends!'
                 suitableFor={["Test", "Test3"]}
-                icon='icons/CardGameIcon.svg'
+                iconSrc='icons/CardGameIcon.svg'
             />
             </div>
         </div>

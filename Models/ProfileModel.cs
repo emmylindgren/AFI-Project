@@ -16,6 +16,9 @@ namespace AFI_Project.Models
         public string Pr_City { get; set; } = String.Empty;
         public string Pr_Img { get; set; } = String.Empty;
         public string GoogleId { get; set; } = String.Empty;
+        public string Pr_GoogleIdSalt { get; set; } = String.Empty;
+        // Is Hash(GoogleId, Pr_GoogleIdSalt)
+        public string ApiKey { get; set; } = String.Empty;
 
         public virtual ICollection<RequestedInviteModel>? Pr_RequestedInviteModel { get; set; }
         public virtual ICollection<DeclinedInviteModel>? Pr_DeclinedInviteModel { get; set; }

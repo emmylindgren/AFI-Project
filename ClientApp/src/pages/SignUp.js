@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../custom.css'
-import './InputStyle.css'
-import BackButton from './BackButton';
-import Button from './Button';
+import '../components/InputStyle.css'
+import BackButton from '../components/BackButton';
+import Button from '../components/Button';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
-import DisabilityInput from './form/DisabilityInput';
-import TextInput from './form/TextInput';
-import DateInput from './form/DateInput';
+import DisabilityInput from '../components/form/DisabilityInput';
+import TextInput from '../components/form/TextInput';
+import DateInput from '../components/form/DateInput';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
