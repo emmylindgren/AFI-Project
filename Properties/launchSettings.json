@@ -11,7 +11,7 @@
     "AFI_Project": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://*:7259",
+      "applicationUrl": "https://*:443",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"

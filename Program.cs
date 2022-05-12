@@ -29,6 +29,9 @@ builder.Services.AddDbContext<Database>(options =>
 	options.UseMySql(connectionString: @Config.ConnectionString,
 			new MySqlServerVersion(new Version(8, 0, 27))));
 
+// Uncomment line below to use HTTPS.
+//builder.Services.AddLettuceEncrypt();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,7 +46,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseCors(MyAllowSpecificOrigins);
-
 
 app.MapControllerRoute(
 	name: "default",
