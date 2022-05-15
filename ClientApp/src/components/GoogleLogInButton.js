@@ -19,16 +19,20 @@ function GoogleLoginComponent() {
     //kollar om användaren som försöker logga in är medlem
     axios.get(API_ADRESS + '/api/profile/googleID/' + id)
     .then(res => {
-      
-      // --------------- Borde redirecta till explore, sätt id till global varabel?----------------
-      const profileId = res.data;
-      localStorage.setItem("profileId", profileId);
-      //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
-      // Be den här get funktionen att också returnera api nyckeln. 
+      console.log(res)
+      // Set the API-key header in axios.
+      axios.defaults.headers.common['ApiKey'] = res.data;
+      localStorage.setItem("ApiKey", res.data)
+
+      // Save profileId in localStorage.
+      const profileId = res.data.split('_')[0];
+      localStorage.setItem("profileId", profileId); 
+
       navigate('/explore');
       })
 
       .catch(function (error){
+        console.log(error)
           if(error.response.status === 404){
             setError("You are not a registered user.");
           }

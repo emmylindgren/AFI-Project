@@ -10,12 +10,22 @@
 }
 input
 ::file-selector-button {
-    display: none;
     width: 110px;
-} 
+    background-color: 'none';
+    background: none;
+    border: 'none';
+    padding: 0;
+}
 ::-webkit-file-upload-button {
-    display: none;
     width: 110px;
+    display: none;
+}
+input::-webkit-calendar-picker-indicator {
+    width: 50%;
+    opacity: 0;
+}
+::-webkit-datetime-edit-fields-wrapper{
+    justify-self: 'flex-start';
 }
 label{
     color: var(--black);

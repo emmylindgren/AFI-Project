@@ -67,9 +67,9 @@ h1{
 }
 
 h2{
-  font-Family: Inter;
-  font-Weight: 700;
-  font-size: 1rem;
+  font-Family: "Inter";
+  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 h3{
@@ -90,6 +90,9 @@ h4{
 }
 .success-text{
   color: var(--deep-green)
+}
+.muted-text{
+  color: var(--gray)
 }
 
 .btn-primary {
@@ -222,4 +225,15 @@ h4{
   body{
     background-image: linear-gradient(to bottom, #f1f9f6, #fbfdfd);
   }
+}
+
+/* Animations */
+
+.loading{
+  animation: spin 1s infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

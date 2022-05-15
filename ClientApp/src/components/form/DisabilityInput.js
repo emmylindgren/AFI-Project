@@ -3,6 +3,7 @@ import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 're
 import axios from 'axios';
 import { API_ADRESS } from '../../config';
 import Disability from './Disability';
+import LoadingCard from '../LoadingCard';
 
 const disabilityStyle = {
     display: 'flex',
@@ -18,6 +19,7 @@ const disabilityStyle = {
 const DisabilityInput = forwardRef((props, _ref) => {
 
     const [disabilities, setDisabilities] = useState([]);
+    const [state, setState] = useState('loading');
 
     const pills = useRef([]);
 
@@ -25,6 +27,9 @@ const DisabilityInput = forwardRef((props, _ref) => {
         axios.get(API_ADRESS + '/api/disability')
         .then(res => {
             setDisabilities(res.data);
+            setTimeout(() => {
+                setState('loaded')
+            },1500);
         })
     }, []);
 
@@ -60,7 +65,12 @@ const DisabilityInput = forwardRef((props, _ref) => {
         <div>
             <label>Disabilities</label>
             <div style={disabilityStyle}>
-            {renderPills(disabilities)}
+            {state === 'loaded' ?
+            (
+                renderPills(disabilities)
+            ) : (
+                <LoadingCard/>
+            )}
             </div>
         </div>
     )

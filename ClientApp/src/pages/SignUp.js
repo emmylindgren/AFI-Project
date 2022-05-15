@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../custom.css'
-import './InputStyle.css'
-import BackButton from './BackButton';
-import Button from './Button';
+import '../components/InputStyle.css'
+import BackButton from '../components/BackButton';
+import Button from '../components/Button';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
-import DisabilityInput from './form/DisabilityInput';
+import DisabilityInput from '../components/form/DisabilityInput';
+import TextInput from '../components/form/TextInput';
+import DateInput from '../components/form/DateInput';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -54,17 +56,6 @@ function SignUp() {
             Pr_Disabilities: disabilityRef.current.getPillStates()
         }));
 
-        console.log(JSON.stringify({
-            Pr_Firstname: firstname,
-            Pr_Lastname: lastname,
-            Pr_BirthDate: birthdate,
-            Pr_Adress: adress,
-            Pr_PostalCode: postalcode,
-            Pr_City: city,
-            GoogleId: location.state ? location.state.googleId: null,
-            Pr_Disabilities: disabilityRef.current.getPillStates()
-        }))
-
         let blob
         // If a file is selected
         if(propicker.files[0]) {
@@ -107,13 +98,13 @@ function SignUp() {
                 <h1>Create New Profile</h1>
 
                 {renderProfilePicture(profilePicture)}
-                
-                {getInput('Firstname','Emma...',firstname,setFirstname)}
-                {getInput('Lastname','Hornham...',lastname,setLastname)}
-                {getInput('Date of Birth','2022-04-05',birthdate,setBirthdate)}
-                {getInput('Adress','Gnejs 1...',adress,setAdress)}
-                {getInput('Postal Code','907 40.',postalcode,setPostalCode)}
-                {getInput('City','Umea...',city,setCity)}
+
+                <TextInput value={firstname} onChange={setFirstname} label="Firstname" placeholder="Emma..."/>
+                <TextInput value={lastname} onChange={setLastname} label="Lastname" placeholder="Emma..."/>
+                <DateInput value={birthdate} onChange={setBirthdate} label='Birthday' placeholder='2022-02-02'/>
+                <TextInput value={adress} onChange={setAdress} label="Adress" placeholder="Gnejsvägen 1..."/>
+                <TextInput value={postalcode} onChange={setPostalCode} label="Postal Code" placeholder="12345..."/>
+                <TextInput value={city} onChange={setCity} label="City" placeholder="Stockholm..."/>
 
                 <DisabilityInput ref={disabilityRef}/>
 
@@ -124,20 +115,6 @@ function SignUp() {
                 <p className='success-text'>{success}</p>
 
             </div>
-        </div>
-    )
-}
-
-function getInput(label, placeholder,state,setState){
-    return(
-        <div>
-            <label>{label}</label>
-                <input
-                    className='textInput'
-                    placeholder={placeholder}
-                    value={state}
-                    onChange={(e) =>{setState(e.target.value)}}
-                />
         </div>
     )
 }
