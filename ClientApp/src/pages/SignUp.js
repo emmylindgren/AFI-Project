@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../custom.css'
-import './InputStyle.css'
-import BackButton from './BackButton';
-import Button from './Button';
+import '../components/InputStyle.css'
+import BackButton from '../components/BackButton';
+import Button from '../components/Button';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
-import DisabilityInput from './form/DisabilityInput';
-import TextInput from './form/TextInput';
-import FileInput from './form/FileInput';
+import DisabilityInput from '../components/form/DisabilityInput';
+import TextInput from '../components/form/TextInput';
+import DateInput from '../components/form/DateInput';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -101,11 +101,10 @@ function SignUp() {
 
                 <TextInput value={firstname} onChange={setFirstname} label="Firstname" placeholder="Emma..."/>
                 <TextInput value={lastname} onChange={setLastname} label="Lastname" placeholder="Emma..."/>
+                <DateInput value={birthdate} onChange={setBirthdate} label='Birthday' placeholder='2022-02-02'/>
                 <TextInput value={adress} onChange={setAdress} label="Adress" placeholder="Gnejsvägen 1..."/>
                 <TextInput value={postalcode} onChange={setPostalCode} label="Postal Code" placeholder="12345..."/>
                 <TextInput value={city} onChange={setCity} label="City" placeholder="Stockholm..."/>
-
-                <FileInput/>
 
                 <DisabilityInput ref={disabilityRef}/>
 

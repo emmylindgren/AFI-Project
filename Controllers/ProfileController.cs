@@ -18,16 +18,20 @@ namespace AFI_Project.Controllers
 	public class ProfileController : ControllerBase
 	{
 		private readonly Database _context;
+		private readonly AuthHandler _authHandler;
 
 		public ProfileController(Database context)
 		{
 			_context = context;
+			_authHandler = new AuthHandler(context);
 		}
 
 		// GET: api/Profile
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ProfileModel>>> GetProfiles()
 		{
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			return await _context.Profiles.ToListAsync();
 		}
 
@@ -35,6 +39,8 @@ namespace AFI_Project.Controllers
 		[HttpGet("attendeesEventId/{attendeesEventId}")]
 		public async Task<ActionResult<IEnumerable<int>>> GetProfiles(int attendeesEventId)
 		{
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			var list = await _context.Attendees.Where(a => a.Ev_Id == attendeesEventId).Select(a => a.Pr_Id).ToListAsync();
 			return list;
 		}
@@ -42,6 +48,8 @@ namespace AFI_Project.Controllers
 		[HttpGet("image/{id}")]
 		public async Task<IActionResult> GetProfilePicture(int id)
 		{
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			var profileModel = await _context.Profiles.FindAsync(id);
 
 			if (profileModel == null)
@@ -59,6 +67,8 @@ namespace AFI_Project.Controllers
 		[HttpGet("{id}")]
 		public async Task<ActionResult<ProfileModel>> GetProfileModel(int id)
 		{
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			var profileModel = await _context.Profiles.FindAsync(id);
 
 			if (profileModel == null)
@@ -69,11 +79,10 @@ namespace AFI_Project.Controllers
 			return profileModel;
 		}
 
-		// GET: api/Profile/googleID=string
+		// GET: api/Profile/googleID/string
 		[HttpGet("googleID/{googleID}")]
-		public async Task<ActionResult<int>> GetWithGId(string googleID)
+		public async Task<ActionResult<string>> GetWithGId(string googleID)
 		{
-
 			var list = await _context.Profiles.Where(p => p.GoogleId == googleID).ToListAsync();
 
 			if (list.Count == 0)
@@ -81,7 +90,7 @@ namespace AFI_Project.Controllers
 				return NotFound();
 			}
 
-			return list[0].Pr_Id;
+			return list[0].Pr_Id + "_" + list[0].ApiKey;
 		}
 
 		// PUT: api/Profile/5
@@ -89,6 +98,8 @@ namespace AFI_Project.Controllers
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutProfileModel(int id, ProfileModel profileModel)
 		{
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			if (id != profileModel.Pr_Id)
 			{
 				return BadRequest();
@@ -120,19 +131,24 @@ namespace AFI_Project.Controllers
 		[HttpPost]
 		public async Task<ActionResult<ProfileModel>> PostProfileModel([FromForm] IFormFile uploadFile, [FromForm] string userdata)
 		{
-			ProfileModel profileModel = JsonConvert.DeserializeObject<ProfileModel>(userdata);
-			await RecieveFile(uploadFile, profileModel);
+			ProfileModel pm = JsonConvert.DeserializeObject<ProfileModel>(userdata);
+			await RecieveFile(uploadFile, pm);
 
-			_context.Profiles.Add(profileModel);
+			pm.Pr_GoogleIdSalt = _authHandler.GetRandomSalt();
+			pm.ApiKey = _authHandler.Hash(pm.GoogleId, pm.Pr_GoogleIdSalt);
+
+			_context.Profiles.Add(pm);
 			await _context.SaveChangesAsync();
 
-			return CreatedAtAction("GetProfileModel", new { id = profileModel.Pr_Id }, profileModel);
+			return CreatedAtAction("GetProfileModel", new { id = pm.Pr_Id }, pm);
 		}
 
 		// DELETE: api/Profile/5
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteProfileModel(int id)
 		{
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
 			var profileModel = await _context.Profiles.FindAsync(id);
 			if (profileModel == null)
 			{
@@ -173,7 +189,7 @@ namespace AFI_Project.Controllers
 				{
 					// Try to read the first line of file count.txt.
 					index = int.Parse(System.IO.File.ReadLines(
-					"Profilepictures/count.txt")
+					"Pictures/count.txt")
 					.First());
 				}
 				// If the file does not exist, start index from 0.
@@ -187,14 +203,14 @@ namespace AFI_Project.Controllers
 				// Write index to count.txt. If count.txt does not
 				// exist, WriteAllText creates a file and writes to it.
 				System.IO.File.WriteAllText(
-					"Profilepictures/count.txt",
+					"Pictures/count.txt",
 					index.ToString());
 
 				// Set the name of the incoming file to index.
 				string fileName = index.ToString() + fileExtension;
-				string filePath = Path.Combine("Profilepictures/", fileName);
+				string filePath = Path.Combine("Pictures/", fileName);
 
-				pm.Pr_Img = "/Profilepictures/" + fileName;
+				pm.Pr_Img = "/Pictures/" + fileName;
 
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
