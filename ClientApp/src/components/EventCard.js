@@ -28,7 +28,7 @@ import LoadingCard from './LoadingCard';
 
 function EventCard({event,state}) {
 
-    const [state, setState] = useState({month: 'loading', day: 'loading', hours: 'loading', minutes: 'loading', hoursToInt: 'loading', timeVar: 'loading'});
+    const [date, setDate] = useState({month: 'loading', day: 'loading', hours: 'loading', minutes: 'loading', hoursToInt: 'loading', timeVar: 'loading'});
 
     useEffect( () =>{
         let date = new Date(event.ev_DateTime);
@@ -47,7 +47,7 @@ function EventCard({event,state}) {
             hours = 12;
             timeVar = "PM";
         }
-        setState({month: month, day: day, hours: hours, minutes: minutes, hoursToInt: hoursToInt, timeVar: timeVar})
+        setDate({month: month, day: day, hours: hours, minutes: minutes, hoursToInt: hoursToInt, timeVar: timeVar})
     }, [])
 
     const functionWithSwitch = (month) => {
@@ -114,7 +114,7 @@ function EventCard({event,state}) {
 
                     <div className = "event-information-block">
                         <img src={clockIcon} id="clock-icon"></img>
-                        <span className="gray-body-text">&nbsp; {state.day + " " + functionWithSwitch(state.month) + ", " + state.hours + ":" + state.minutes + " " + state.timeVar}</span>
+                        <span className="gray-body-text">&nbsp; {date.day + " " + functionWithSwitch(date.month) + ", " + date.hours + ":" + date.minutes + " " + date.timeVar}</span>
                         <AttendingPreview event={event}/>
                     </div>
                 </span>

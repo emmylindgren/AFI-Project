@@ -27,6 +27,9 @@ function Explore(){
     const [event, setEvent] = useState([]);
 
     useEffect(()=>{
+        axios.defaults.headers.common = {
+            "ApiKey": localStorage.getItem("ApiKey"),
+          };
         axios.get(API_ADRESS + '/api/profile/' + localStorage.getItem("profileId"))
         .then(res =>{
             setUserInfo(res.data)
