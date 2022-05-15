@@ -85,10 +85,6 @@ h4{
 
 }
 
-p{
-  font-Family: Inter;
-  font-size: 14px;
-}
 .err-text{
   color: var(--red-button)
 }
