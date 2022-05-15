@@ -22,12 +22,25 @@ function Explore(){
     }
 
     const [userInfo, setUserInfo] = useState([]);
+    const [event, setEvent] = useState([]);
+
     useEffect(()=>{
         axios.get(API_ADRESS + '/api/profile/' + localStorage.getItem("profileId"))
         .then(res =>{
             setUserInfo(res.data)
         })
+
+        axios.get(API_ADRESS + '/api/event/latest/' + 1)
+        .then(res =>{
+            console.log(res.data)
+            setEvent(res.data)
+        })
     },[])
+
+
+    let renderNextEvent = (event) =>{
+        return (<div key={event.ev_Id}><EventCard event={event}/></div>)
+    }
 
     return (
         <div className="page-container">
@@ -35,6 +48,7 @@ function Explore(){
                 <h1>Hello, {userInfo.pr_Firstname}!</h1>
                 <h2>Your next event</h2>
                 <br></br>
+                
                 {renderEvents(events)}
             </div>
         </div>
