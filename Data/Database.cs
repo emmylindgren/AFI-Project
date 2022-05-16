@@ -100,6 +100,31 @@ namespace AFI_Project.Data {
             .WithMany(c => c.Di_Events)
             .HasForeignKey(p => p.Dis_Id);
 
+            
+        // Create many-to-many relationship between tables Post and Profiles (likes).
+        modelBuilder.Entity<PostLikeModel>()
+            .HasKey(p => new { p.Po_Id, p.Pr_Id });
+        modelBuilder.Entity<PostLikeModel>()
+            .HasOne(p => p.PoLi_Post)
+            .WithMany(p => p.Po_Likes)
+            .HasForeignKey(p => p.Po_Id);
+        modelBuilder.Entity<PostLikeModel>()
+            .HasOne(p => p.PoLi_Profile)
+            .WithMany(c => c.Pr_PostLikes)
+            .HasForeignKey(p => p.Pr_Id);
+
+        // Create many-to-many relationship between tables Comments and Profiles (likes).
+        modelBuilder.Entity<CommentLikeModel>()
+            .HasKey(p => new { p.Co_Id, p.Pr_Id });
+        modelBuilder.Entity<CommentLikeModel>()
+            .HasOne(p => p.CoLi_Comment)
+            .WithMany(p => p.Co_Likes)
+            .HasForeignKey(p => p.Co_Id);
+        modelBuilder.Entity<CommentLikeModel>()
+            .HasOne(p => p.CoLi_Profile)
+            .WithMany(c => c.Pr_CommentLikes)
+            .HasForeignKey(p => p.Pr_Id);
+
 }
 
         public DbSet<ProfileModel> Profiles { get; set; }
@@ -114,6 +139,11 @@ namespace AFI_Project.Data {
         public DbSet<EventCategoryModel> EventCategories { get; set; }
         public DbSet<EventDisabilityModel> EventDisabilities { get; set; }
         public DbSet<ProfileDisabilityModel> ProfileDisabilities { get; set; }
+
+        public DbSet<CommentModel> Comments { get; set; }
+        public DbSet<PostLikeModel> PostLikes { get; set; }
+        public DbSet<CommentLikeModel> CommentLikes { get; set; }
+        public DbSet<PostModel> Posts { get; set; }
     }
 }
 
