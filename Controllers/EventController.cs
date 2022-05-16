@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AFI_Project.Data;
 using AFI_Project.Models;
+using Newtonsoft.Json;
 
 namespace AFI_Project.Controllers
 {
@@ -142,13 +143,17 @@ namespace AFI_Project.Controllers
         // POST: api/Event
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<EventModel>> PostEventModel(EventModel eventModel)
-        {
-            _context.Events.Add(eventModel);
+		public async Task<ActionResult<EventModel>> PostEventModel([FromForm] IFormFile uploadFile, [FromForm] string eventdata, [FromForm] string id)
+		{
+            EventModel em = JsonConvert.DeserializeObject<EventModel>(eventdata);
+            em.Ev_Owner = await _context.Profiles.FindAsync(int.Parse(id));
+			await RecieveFile(uploadFile, em);
+
+			 _context.Events.Add(em);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEventModel", new { id = eventModel.Ev_Id }, eventModel);
-        }
+            return CreatedAtAction("GetEventModel", new { id = em.Ev_Id }, em);
+		}
 
         // DELETE: api/Event/5
         [HttpDelete("{id}")]
@@ -170,5 +175,58 @@ namespace AFI_Project.Controllers
         {
             return _context.Events.Any(e => e.Ev_Id == id);
         }
+
+        		/// <summary>
+		/// Saves the provided IFormFile into the directory
+		/// wwwroot/uploadedfiles and sets this file as
+		/// the profile picture of the provided ProfileModel.
+		/// </summary>
+		/// <param name="uploadFile"></param>
+		private async Task RecieveFile(IFormFile uploadFile, EventModel em)
+		{
+			if (uploadFile != null && uploadFile.Length > 0)
+			{
+				// Get the type of file (png, jpeg, webp, etc...)
+				string fileExtension = System.IO.Path.GetExtension(
+					uploadFile.FileName);
+
+				// The purpose of count.txt is to keep track of how many
+				// images have been uploaded and to make sure no duplicate
+				// file names exist. New files are namned to the next index.
+
+				int index;
+				try
+				{
+					// Try to read the first line of file count.txt.
+					index = int.Parse(System.IO.File.ReadLines(
+					"Pictures/count.txt")
+					.First());
+				}
+				// If the file does not exist, start index from 0.
+				catch (FileNotFoundException)
+				{
+					index = 0;
+				}
+
+				index++;
+
+				// Write index to count.txt. If count.txt does not
+				// exist, WriteAllText creates a file and writes to it.
+				System.IO.File.WriteAllText(
+					"Pictures/count.txt",
+					index.ToString());
+
+				// Set the name of the incoming file to index.
+				string fileName = index.ToString() + fileExtension;
+				string filePath = Path.Combine("Pictures/", fileName);
+
+				em.Ev_Img = "/Pictures/" + fileName;
+
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					await uploadFile.CopyToAsync(fileStream);
+				}
+			}
+		}
     }
 }
