@@ -8,6 +8,7 @@ import EventCard from './components/EventCard'
 import Explore from './components/Explore'
 import EventSD from './components/EventShortDetails'
 import TemplatePage from './pages/TemplatePage';
+import CreateEvent from './pages/CreateEvent';
 
 
 import './custom.css'
@@ -24,6 +25,7 @@ export default function App(){
         <Route path='/explore' element={<Explore/>} />
         <Route path='/create-event' element={<TemplatePage/>} />
         <Route path='/event-short-details' element={<EventSD/>} />
+        <Route path='/new-event' element={<CreateEvent/>} />
       </Routes>
     </Layout>
   );
