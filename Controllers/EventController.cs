@@ -26,19 +26,23 @@ namespace AFI_Project.Controllers
         [HttpGet("{disabilities?}")]
         public async Task<ActionResult<IEnumerable<EventModel>>> GetEvents([FromQuery] string disabilities)
         {
-            if(disabilities is not null){
+            if (disabilities is not null)
+            {
                 // Make disabilities into a list of int
                 var disabilitiesList = disabilities.Split(',').Select(int.Parse).ToList();
                 return await _context.Events
                 .Where(e => e.Ev_Disabilities.Any(d => disabilitiesList.Contains(d.Dis_Id)))
                 .Include(e => e.Ev_Owner)
                 .Include(e => e.Ev_AttendingModel)
+                .Include(e => e.Ev_Disabilities)
                 .ToListAsync();
             }
-            else{
+            else
+            {
                 return await _context.Events
                 .Include(e => e.Ev_AttendingModel)
                 .Include(e => e.Ev_Owner)
+                .Include(e => e.Ev_Disabilities)
                 .ToListAsync();
             }
         }
@@ -77,20 +81,20 @@ namespace AFI_Project.Controllers
 
 
         [HttpGet("image/{id}")]
-		public async Task<IActionResult> GetEventPicture(int id)
-		{
-			var eventModel = await _context.Events.FindAsync(id);
+        public async Task<IActionResult> GetEventPicture(int id)
+        {
+            var eventModel = await _context.Events.FindAsync(id);
 
-			if (eventModel == null)
-			{
-				return NotFound();
-			}
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
 
-			// Using '+'-operator on paths is bad practice.
-			var img = System.IO.File.OpenRead(System.IO.Directory.GetCurrentDirectory() + eventModel.Ev_Img);
+            // Using '+'-operator on paths is bad practice.
+            var img = System.IO.File.OpenRead(System.IO.Directory.GetCurrentDirectory() + eventModel.Ev_Img);
 
-			return File(img, "image/jpeg");
-		}
+            return File(img, "image/jpeg");
+        }
 
         // GET: api/Event/profileID/1
         [HttpGet("profileID/{profileID}")]

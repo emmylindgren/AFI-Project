@@ -158,6 +158,10 @@ p{
   width: 1.2rem;  
 }
 
+#warning-icon {
+  margin-left: 10px;
+}
+
 #event-image {
   display: flex;
   float: right;

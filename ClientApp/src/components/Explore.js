@@ -77,7 +77,7 @@ function Explore(){
                 <br></br>
                 {renderNextEvent(event)}
                 <Button text="Create event" onClick={() => {navigate('/create-event')}} buttonColorChoice="green" iconChoice="add"/>
-                <br></br>
+                <br></br><br></br>
                 <h1>Explore events</h1>
                 <Search
                     searchQuery={searchQuery}
