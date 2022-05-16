@@ -4,6 +4,7 @@ import { Navigate, Redirect, useNavigate } from "react-router-dom";
 import { API_ADRESS } from '../config';
 import EventCard from './EventCard';
 import Button from './Button'
+import Search from './Search'
 import '../custom.css'
 
 
@@ -50,7 +51,24 @@ function Explore(){
     let renderNextEvent = (event) =>{
         return (<div key={event.ev_Id}><EventCard event={event} state={state}/></div>)
     }
+    
+    const { search } = window.location;
+    const query = new URLSearchParams(search).get('s');
 
+    const filterEvents = (events, query) => {
+        if (!query) {
+            return events;
+        }
+    
+        return events.filter((event) => {
+            const eventName = event.ev_Title.toLowerCase();
+            return eventName.includes(query);
+        });
+    };
+    
+    const [searchQuery, setSearchQuery] = useState(query || '');
+    const filteredEvents = filterEvents(events, searchQuery);
+    
     return (
         <div className="page-container">
             <div className="page-content">
@@ -60,8 +78,13 @@ function Explore(){
                 {renderNextEvent(event)}
                 <Button text="Create event" onClick={() => {navigate('/create-event')}} buttonColorChoice="green" iconChoice="add"/>
                 <br></br>
-                <h1>Explore</h1>
-                {renderEvents(events)}
+                <h1>Explore events</h1>
+                <Search
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
+                <br></br>
+                {renderEvents(filteredEvents)}
             </div>
         </div>
     );
