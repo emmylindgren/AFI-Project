@@ -15,6 +15,7 @@ const buttonstyleGreen = {
     justifyContent: 'center',
     alignItems: 'center',
     cursor:'pointer',
+    flexGrow: 1,
 }
 
 const buttonstyleRed = { 
@@ -27,6 +28,7 @@ const buttonstyleRed = {
     justifyContent: 'center',
     alignItems: 'center',
     cursor:'pointer',
+    flexGrow: 1,
 }
 
 const buttonTextStyle = {
