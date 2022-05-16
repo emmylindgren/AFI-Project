@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp';
 import EventCard from './components/EventCard'
 import Explore from './components/Explore'
 import EventSD from './components/EventShortDetails'
-import EventInformation from './components/EventInformation';
+import EventInformation from './pages/EventInformation';
 import TemplatePage from './pages/TemplatePage';
 import CreateEvent from './pages/CreateEvent';
 import Schedule from './pages/Schedule';

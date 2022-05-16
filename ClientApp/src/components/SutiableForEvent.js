@@ -2,12 +2,22 @@ import axios from 'axios'
 import { API_ADRESS } from '../config';
 import { useEffect, useState } from 'react';
 import '../custom.css'
-import Disability from './form/Disability';
+import EventDisability from './EventDisability';
+
+
+
+const displayDisability = {
+    display: 'flex',
+    flexWrap: 'wrap',
+
+
+}
 
 function SuitableForEvent({event}) {
     
     let hasDisabilities = Object.keys(event.ev_Disabilities).length;
     const [disabilities, setDisabilities] = useState([]);
+    
     useEffect(() => {
         axios.get(API_ADRESS + '/api/disability')
         .then(res => {
@@ -15,10 +25,19 @@ function SuitableForEvent({event}) {
         })
     }, []);
 
-    const showDisabilities = () => {
+    let eventDisabilities = (num) => {
+        let name
+        Object.values(disabilities).map(item => {
+            if(item.di_Id === num){
+                name = item.di_Name
+            } 
+        })
+        return name
+    }
+
+    let showDisabilities = () => {
         return event.ev_Disabilities.map(disability => {
-            console.log()
-            return (<div key={disability.dis_Id}><Disability name={disabilities.di_Name} /></div>)
+            return (<div key={disability.dis_Id}><EventDisability name={eventDisabilities(disability.dis_Id)} /></div>)
         })
     }
     
@@ -27,11 +46,11 @@ function SuitableForEvent({event}) {
             <h3>Suitable for</h3>
             {hasDisabilities ? 
                 <div>
-                    <div>
+                    <div style={displayDisability}>
                         {showDisabilities()}
                     </div>
                 </div>
-                : <p>No categories chosen</p>
+                : <p>Suitable for everyone</p>
             }
         </div>
     );
