@@ -2,7 +2,7 @@ import axios from 'axios'
 import { API_ADRESS } from '../config';
 import { useEffect, useState } from 'react';
 import '../custom.css'
-import EventDisability from './form/EventDisability';
+import EventDisability from './EventDisability';
 
 
 

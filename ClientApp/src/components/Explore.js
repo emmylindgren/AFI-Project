@@ -5,6 +5,7 @@ import { API_ADRESS } from '../config';
 import EventCard from './EventCard';
 import Button from './Button'
 import Search from './Search'
+import TabBar from './TabBar';
 import '../custom.css'
 
 
@@ -86,6 +87,7 @@ function Explore(){
                 <br></br>
                 {renderEvents(filteredEvents)}
             </div>
+            <TabBar activeTab={0}/>
         </div>
     );
 }
