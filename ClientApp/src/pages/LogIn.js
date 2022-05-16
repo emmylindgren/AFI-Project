@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from "../img/logo-with-text.svg";
-import GoogleLogInButton from "./GoogleLogInButton.js";
-import GoogleSignInButton from "./GoogleSignInButton.js";
+import GoogleLogInButton from "../components/GoogleLogInButton.js";
+import GoogleSignInButton from "../components/GoogleSignInButton.js";
 import { Link } from "react-router-dom";
 
 import '../custom.css';
