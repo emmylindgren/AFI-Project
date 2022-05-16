@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { API_ADRESS } from '../config';
 import '../custom.css'
+import Disability from './form/Disability';
 //Remove line below
 import eventImage from '../img/event-image.png';
 

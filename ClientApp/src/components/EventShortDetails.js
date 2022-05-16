@@ -10,19 +10,7 @@ import { renderMatches } from 'react-router-dom';
 import BackButtonGreen from './BackButtonGreen';
 
 
-const backgroundImg = {
-       
-    backgroundImage : 'url("' + eventImage + '")',
-    background: 'linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,1)), url("' + eventImage+ '")',
-    backgroundSize: 'cover',
-    width: '100%',
-    height: '80vw',
-    maxHeight: '300px',
-    display: 'flex',
-    flexDirection: 'column',
-    color: 'var(--white)',
-    fontSize: '1.3rem',
-}
+
 
 const textBox ={
     margin: '20px',
@@ -42,6 +30,19 @@ const dateAndTime = {
 
 
 function EventShortDetails({event, returnTo}) { 
+    
+    let backgroundImg =  {
+        backgroundImage : 'url("' +  API_ADRESS + "/api/event/image/" + event.ev_Id + '")',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,1)), url("' + API_ADRESS + "/api/event/image/" + event.ev_Id+ '")',
+        backgroundSize: 'cover',
+        width: '100%',
+        height: '80vw',
+        maxHeight: '300px',
+        display: 'flex',
+        flexDirection: 'column',
+        color: 'var(--white)',
+        fontSize: '1.3rem',
+    }
 
     let date = new Date(event.ev_DateTime);
     let month = ((date.getMonth()<10?'0':'') + date.getMonth());

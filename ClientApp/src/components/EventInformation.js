@@ -4,6 +4,7 @@ import { API_ADRESS } from '../config';
 import '../custom.css'
 import EventShortDetails from './EventShortDetails';
 import AttendingInfoCard from './AttendingInfoCard';
+import SuitableForEvent from './SutiableForEvent';
 
 
 function EventInformation(){
@@ -37,12 +38,13 @@ function EventInformation(){
     //  <p>{events.ev_Description}</p> <EventShortDetails event={events} returnTo={"/schedule"}/> <AttendingInfoCard event={events}/>
     return (
         <div>
-           <EventShortDetails event={events} returnTo={"/schedule"}/>
+            <EventShortDetails event={events} returnTo={"/schedule"}/> 
             <div className="page-container">
                 <div className="page-content">
                     <h3>Description</h3>
                     <p>{events.ev_Description}</p>
                     <AttendingInfoCard event={events}/>
+                    <SuitableForEvent event={events}/>
                 </div>
             </div>
         </div>

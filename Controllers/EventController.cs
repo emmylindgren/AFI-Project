@@ -51,6 +51,7 @@ namespace AFI_Project.Controllers
             .Where(e => e.Ev_Id == id)
             .Include(e => e.Ev_AttendingModel)
             .Include(e => e.Ev_RequestedInviteModel)
+            .Include(e => e.Ev_Disabilities)
             .Include(e => e.Ev_Owner)
             .FirstOrDefaultAsync();
 
