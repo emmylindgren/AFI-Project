@@ -2,6 +2,7 @@ import '../custom.css'
 import BackButton from '../components/BackButton';
 import Button from '../components/Button';
 import Preset from '../components/Preset';
+import { useNavigate } from 'react-router-dom';
 
 const EventTemplates = {
     display: 'flex',
@@ -11,12 +12,15 @@ const EventTemplates = {
 }
 
 function TemplatePage() {
+
+    const navigate = useNavigate();
+
     return (
     <div className='page-container'>
         <div className='page-content'>
             <BackButton text='Explore' to='/'/>
             <h1>New Event</h1>
-            <Button text='Create Without Preset' buttonColorChoice='green' iconChoice ="add"/>
+            <Button text='Create Without Preset' buttonColorChoice='green' iconChoice ="add" onClick={() =>{ navigate('/new-event')}}/>
 
             <div style={EventTemplates}>
             <h3>Presets</h3>

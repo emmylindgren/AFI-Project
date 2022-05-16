@@ -10,21 +10,23 @@ const style = {
     justifyContent: 'space-between',
     boxShadow: 'none',
     paddingLeft: '20px',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    position: 'relative',
 }
 const inputStyle = {
-    width: '70%',
-    color: 'var(--gray)',
-    fontFamily: 'Inter'
+    width: '100%',
+    fontFamily: 'Inter',
+    margin: '0',
+    top: '0px',
+    top: '5px',
 }
-function FileInput({label}) {
+function FileInput({label, id}) {
     return (
-        <div>
-            <label>{label}</label>
-            <div style={style}>
-                <input type='file' name='filename' style={inputStyle}/>
-                <p style={{color: 'var(--deep-green)', fontWeight: '700', margin: '0 20px 0 0'}}>Pick a file</p>
-            </div>
+        <div style={style}>
+            <label style={inputStyle}>
+                <input type='file' name='filename' id={id}/>
+                <p style={{color: 'var(--deep-green)', fontWeight: '700', margin: '0 20px 0 0', float: 'right'}}>Pick a file</p>
+            </label>
         </div>
     );
 }

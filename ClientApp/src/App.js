@@ -7,7 +7,9 @@ import SignUp from './pages/SignUp';
 import EventCard from './components/EventCard'
 import Explore from './components/Explore'
 import EventSD from './components/EventShortDetails'
+import EventInformation from './components/EventInformation';
 import TemplatePage from './pages/TemplatePage';
+import CreateEvent from './pages/CreateEvent';
 import Schedule from './pages/Schedule';
 
 
@@ -23,8 +25,11 @@ export default function App(){
         <Route path='/event-card' element={<EventCard/>} />
         <Route path='/schedule' element={<Schedule/>} />
         <Route path='/explore' element={<Explore/>} />
+        <Route path='/event-information' element={<EventInformation/>} />
+
         <Route path='/create-event' element={<TemplatePage/>} />
         <Route path='/event-short-details' element={<EventSD/>} />
+        <Route path='/new-event' element={<CreateEvent/>} />
       </Routes>
     </Layout>
   );
