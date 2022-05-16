@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useImperativeHandle, forwardRef } from 'react';
-import '../../custom.css';
+import '../custom.css';
 
 
 const style = {

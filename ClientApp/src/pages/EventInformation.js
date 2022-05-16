@@ -6,6 +6,7 @@ import EventShortDetails from '../components/EventShortDetails';
 import AttendingInfoCard from '../components/AttendingInfoCard';
 import SuitableForEvent from '../components/SutiableForEvent';
 import LoadingCard from '../components/LoadingCard';
+import EventInfoCat from '../components/EventInfoCat';
 
 
 function EventInformation(){
@@ -29,21 +30,22 @@ function EventInformation(){
     return (
        <div>
            {loaded ? (
-               <div>
-            <EventShortDetails event={events} returnTo={"/schedule"}/>
-            <div className="page-container">
-                <div className="page-content">
-                    <h3>Description</h3>
-                    <p>{events.ev_Description}</p>
-                    <AttendingInfoCard event={events}/>
-                    <SuitableForEvent event={events}/>
+            <div>
+                <EventShortDetails event={events} returnTo={"/schedule"}/>
+                <div className="page-container">
+                    <div className="page-content">
+                        <h3>Description</h3>
+                        <p>{events.ev_Description}</p>
+                        <AttendingInfoCard event={events}/>
+                        <SuitableForEvent event={events}/>
+                        <EventInfoCat event={events}/>
+                    </div>
                 </div>
-            </div>
             </div>
             ) : (
-                <div style={{marginTop: '90%'}}>
-                    <LoadingCard/>
-                </div>
+            <div style={{marginTop: '90%'}}>
+                <LoadingCard/>
+            </div>
             )}
         </div>
         
