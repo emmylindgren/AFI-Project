@@ -1,8 +1,5 @@
-import axios from 'axios'
 import { API_ADRESS } from '../config';
 import '../custom.css'
-//Remove line below
-import eventImage from '../img/event-image.png';
 
 function AttendingPreview({event}) {
     
