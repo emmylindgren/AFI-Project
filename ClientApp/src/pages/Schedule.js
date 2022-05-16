@@ -4,6 +4,8 @@ import ScheduleEventCard from '../components/ScheduleEventCard'
 import axios from 'axios'
 import { API_ADRESS } from '../config'
 import TabBar from '../components/TabBar'
+import LoadingCard from '../components/LoadingCard'
+import ErrorCard from '../components/ErrorCard'
 
 
 const eventCardStyle = {
@@ -41,10 +43,16 @@ function Schedule() {
     let todayhasbeen = false;
 
     const [events, setEvents] = useState([]);
-    useEffect(()=>{
+    const [state, setState] = useState('loading');
+
+    useEffect(async ()=>{
         axios.get(API_ADRESS + '/api/event/profileID/'+ localStorage.getItem("profileId"))
         .then(res =>{
+            setState('loaded')
             setEvents(res.data)
+        })
+        .catch(err =>{
+            setState('error')
         })
     },[])
 
@@ -88,6 +96,20 @@ function Schedule() {
         })      
         return (todayhasbeen ? <div>{eventsList}</div> : <div> <div style={noEventStyle}>You have no events today</div> {eventsList} </div>)
     }
+
+    const getCurrentState = () => {
+        switch(state){
+            case 'loading':
+                return <LoadingCard/>
+            case 'loaded':
+                return renderEvents(events)
+            case 'error':
+                return <ErrorCard
+                iconChoice={'filenotfound'} 
+                infoText={"Oops, there was a problem when fetching your data! Try again later."}
+                    />
+        }
+    }
     
 
   return (
@@ -98,8 +120,8 @@ function Schedule() {
                 <h2 style = {{textAlign:'left', fontSize:'1.3rem',}}>Today</h2>
                 <h2 style={{fontWeight:'200', fontSize:'1.3rem',}}>{new Date(Date.now()).getDate() + " " + months[new Date(Date.now()).getMonth()]}</h2>
             </div>
-            
-            {renderEvents(events)}
+
+            {getCurrentState()}
            
         </div>
         <TabBar activeTab={1}/>
