@@ -28,6 +28,8 @@ namespace AFI_Project.Models
 
         public virtual ICollection<PostLikeModel>? Pr_PostLikes { get; set; }
         public virtual ICollection<CommentLikeModel>? Pr_CommentLikes { get; set; }
+
+        public virtual ICollection<ProfileBadgesModel>? Pr_Badges { get; set; }
     }
 
 }

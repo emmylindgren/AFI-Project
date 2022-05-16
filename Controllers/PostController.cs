@@ -26,14 +26,21 @@ namespace AFI_Project.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PostModel>>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
+            return await _context.Posts
+            .Include(p => p.Po_Owner)
+            .Include(p => p.Po_Likes)
+            .ToListAsync();
         }
 
         // GET: api/Post/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PostModel>> GetPostModel(int id)
         {
-            var postModel = await _context.Posts.FindAsync(id);
+            var postModel = await _context.Posts
+            .Where(p => p.Po_Id == id)
+            .Include(p => p.Po_Owner)
+            .Include(p => p.Po_Likes)
+            .FirstAsync();
 
             if (postModel == null)
             {
@@ -70,6 +77,38 @@ namespace AFI_Project.Controllers
                     throw;
                 }
             }
+
+            return NoContent();
+        }
+
+        // POST: api/Post/like/postId/profileID
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("like/{post}/{profile}")]
+        public async Task<ActionResult<PostModel>> PostPostLikeModel(int post, int profile)
+        {
+            PostLikeModel plm = new PostLikeModel();
+            plm.Po_Id = post;
+            plm.Pr_Id = profile;
+            _context.PostLikes.Add(plm);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // POST: api/Post/unlike/postId/profileID
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("unlike/{post}/{profile}")]
+        public async Task<ActionResult<PostModel>> DeletePostLikeModel(int post, int profile)
+        {
+            var plm = await _context.PostLikes.Where(pl => pl.Po_Id == post && pl.Pr_Id == profile)
+            .FirstAsync();
+            
+            if (plm == null)
+            {
+                return NotFound();
+            }
+            _context.PostLikes.Remove(plm);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

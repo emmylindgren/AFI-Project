@@ -125,6 +125,18 @@ namespace AFI_Project.Data {
             .WithMany(c => c.Pr_CommentLikes)
             .HasForeignKey(p => p.Pr_Id);
 
+        // Create many-to-many relationship between tables Comments and Profiles (likes).
+        modelBuilder.Entity<ProfileBadgesModel>()
+            .HasKey(pb => new { pb.Ba_Id, pb.Pr_Id });
+        modelBuilder.Entity<ProfileBadgesModel>()
+            .HasOne(pb => pb.Pr_Ba_Badge)
+            .WithMany(b => b.Ba_Profiles)
+            .HasForeignKey(pb => pb.Ba_Id);
+        modelBuilder.Entity<ProfileBadgesModel>()
+            .HasOne(pb => pb.Pr_Ba_Profile)
+            .WithMany(p => p.Pr_Badges)
+            .HasForeignKey(pb => pb.Pr_Id);
+
 }
 
         public DbSet<ProfileModel> Profiles { get; set; }
@@ -144,6 +156,9 @@ namespace AFI_Project.Data {
         public DbSet<PostLikeModel> PostLikes { get; set; }
         public DbSet<CommentLikeModel> CommentLikes { get; set; }
         public DbSet<PostModel> Posts { get; set; }
+
+        public DbSet<BadgeModel> Badges { get; set; }
+        public DbSet<ProfileBadgesModel> ProfileBadges { get; set; }
     }
 }
 

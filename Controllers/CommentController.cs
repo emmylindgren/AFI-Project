@@ -22,26 +22,48 @@ namespace AFI_Project.Controllers
             _context = context;
         }
 
-        // GET: api/Comment
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CommentModel>>> GetComments()
+        // GET: api/Comment/fromPost/5 to get all comments corresponding to post with id 5. 
+        [HttpGet("fromPost/{id}")]
+        public async Task<ActionResult<IEnumerable<CommentModel>>> GetComments(int id)
         {
-            return await _context.Comments.ToListAsync();
+            return await _context.Comments.Where(c => c.Co_Post.Po_Id == id)
+            .Include(c => c.Co_Owner)
+            .Include(c => c.Co_Likes)
+            .ToListAsync();
         }
 
-        // GET: api/Comment/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CommentModel>> GetCommentModel(int id)
+        // POST: api/Comment/like/commentId/profileID
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("like/{comment}/{profile}")]
+        public async Task<ActionResult<PostModel>> PostPostLikeModel(int comment, int profile)
         {
-            var commentModel = await _context.Comments.FindAsync(id);
+            CommentLikeModel clm = new CommentLikeModel();
+            clm.Co_Id = comment;
+            clm.Pr_Id = profile;
+            _context.CommentLikes.Add(clm);
+            await _context.SaveChangesAsync();
 
-            if (commentModel == null)
+            return Ok();
+        }
+
+        // POST: api/Comment/unlike/commentId/profileID
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("unlike/{comment}/{profile}")]
+        public async Task<ActionResult<PostModel>> DeletePostLikeModel(int comment, int profile)
+        {
+            var clm = await _context.CommentLikes.Where(cl => cl.Co_Id == comment && cl.Pr_Id == profile)
+            .FirstAsync();
+            
+            if (clm == null)
             {
                 return NotFound();
             }
+            _context.CommentLikes.Remove(clm);
+            await _context.SaveChangesAsync();
 
-            return commentModel;
+            return NoContent();
         }
+
 
         // PUT: api/Comment/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
