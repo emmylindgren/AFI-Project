@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import axios from 'axios'
 import { API_ADRESS } from '../config';
 import '../custom.css'
 import AttendingPreview from './AttendingPreview';
@@ -77,6 +78,27 @@ function EventCard({event,state}) {
     }
 
 
+    const [userInfo, setUserInfo] = useState([]);
+        
+        useEffect(()=>{
+            /*axios.defaults.headers.common = {
+                "ApiKey": localStorage.getItem("ApiKey"),
+              };*/
+            axios.get(API_ADRESS + '/api/profile/' + localStorage.getItem("profileId"))
+            .then(res =>{
+                setUserInfo(res.data)
+            })
+    
+        },[])
+
+    const disabilitiesMatching = (event) => {
+        let eventDisabilities = event.event.ev_Disabilities;
+        let personDisabilities = userInfo.pr_Disabilities;
+        console.log(eventDisabilities);
+        console.log(personDisabilities);
+        return true;
+    }
+
     return (
         event ? (
             <div className="event-card">
@@ -84,7 +106,9 @@ function EventCard({event,state}) {
                 (
                 <span>
                     <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
-                    <h3>{event.ev_Title}</h3>
+
+                    {disabilitiesMatching({event}) ? <h3>{event.ev_Title}</h3> : <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning.svg"></img></h3> }
+
                     <div className = "event-information-block">
                         <img src="icons/location-icon.svg" id="location-icon"></img>
                         {privateAndAttending()}
