@@ -28,22 +28,27 @@ import LoadingCard from './LoadingCard';
 
 function EventCard({event,state}) {
 
-    let date = new Date(event.ev_DateTime);
-    let month = ((date.getMonth()<10?'0':'') + date.getMonth());
-    let day = date.getDate();
-    let hours = date.getHours();
-    let minutes = ((date.getMinutes()<10?'0':'') + date.getMinutes());
-    let hoursToInt = parseInt(hours);
-    let timeVar = "AM";
+    const [date, setDate] = useState({month: 'loading', day: 'loading', hours: 'loading', minutes: 'loading', hoursToInt: 'loading', timeVar: 'loading'});
 
-    if(hoursToInt > 12 && hoursToInt < 24) {
-        hours = hoursToInt % 12;
-        timeVar = "PM";
-    }
-    else if(hours === "24" || hours === "00") {
-        hours = 12;
-        timeVar = "PM";
-    }
+    useEffect( () =>{
+        let date = new Date(event.ev_DateTime);
+        let month = ((date.getMonth()<10?'0':'') + date.getMonth());
+        let day = date.getDate();
+        let hours = date.getHours();
+        let minutes = ((date.getMinutes()<10?'0':'') + date.getMinutes());
+        let hoursToInt = parseInt(hours);
+        let timeVar = "AM";
+
+        if(hoursToInt > 12 && hoursToInt < 24) {
+            hours = hoursToInt % 12;
+            timeVar = "PM";
+        }
+        else if(hours === "24" || hours === "00") {
+            hours = 12;
+            timeVar = "PM";
+        }
+        setDate({month: month, day: day, hours: hours, minutes: minutes, hoursToInt: hoursToInt, timeVar: timeVar})
+    }, [])
 
     const functionWithSwitch = (month) => {
         switch(month){
@@ -74,29 +79,52 @@ function EventCard({event,state}) {
         }        
     }
 
+    const privateAndAttending = () => {
+        
+        if(event.ev_Private){
+            
+            let attending = false;
+            
+            event.ev_AttendingModel.forEach(element => {
+                if(element.pr_Id === parseInt(localStorage.getItem("profileId"))){
+                    attending = true;
+                }
+            });
+
+            if(attending === false) {
+                return <span className="gray-body-text">&nbsp; Undisclosed</span>
+            }
+        }
+        return (<span className="gray-body-text">&nbsp; {event.ev_Street}</span>)
+    }
+
+
     return (
+        event ? (
+            <div className="event-card">
+                {state === 'loaded' ?
+                (
+                <span>
+                    <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
+                    <h3>{event.ev_Title}</h3>
+                    <div className = "event-information-block">
+                        <img src={locationIcon} id="location-icon"></img>
+                        {privateAndAttending()}
+                    </div>
 
-        <div className="event-card">
-            {state === 'loaded' ?
-            (
-            <span>
-                <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
-                <h3>{event.ev_Title}</h3>
-                <div className = "event-information-block">
-                    <img src={locationIcon} id="location-icon"></img>
-                    {event.ev_Private ? <span className="gray-body-text">&nbsp; Undisclosed</span> : <span className="gray-body-text">&nbsp; {event.ev_Street}</span>}
-                </div>
-
-                <div className = "event-information-block">
-                    <img src={clockIcon} id="clock-icon"></img>
-                    <span className="gray-body-text">&nbsp; {day + " " + functionWithSwitch(month) + ", " + hours + ":" + minutes + " " + timeVar}</span>
-                    <AttendingPreview event={event}/>
-                </div>
-            </span>
-            ) : (
-                <LoadingCard/>
-            )}
-        </div>
+                    <div className = "event-information-block">
+                        <img src={clockIcon} id="clock-icon"></img>
+                        <span className="gray-body-text">&nbsp; {date.day + " " + functionWithSwitch(date.month) + ", " + date.hours + ":" + date.minutes + " " + date.timeVar}</span>
+                        <AttendingPreview event={event}/>
+                    </div>
+                </span>
+                ) : (
+                    <LoadingCard/>
+                )}
+            </div>
+        ) : (
+            <LoadingCard/>
+        )
     );
 }
 

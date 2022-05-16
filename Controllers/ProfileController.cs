@@ -48,7 +48,7 @@ namespace AFI_Project.Controllers
 		[HttpGet("image/{id}")]
 		public async Task<IActionResult> GetProfilePicture(int id)
 		{
-			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+			//if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
 
 			var profileModel = await _context.Profiles.FindAsync(id);
 

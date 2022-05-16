@@ -22,6 +22,7 @@ function GoogleLoginComponent() {
       console.log(res)
       // Set the API-key header in axios.
       axios.defaults.headers.common['ApiKey'] = res.data;
+      localStorage.setItem("ApiKey", res.data)
 
       // Save profileId in localStorage.
       const profileId = res.data.split('_')[0];

@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import { Navigate, Redirect, useNavigate } from "react-router-dom";
 import { API_ADRESS } from '../config';
 import EventCard from './EventCard';
+import Button from './Button'
 import '../custom.css'
 
 
 function Explore(){
+
+    const navigate = useNavigate()
 
     const [events, setEvents] = useState([]);
     const [state, setState] = useState('loading');  
@@ -24,12 +28,28 @@ function Explore(){
     }
 
     const [userInfo, setUserInfo] = useState([]);
+    const [event, setEvent] = useState([]);
+
     useEffect(()=>{
+        axios.defaults.headers.common = {
+            "ApiKey": localStorage.getItem("ApiKey"),
+          };
         axios.get(API_ADRESS + '/api/profile/' + localStorage.getItem("profileId"))
         .then(res =>{
             setUserInfo(res.data)
         })
+
+        axios.get(API_ADRESS + '/api/event/latest/' + localStorage.getItem("profileId"))
+        .then(res =>{
+            console.log(res.data)
+            setEvent(res.data)
+        })
     },[])
+
+
+    let renderNextEvent = (event) =>{
+        return (<div key={event.ev_Id}><EventCard event={event} state={state}/></div>)
+    }
 
     return (
         <div className="page-container">
@@ -37,7 +57,10 @@ function Explore(){
                 <h1>Hello, {userInfo.pr_Firstname}!</h1>
                 <h2>Your next event</h2>
                 <br></br>
-                
+                {renderNextEvent(event)}
+                <Button text="Create event" onClick={() => {navigate('/create-event')}} buttonColorChoice="green" iconChoice="add"/>
+                <br></br>
+                <h1>Explore</h1>
                 {renderEvents(events)}
             </div>
         </div>
