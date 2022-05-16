@@ -18,7 +18,7 @@ function TemplatePage() {
     return (
     <div className='page-container'>
         <div className='page-content'>
-            <BackButton text='Explore' to='/'/>
+            <BackButton text='Explore' to='/explore'/>
             <h1>New Event</h1>
             <Button text='Create Without Preset' buttonColorChoice='green' iconChoice ="add" onClick={() =>{ navigate('/new-event')}}/>
 

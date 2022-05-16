@@ -3,6 +3,7 @@ import '../custom.css'
 import ScheduleEventCard from '../components/ScheduleEventCard'
 import axios from 'axios'
 import { API_ADRESS } from '../config'
+import TabBar from '../components/TabBar'
 
 
 const eventCardStyle = {
@@ -101,6 +102,7 @@ function Schedule() {
             {renderEvents(events)}
            
         </div>
+        <TabBar activeTab={1}/>
     </div>
   )
 
