@@ -3,6 +3,7 @@ using System;
 using AFI_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AFI_Project.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220516105604_AddedCommentsAndPosts")]
+    partial class AddedCommentsAndPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,14 +79,14 @@ namespace AFI_Project.Migrations
                     b.Property<int>("Co_OwnerPr_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Co_PostPo_Id")
+                    b.Property<int?>("PostModelPo_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Co_Id");
 
                     b.HasIndex("Co_OwnerPr_Id");
 
-                    b.HasIndex("Co_PostPo_Id");
+                    b.HasIndex("PostModelPo_Id");
 
                     b.ToTable("Tbl_Comments");
                 });
@@ -372,15 +374,11 @@ namespace AFI_Project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AFI_Project.Models.PostModel", "Co_Post")
+                    b.HasOne("AFI_Project.Models.PostModel", null)
                         .WithMany("Po_Comments")
-                        .HasForeignKey("Co_PostPo_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PostModelPo_Id");
 
                     b.Navigation("Co_Owner");
-
-                    b.Navigation("Co_Post");
                 });
 
             modelBuilder.Entity("AFI_Project.Models.DeclinedInviteModel", b =>
