@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../custom.css'
-import ScheduleEventCard from './ScheduleEventCard'
+import ScheduleEventCard from '../components/ScheduleEventCard'
 import axios from 'axios'
 import { API_ADRESS } from '../config'
 

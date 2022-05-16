@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from "../img/logo-with-text.svg";
-import GoogleLogInButton from "./GoogleLogInButton.js";
-import GoogleSignInButton from "./GoogleSignInButton.js";
+import GoogleLogInButton from "../components/GoogleLogInButton.js";
+import GoogleSignInButton from "../components/GoogleSignInButton.js";
 import { Link } from "react-router-dom";
 
 import '../custom.css';
@@ -24,7 +24,7 @@ export class LogIn extends Component {
                 <Link to='./event-card'>Event card</Link>
                 <Link to='./sign-up'>Sign In!</Link>
                 <Link to ='./schedule'>Schedule</Link>
-                <Link to ='./event-short-details'>Event information details</Link>
+                <Link to ='./event-information'>Event information</Link>
             </div>
             
     );

@@ -47,7 +47,13 @@ namespace AFI_Project.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<EventModel>> GetEventModel(int id)
         {
-            var eventModel = await _context.Events.FindAsync(id);
+            var eventModel = await _context.Events
+            .Where(e => e.Ev_Id == id)
+            .Include(e => e.Ev_AttendingModel)
+            .Include(e => e.Ev_RequestedInviteModel)
+            .Include(e => e.Ev_Disabilities)
+            .Include(e => e.Ev_Owner)
+            .FirstOrDefaultAsync();
 
             if (eventModel == null)
             {
