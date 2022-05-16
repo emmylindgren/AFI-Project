@@ -41,7 +41,7 @@ function Schedule() {
 
     const [events, setEvents] = useState([]);
     useEffect(()=>{
-        axios.get(API_ADRESS + '/api/event/profileID/'+ 1)
+        axios.get(API_ADRESS + '/api/event/profileID/'+ localStorage.getItem("profileId"))
         .then(res =>{
             setEvents(res.data)
         })
