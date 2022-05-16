@@ -11,7 +11,7 @@ import EventInformation from './pages/EventInformation';
 import TemplatePage from './pages/TemplatePage';
 import CreateEvent from './pages/CreateEvent';
 import Schedule from './pages/Schedule';
-import ProfilePage from './pages/Profile';
+import ProfilePage from './pages/ProfilePage';
 
 
 
