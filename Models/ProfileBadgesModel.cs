@@ -11,5 +11,7 @@ namespace AFI_Project.Models
 
         public int Ba_Id { get; set; }
         public int Pr_Id { get; set; }
+
+        public DateTime Pr_Ba_DateRecieved { get; set; }
     }
 }

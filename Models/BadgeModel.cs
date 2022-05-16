@@ -8,7 +8,6 @@ namespace AFI_Project.Models
         [Key]
         public int Ba_Id { get; set; }
         public string Ba_Name { get; set; } = String.Empty;
-        public DateTime Ba_DateRecieved { get; set; }
         public string Ba_Img { get; set; } = String.Empty;
 
         public virtual ICollection<ProfileBadgesModel> Ba_Profiles { get; set; }

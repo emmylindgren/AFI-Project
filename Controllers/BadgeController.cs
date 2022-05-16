@@ -29,6 +29,32 @@ namespace AFI_Project.Controllers
             return await _context.Badges.ToListAsync();
         }
 
+        // GET: api/Comment/fromPerson/5 to get all badges corresponding to person with id 5. 
+        [HttpGet("fromPerson/{id}")]
+        public async Task<ActionResult<IEnumerable<BadgeModel>>> GetProfileBadges(int id)
+        {
+            return await _context.Badges
+            .Where(b => b.Ba_Profiles.Any(p => p.Pr_Id == id))
+            .ToListAsync();
+        }
+
+        // POST: api/Badge/profile/profilid/badge/badgeid
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("profile/{profile}/badge/{badge}")]
+        public async Task<ActionResult<BadgeModel>> PostBadgeProfileModel(int profile, int badge)
+        {
+            ProfileBadgesModel pbm = new ProfileBadgesModel();
+            pbm.Ba_Id = badge;
+            pbm.Pr_Id = profile;
+            pbm.Pr_Ba_DateRecieved = DateTime.Now;
+
+            _context.ProfileBadges.Add(pbm);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
         // GET: api/Badge/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BadgeModel>> GetBadgeModel(int id)
