@@ -43,14 +43,17 @@ function CreateEvent() {
 
         let form = new FormData();
 
-        form.append('event', JSON.stringify({
+        axios.get(API_ADRESS + '/api/')
+
+        form.append('eventdata', JSON.stringify({
             Ev_Title: title,
             Ev_Description: description,
             Ev_Private: false,
             Ev_Street: adress,
             Ev_City: city,
             Ev_DateTime: date + ' ' + time,
-            Pr_Disabilities: disabilityRef.current.getPillStates()
+            Ev_Disabilities: disabilityRef.current.getPillStates(),
+            Ev_PostalCode: postalCode,
         }));
 
         let blob
@@ -66,6 +69,8 @@ function CreateEvent() {
         // Create and append img to form.
         let binaryImg = new File([blob],'uploadFile.jpg',{type: 'image/jpeg'})
         form.append('uploadFile', binaryImg);
+
+        form.append('id', localStorage.getItem('profileId'))
 
         axios.post(API_ADRESS + '/api/event', form)
         .then(res => {
