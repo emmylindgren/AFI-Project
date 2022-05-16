@@ -1,30 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios'
 import { API_ADRESS } from '../config';
-import clockIcon from '../img/clock-icon.svg';
-import locationIcon from '../img/location-icon.svg';
-import eventImage from '../img/event-image.png';
 import '../custom.css'
 import AttendingPreview from './AttendingPreview';
 import LoadingCard from './LoadingCard';
-
-
-/*const getEventInfo = async (eventid) => {
-    let res = await axios.get(API_ADRESS + '/api/event/'+ eventid)    
-    return res.data
-    .catch(function (error){
-        console.log(error);
-    });
-};
-*/
-
-
-
-/*function getEventInfo(eventid) {
-    return axios.get('https://localhost:7259/api/event/'+ eventid).then(res => res.data)
-}*/
-
-
 
 function EventCard({event,state}) {
 
@@ -108,12 +86,12 @@ function EventCard({event,state}) {
                     <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
                     <h3>{event.ev_Title}</h3>
                     <div className = "event-information-block">
-                        <img src={locationIcon} id="location-icon"></img>
+                        <img src="icons/location-icon.svg" id="location-icon"></img>
                         {privateAndAttending()}
                     </div>
 
                     <div className = "event-information-block">
-                        <img src={clockIcon} id="clock-icon"></img>
+                        <img src="icons/clock-icon.svg" id="clock-icon"></img>
                         <span className="gray-body-text">&nbsp; {date.day + " " + functionWithSwitch(date.month) + ", " + date.hours + ":" + date.minutes + " " + date.timeVar}</span>
                         <AttendingPreview event={event}/>
                     </div>

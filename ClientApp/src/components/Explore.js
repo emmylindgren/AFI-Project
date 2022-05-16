@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import { Navigate, Redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_ADRESS } from '../config';
 import EventCard from './EventCard';
 import Button from './Button'
