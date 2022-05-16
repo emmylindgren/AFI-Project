@@ -1,5 +1,6 @@
 import { API_ADRESS } from '../config';
 import '../custom.css'
+import LoadingCard from './LoadingCard';
 
 function AttendingPreview({event}) {
     
@@ -41,13 +42,20 @@ function AttendingPreview({event}) {
     
     return (
         <div className="event-card-attendees">
-            <img src={API_ADRESS + "/api/profile/image/" + event.ev_Owner.pr_Id} className="event-card-host-image"></img>
-            <div className="event-card-attendees-image">
-                {event.ev_AttendingModel[0] === undefined || !canSeeAttending() ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[0].pr_Id } className="event-card-attendees-images-1"></img>}
-                {event.ev_AttendingModel[1] === undefined || !canSeeAttending() ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[1].pr_Id } className="event-card-attendees-images-2"></img>}
-                {event.ev_AttendingModel[2] === undefined || !canSeeAttending() ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[2].pr_Id } className="event-card-attendees-images-3"></img>}
-                {displayMoreAttendees()}
-            </div>
+            {event.length !== 0 ? (
+                <div>
+                <img src={API_ADRESS + "/api/profile/image/" + event.ev_Owner.pr_Id} className="event-card-host-image"></img>
+                <div className="event-card-attendees-image">
+                    {event.ev_AttendingModel[0] === undefined || !canSeeAttending() ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[0].pr_Id } className="event-card-attendees-images-1"></img>}
+                    {event.ev_AttendingModel[1] === undefined || !canSeeAttending() ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[1].pr_Id } className="event-card-attendees-images-2"></img>}
+                    {event.ev_AttendingModel[2] === undefined || !canSeeAttending() ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[2].pr_Id } className="event-card-attendees-images-3"></img>}
+                    {displayMoreAttendees()}
+                </div>
+                </div>
+            ) : (
+                ""
+            )
+            }
         </div>
     );
 }
