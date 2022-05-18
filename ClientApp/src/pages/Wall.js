@@ -4,7 +4,7 @@ import TabBar from '../components/TabBar'
 
 function Wall() {
   return (
-    <div className='page-container'>
+    <div className='page-container' style={{backgroundColor:'var(--superlight-green)',height: '100vh',}}>
         <div className='page-content'>
             <p>Not implemented, for testing.</p>
             <Post/>
