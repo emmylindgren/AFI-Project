@@ -119,7 +119,7 @@ function AttendingInfoCard({event}) {
                     </div>)
                 }
             </div>
-            {isOwner && (nrOfRequests != 0)? 
+            {isOwner ? 
             <div>
                 <h3>{nrOfRequests} people have requested invites</h3>
                 <div style={attendeeInformation}>
