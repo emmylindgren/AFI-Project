@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_ADRESS } from '../config';
 import AuditRequestCard from '../components/AuditRequestCard';
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 
 const requestcardStyle = {
@@ -14,6 +15,7 @@ const requestcardStyle = {
 function Audit({eventID=1}) {
     const [requests, setRequests] = useState([]);
     const [state, setState] = useState('loading');
+    const navigate = useNavigate();
 
     useEffect(async ()=>{
         axios.defaults.headers.common = {
@@ -41,10 +43,13 @@ function Audit({eventID=1}) {
         })
     }
 
+    let navigateTo = () => {
+        navigate("../event-information")
+    }
   return (
     <div className='page-container'>
         <div className='page-content'>
-        <BackButton text={'Overview'} onClick ={""} to={""}/>
+        <BackButton text={'Overview'} onClick ={() => {navigateTo()}} to={"../event-information"}/>
         <h1 style={{color:'var(--black)', marginTop:'1rem',}}>Audit</h1>
         <h3 style={{marginBottom:'1rem',}}>Requested invites</h3>
         {renderRequests(requests)}

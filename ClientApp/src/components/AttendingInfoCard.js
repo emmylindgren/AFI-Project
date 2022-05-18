@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { API_ADRESS } from '../config';
 import '../custom.css'
+import { Link } from "react-router-dom";
 
 
 
@@ -116,6 +117,7 @@ function AttendingInfoCard({event}) {
                             {event.ev_AttendingModel[4] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[4].pr_Id } style={image5Style}></img>}
                         </div>
                         <h3 style={{color: 'var(--deep-green'}}>See all</h3>
+                        {/*<Link to="../see-all" style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>See all</Link> */}
                     </div>)
                 }
             </div>
@@ -131,7 +133,7 @@ function AttendingInfoCard({event}) {
                         {event.ev_RequestedInviteModel[3] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_RequestedInviteModel[3].pr_Id } style={image4Style}></img>}
                         {event.ev_RequestedInviteModel[4] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_RequestedInviteModel[4].pr_Id } style={image5Style}></img>}
                     </div>
-                    <h3 style={{color: 'var(--deep-green'}}>Audit</h3>
+                    <Link to="../audit" style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>Audit</Link>
                 </div>
              </div>
             : ""}

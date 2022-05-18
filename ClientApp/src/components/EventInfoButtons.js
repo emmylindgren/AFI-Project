@@ -18,6 +18,12 @@ import { useNavigate } from "react-router-dom";
 // Om public:  going
 //             not going
 
+const buttonstyle = {
+    marginTop: '30px', 
+    display: 'flex', 
+    flexDirection: 'row'
+}
+
 function EventInfoButtons({event}) {
     /*
     useEffect( () =>{
@@ -48,7 +54,7 @@ function EventInfoButtons({event}) {
     let displayButtons = () => {
         if(isAttending){
             
-            return  (<div style={{marginTop: '30px', display: 'flex', flexDirection: 'row'}} >
+            return  (<div style={buttonstyle} >
                         <div style={{width: '50%', marginRight: '15px' }}><Button text={isInterested ? "Not Interested" : "Interested"} onClick ={() => {apiCall("interested")}} buttonColorChoice ="green" /> </div>
                         <div style={{width: '50%'}}><Button text="Not going" onClick ={() => {apiCall("going")}} buttonColorChoice ="green" /> </div>
                     </div>)
@@ -56,19 +62,19 @@ function EventInfoButtons({event}) {
 
         if(isPrivate){
             if(isRequested || isDenied){
-                return  (<div style={{marginTop: '30px', display: 'flex', flexDirection: 'row'}} >
+                return  (<div style={buttonstyle} >
                         <div style={{width: '50%', marginRight: '15px' }}><Button text={isInterested ? "Not Interested" : "Interested"} onClick ={() => {apiCall("interested")}} buttonColorChoice ="green" /> </div>
                         <div style={{width: '50%'}}><Button text="Invite requested" onClick ={() => {apiCall("request")}} buttonColorChoice ="gray" /> </div>
                     </div>)
             }
 
-            return  (<div style={{marginTop: '30px', display: 'flex', flexDirection: 'row'}} >
+            return  (<div style={buttonstyle} >
                         <div style={{width: '50%', marginRight: '15px' }}><Button text={isInterested ? "Not Interested" : "Interested"} onClick ={() => {apiCall("interested")}} buttonColorChoice ="green" /> </div>
                         <div style={{width: '50%'}}><Button text="Request Invite" onClick ={() => {apiCall("request")}} buttonColorChoice ="green" /> </div>
                     </div>)
 
         }
-        return  (<div style={{marginTop: '30px', display: 'flex', flexDirection: 'row'}} >
+        return  (<div style={buttonstyle} >
                     <div style={{width: '50%', marginRight: '15px' }}><Button text={isInterested ? "Not Interested" : "Interested"} onClick ={() => {apiCall("interested")}} buttonColorChoice ="green" /> </div>
                     <div style={{width: '50%'}}><Button text="Going" onClick ={() => {apiCall("going")}} buttonColorChoice ="green" /> </div>
                 </div>)
@@ -89,7 +95,7 @@ function EventInfoButtons({event}) {
                 console.log("already going, removes going")
             }
             else{
-                console.log("removes going")
+                console.log("adds going")
             }
         }
         if(send === "request"){
@@ -112,7 +118,7 @@ function EventInfoButtons({event}) {
     return (
         <div>
             {isOwner ? 
-            <div style={{marginTop: '30px', display: 'flex', flexDirection: 'row'}} >
+            <div style={buttonstyle} >
                 <div style={{width: '50%', marginRight: '15px' }}><Button text="Edit event" onClick ={() => {navigate("../explore")}} buttonColorChoice ="green" /> </div>
                 <div style={{width: '50%'}}> </div>
             </div>
