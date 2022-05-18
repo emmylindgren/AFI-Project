@@ -32,8 +32,7 @@ const noEventStyle = {
 
 /**
  * TODO: 
- * Update so events for the logged in person is showing. Right now for person with 
- * id of 1. Also add so that eventcards route to eventinfo for that event. 
+ * add so that eventcards route to eventinfo for that event. 
  * 
  */
 function Schedule() {

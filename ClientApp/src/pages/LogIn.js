@@ -25,6 +25,7 @@ export class LogIn extends Component {
                 <Link to='./sign-up'>Sign In!</Link>
                 <Link to ='./schedule'>Schedule</Link>
                 <Link to ='./event-information'>Event information</Link>
+                <Link to ='./audit'>Audit</Link>
             </div>
             
     );

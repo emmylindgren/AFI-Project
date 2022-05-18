@@ -16,6 +16,7 @@ import ProfilePage from './pages/ProfilePage';
 
 
 import './custom.css'
+import Audit from './pages/Audit';
 
 export default function App(){
   return (
@@ -30,6 +31,8 @@ export default function App(){
 
         <Route path='/create-event' element={<TemplatePage/>} />
         <Route path='/event-short-details' element={<EventSD/>} />
+        <Route path='/audit' element={<Audit/>} />
+
         <Route path='/new-event' element={<CreateEvent/>} />
         <Route path='/profile' element={<ProfilePage/>} />
       </Routes>

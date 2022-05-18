@@ -9,7 +9,6 @@ import axios from 'axios';
  * <AuditRequestCard userID={1}/>
  * 
  * TODO: 
- * - Use the profiles picture instead of the plant 
  * - Decline and accept should move that profile from requested t
  *  to other list. 
  * 
@@ -42,14 +41,17 @@ const [profile,setProfile] = useState();
 const [loaded,setLoaded] = useState(false);
 
 useEffect(()=>{
-    axios.get(API_ADRESS + '/api/profile/' + userID)
+    axios.defaults.headers.common = {
+        "ApiKey": localStorage.getItem("ApiKey"),
+      };
+    axios.get(API_ADRESS + '/api/profile/shortdetails/' + userID)
         .then(res => {
             setProfile(res.data);
             setLoaded(true)
             console.log(res.data);
         })
     .catch(function (error){
-    console.log(error);
+        console.log(error);
     });
 
 },[]);
@@ -58,7 +60,7 @@ useEffect(()=>{
   return (
     <div>
         <div style={textandImageStyle}>
-            <img style={imgStyle} src='plant.png'/>
+            <img style={imgStyle} src={API_ADRESS + "/api/profile/image/"+ userID} id="profile-image" />
             <div style={textStyles}>
                 <p style={{marginBottom:'0px', fontSize:'1.5rem',}}>{loaded ? profile.pr_Firstname + " "+ profile.pr_Lastname : "Loading..."}</p>
                 <p style={{fontSize:'1.2rem',color:'var(--grey-text)'}}>{loaded ? profile.pr_Street + ", "+ profile.pr_City : "Loading..."}</p>
