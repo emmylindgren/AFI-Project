@@ -71,6 +71,23 @@ namespace AFI_Project.Controllers
             return eventModel;
         }
 
+        // GET: api/Event/requests/5
+        [HttpGet("requests/{id:int}")]
+        public async Task<ActionResult<IEnumerable<int>>> GetRequestsForEvent(int id)
+        {
+            var requests = await _context.RequestedInvites
+            .Where(r => r.Ev_Id == id)
+            .Select(r => r.Pr_Id)
+            .ToListAsync();
+
+            if (requests == null)
+            {
+                return NotFound();
+            }
+
+            return requests;
+        }
+
         // GET: api/Event/latest/5
         [HttpGet("latest/{personID}")]
         public async Task<ActionResult<EventModel>> GetLatestEvent(int personID)
