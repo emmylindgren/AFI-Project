@@ -2,27 +2,44 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { API_ADRESS } from '../config';
-import EventCard from './EventCard';
-import Button from './Button'
-import Search from './Search'
+import BackButton from './BackButton'
 import TabBar from './TabBar';
-import AttendeesInfo from './AttendeesInfo';
+import AttendeesGoingInfo from './AttendeesGoingInfo';
+import AttendeesInterestedInfo from './AttendeesInterestedInfo';
+import AttendeesHost from './AttendeesHost';
 import '../custom.css'
 
-
 let renderGoingProfiles = (goingList) =>{
-    return goingList.map(going => {
-        return (<div key={going.pr_Id}><AttendeesInfo attendee={going} isHost={false}/></div>)
+
+    return goingList.map(goes => {
+        const [going, setGoing] = useState([]);
+        useEffect(()=>{
+            axios.defaults.headers.common = {
+                "ApiKey": localStorage.getItem("ApiKey"),
+            };
+            axios.get(API_ADRESS + '/api/profile/shortdetails/' + goes.pr_Id)
+            .then(res =>{
+                setGoing(res.data);
+            })
+        },[])
+        return (<div key={goes.pr_Id}><AttendeesGoingInfo attendeeId={goes.pr_Id} attendee={{going}}/></div>)
     })
 }
 
 let renderInterestedProfiles = (interestedList) =>{
-    return interestedList.map(interested => {
-        return (<div key={interestedList.pr_Id}><AttendeesInfo attendee={interested} isHost={false}/></div>)
+    return interestedList.map(interest => {
+        const [interested, setInterested] = useState([]);
+        useEffect(()=>{
+            axios.defaults.headers.common = {
+                "ApiKey": localStorage.getItem("ApiKey"),
+            };
+            axios.get(API_ADRESS + '/api/profile/shortdetails/' + interest.pr_Id)
+            .then(res =>{
+                setInterested(res.data)
+            })
+        },[])
+        return (<div key={interest.pr_Id}><AttendeesInterestedInfo attendeeId={interest.pr_Id} attendee={interested}/></div>)
     })
-}
-let renderHost = (hostId) => {
-    return (<div key={hostId}><AttendeesInfo attendee={hostId} isHost={true}/></div>)
 }
 
 function Attendees(goingList, interestedList, hostId){
@@ -58,38 +75,18 @@ function Attendees(goingList, interestedList, hostId){
         }
     ];
 
-    
-    const [details, setDetails] = useState([]);
-    useEffect(()=>{
-        axios.defaults.headers.common = {
-            "ApiKey": localStorage.getItem("ApiKey"),
-          };
-        axios.get(API_ADRESS + '/api/profile/' + 1/*hostId eller annat id*/)
-        .then(res =>{
-            setDetails(res.data)
-        })
-    },[])
-    //Rendera Host först mha det nya API:et
-    //Hämta info från det nya API:et med pr_Id för både goingList och interestedList
     return (
+        
         <div className="page-container">
             <div className="page-content">
+                <BackButton text="Overview" onClick={""} to={""}/>   
                 <h1>Attendees</h1>
                 <h3>Going</h3>
-                {renderHost(fakeHostId)}
+                <AttendeesHost attendeeId={fakeHostId}/>
                 {renderGoingProfiles(fakeGoingList)}
-                {/*<AttendeesInfo event={event}/>
-                <AttendeesInfo event={event}/>
-                <AttendeesInfo event={event}/>*/}
                 <br></br>
                 <h3>Interested</h3>
-                {renderInterestedProfiles(fakeInterestedList)}
-                {/*<AttendeesInfo event={event}/>
-                <AttendeesInfo event={event}/>
-                <AttendeesInfo event={event}/>
-                <AttendeesInfo event={event}/>*/}   
-                
-                
+                {renderInterestedProfiles(fakeInterestedList)}    
             </div>
             <TabBar activeTab={0}/>
         </div>
