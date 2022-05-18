@@ -42,7 +42,7 @@ function SuitableForEvent({event}) {
     }
     
     return (
-        <div>
+        <div style={{marginTop: '10px'}}>
             <h3>Suitable for</h3>
             {hasDisabilities ? 
                 <div>

@@ -181,6 +181,25 @@ namespace AFI_Project.Controllers
 			return NoContent();
 		}
 
+		// GET: api/Profile/disabilities/5
+        [HttpGet("disabilities/{id}")]
+        public async Task<ActionResult<IEnumerable<int>>> GetProfileDisabilities(int id)
+        {
+            if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
+            var disabilitiesList = await _context.Disabilities.
+            Where(d => d.Di_Profiles.Any(p => p.Pr_Id == id))
+            .Select(d => d.Di_Id)
+            .ToListAsync();
+
+            if (disabilitiesList == null)
+            {
+                return NotFound();
+            }
+
+            return disabilitiesList;
+        }
+
 		private bool ProfileModelExists(int id)
 		{
 			return _context.Profiles.Any(e => e.Pr_Id == id);

@@ -43,7 +43,6 @@ function Explore(){
 
         axios.get(API_ADRESS + '/api/event/latest/' + localStorage.getItem("profileId"))
         .then(res =>{
-            console.log(res.data)
             setEvent(res.data)
         })
     },[])
@@ -69,6 +68,16 @@ function Explore(){
     
     const [searchQuery, setSearchQuery] = useState(query || '');
     const filteredEvents = filterEvents(events, searchQuery);
+
+    const noEventStyle = {
+        borderRadius:'10px',
+        background:'var(--light-gray)',
+        height:'3rem',
+        display:'flex',
+        alignItems:'center',
+        paddingLeft:'2rem',
+        marginBottom:'0.8rem',
+    }
     
     return (
         <div className="page-container">
@@ -76,7 +85,7 @@ function Explore(){
                 <h1>Hello, {userInfo.pr_Firstname}!</h1>
                 <h2>Your next event</h2>
                 <br></br>
-                {renderNextEvent(event)}
+                {event.ev_Id === undefined ? <p style={noEventStyle}>You have no upcoming event</p> : renderNextEvent(event)} 
                 <Button text="Create event" onClick={() => {navigate('/create-event')}} buttonColorChoice="green" iconChoice="add"/>
                 <br></br><br></br>
                 <h1>Explore events</h1>
