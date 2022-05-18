@@ -11,6 +11,7 @@ import EventInformation from './pages/EventInformation';
 import TemplatePage from './pages/TemplatePage';
 import CreateEvent from './pages/CreateEvent';
 import Schedule from './pages/Schedule';
+import ProfilePage from './pages/ProfilePage';
 
 
 
@@ -30,6 +31,7 @@ export default function App(){
         <Route path='/create-event' element={<TemplatePage/>} />
         <Route path='/event-short-details' element={<EventSD/>} />
         <Route path='/new-event' element={<CreateEvent/>} />
+        <Route path='/profile' element={<ProfilePage/>} />
       </Routes>
     </Layout>
   );

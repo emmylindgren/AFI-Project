@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../custom.css'
 import '../components/InputStyle.css'
 import BackButton from '../components/BackButton';
@@ -9,6 +9,7 @@ import { API_ADRESS } from '../config';
 import DisabilityInput from '../components/form/DisabilityInput';
 import TextInput from '../components/form/TextInput';
 import DateInput from '../components/form/DateInput';
+import TabBar from '../components/TabBar';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
@@ -17,6 +18,7 @@ const style = {
 function SignUp() {
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     const [firstname, setFirstname] = useState(location.state ? location.state.firstname : '');
     const [lastname, setLastname] = useState(location.state ? location.state.lastname: '');
@@ -76,8 +78,8 @@ function SignUp() {
                 setSuccess('Successfully created profile.');
                 //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
                 // Be post att returnera den nya användarens profilId samt API nyckel.
-                localStorage.setItem("profileId", location.state.profileId);
-                // Redirect to homepage.
+                localStorage.setItem("profileId", res.data.pr_Id);
+                navigate('/explore')
             }
             else{
                 setError('Something went wrong. Try again later.');
@@ -113,7 +115,6 @@ function SignUp() {
                 <div style={{margin: '20px 0 20px 0'}}></div>
                 <p className='err-text'>{error}</p>
                 <p className='success-text'>{success}</p>
-
             </div>
         </div>
     )

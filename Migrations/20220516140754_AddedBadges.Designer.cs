@@ -3,6 +3,7 @@ using System;
 using AFI_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AFI_Project.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220516140754_AddedBadges")]
+    partial class AddedBadges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,6 +41,9 @@ namespace AFI_Project.Migrations
                     b.Property<int>("Ba_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Ba_DateRecieved")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Ba_Img")
                         .IsRequired()
@@ -272,9 +277,6 @@ namespace AFI_Project.Migrations
 
                     b.Property<int>("Pr_Id")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Pr_Ba_DateRecieved")
-                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Ba_Id", "Pr_Id");
 
