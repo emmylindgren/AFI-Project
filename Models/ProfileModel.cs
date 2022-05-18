@@ -25,6 +25,11 @@ namespace AFI_Project.Models
         public virtual ICollection<InterestedModel>? Pr_InterestedModel { get; set; }
         public virtual ICollection<AttendingModel>? Pr_AttendingModel { get; set; }
         public virtual ICollection<ProfileDisabilityModel>? Pr_Disabilities { get; set; }
+
+        public virtual ICollection<PostLikeModel>? Pr_PostLikes { get; set; }
+        public virtual ICollection<CommentLikeModel>? Pr_CommentLikes { get; set; }
+
+        public virtual ICollection<ProfileBadgesModel>? Pr_Badges { get; set; }
     }
 
 }
