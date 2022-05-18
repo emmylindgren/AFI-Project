@@ -137,7 +137,7 @@ function EventShortDetails({event, returnTo}) {
                 </div>
 
                 <div style={{color: 'var(--white)'}}>
-                    {event.ev_Private ? <span >Private event</span> : <span >Public Event</span>}
+                    {event.ev_Private ? <span style={{fontFamily: 'Inter'}}>Private event</span> : <span style={{fontFamily: 'Inter'}}>Public Event</span>}
                 </div>
             </div>
 

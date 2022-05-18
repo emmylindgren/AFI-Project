@@ -7,6 +7,7 @@ import AttendingInfoCard from '../components/AttendingInfoCard';
 import SuitableForEvent from '../components/SutiableForEvent';
 import LoadingCard from '../components/LoadingCard';
 import EventInfoCat from '../components/EventInfoCat';
+import EventInfoButtons from '../components/EventInfoButtons';
 
 
 function EventInformation(){
@@ -40,9 +41,7 @@ function EventInformation(){
                         <AttendingInfoCard event={events}/>
                         <SuitableForEvent event={events}/>
                         <EventInfoCat event={events}/>
-                        <div>
-                            
-                        </div>
+                        <EventInfoButtons event={events}/>
                     </div>
                 </div>
             </div>
