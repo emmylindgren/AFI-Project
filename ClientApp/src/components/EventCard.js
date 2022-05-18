@@ -84,7 +84,6 @@ function EventCard({event,state}) {
 
             axios.get(API_ADRESS + '/api/profile/disabilities/' + localStorage.getItem("profileId"))
             .then(res =>{
-                console.log(res.data);
                 setUserInfo(res.data);
             })
     

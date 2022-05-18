@@ -65,7 +65,7 @@ function Explore(){
             return eventName.includes(query);
         });
     };
-    
+
     const [searchQuery, setSearchQuery] = useState(query || '');
     const filteredEvents = filterEvents(events, searchQuery);
 
@@ -95,6 +95,7 @@ function Explore(){
                 />
                 <br></br>
                 {renderEvents(filteredEvents)}
+                <br></br><br></br>
             </div>
             <TabBar activeTab={0}/>
         </div>
