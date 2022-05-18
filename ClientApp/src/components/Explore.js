@@ -42,7 +42,6 @@ function Explore(){
 
         axios.get(API_ADRESS + '/api/event/latest/' + localStorage.getItem("profileId"))
         .then(res =>{
-            console.log(res.data)
             setEvent(res.data)
         })
     },[])

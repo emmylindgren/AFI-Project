@@ -81,22 +81,53 @@ function EventCard({event,state}) {
     const [userInfo, setUserInfo] = useState([]);
         
         useEffect(()=>{
-            /*axios.defaults.headers.common = {
-                "ApiKey": localStorage.getItem("ApiKey"),
-              };*/
-            axios.get(API_ADRESS + '/api/profile/' + localStorage.getItem("profileId"))
+
+            axios.get(API_ADRESS + '/api/profile/disabilities/' + localStorage.getItem("profileId"))
             .then(res =>{
-                setUserInfo(res.data)
+                console.log(res.data);
+                setUserInfo(res.data);
             })
     
         },[])
 
     const disabilitiesMatching = (event) => {
         let eventDisabilities = event.event.ev_Disabilities;
-        let personDisabilities = userInfo.pr_Disabilities;
-        console.log(eventDisabilities);
-        console.log(personDisabilities);
-        return true;
+        let personDisabilities = userInfo;
+        //let match = false;
+        let counter = 0;
+        let warning = "none";
+        //console.log(eventDisabilities);
+        if(eventDisabilities !== null){
+            eventDisabilities.forEach(element => {
+                //console.log(personDisabilities);
+                console.log(element.dis_Id);
+                console.log(personDisabilities);
+                if(/*element.dis_Id in personDisabilities*/ personDisabilities.includes(element.dis_Id)){
+                    //match =  true;
+                    console.log("asdasdasd");
+                    counter++;
+                    //console.log(counter);
+                }
+            });
+        }
+
+        if(personDisabilities.length !== 0){   
+            /*if(personDisabilities.length === counter){
+                //Alla matchar, inga varningar
+                warning = "none";
+            }*/
+
+            if(personDisabilities.length > counter){
+                //Vissa matchar, ge "liten" varning
+                warning = "small";
+            }
+            if(counter === 0){
+                //Inga matchningar, "stor" varning
+                warning = "large";
+            }
+            //return match;
+        }
+        return warning;
     }
 
     return (
@@ -107,7 +138,14 @@ function EventCard({event,state}) {
                 <span>
                     <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
 
-                    {disabilitiesMatching({event}) ? <h3>{event.ev_Title}</h3> : <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning.svg"></img></h3> }
+                    {disabilitiesMatching({event}) === "none" ? <h3>{event.ev_Title}</h3> : ""}
+                    {disabilitiesMatching({event}) === "small" ? <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning-orange.svg"></img></h3> : ""}
+                    {disabilitiesMatching({event}) === "large" ? <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning-red.svg"></img></h3> : ""}
+
+                    {/*<h3>{event.ev_Title}<img id="warning-icon" src="icons/warning.svg"></img></h3>*/}
+
+
+
 
                     <div className = "event-information-block">
                         <img src="icons/location-icon.svg" id="location-icon"></img>
