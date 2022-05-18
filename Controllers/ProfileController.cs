@@ -79,6 +79,24 @@ namespace AFI_Project.Controllers
 			return profileModel;
 		}
 
+		//GET: api/Profile/shortdetails/5
+		[HttpGet("shortdetails/{id}")]
+		public async Task<ActionResult<Object>> GetShortInfoProfileModel(int id)
+		{
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+			var profileModel = await _context.Profiles
+			.Where(p => p.Pr_Id ==id)
+			.Select(p => new {p.Pr_Firstname, p.Pr_Lastname, p.Pr_City, p.Pr_Street})
+			.FirstAsync();
+
+			if (profileModel == null)
+			{
+				return NotFound();
+			}
+		
+			return profileModel;
+		}
+
 		// GET: api/Profile/googleID/string
 		[HttpGet("googleID/{googleID}")]
 		public async Task<ActionResult<string>> GetWithGId(string googleID)
@@ -160,6 +178,25 @@ namespace AFI_Project.Controllers
 
 			return NoContent();
 		}
+
+		// GET: api/Profile/disabilities/5
+        [HttpGet("disabilities/{id}")]
+        public async Task<ActionResult<IEnumerable<int>>> GetProfileDisabilities(int id)
+        {
+            if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
+            var disabilitiesList = await _context.Disabilities.
+            Where(d => d.Di_Profiles.Any(p => p.Pr_Id == id))
+            .Select(d => d.Di_Id)
+            .ToListAsync();
+
+            if (disabilitiesList == null)
+            {
+                return NotFound();
+            }
+
+            return disabilitiesList;
+        }
 
 		private bool ProfileModelExists(int id)
 		{

@@ -81,22 +81,37 @@ function EventCard({event,state}) {
     const [userInfo, setUserInfo] = useState([]);
         
         useEffect(()=>{
-            /*axios.defaults.headers.common = {
-                "ApiKey": localStorage.getItem("ApiKey"),
-              };*/
-            axios.get(API_ADRESS + '/api/profile/' + localStorage.getItem("profileId"))
+
+            axios.get(API_ADRESS + '/api/profile/disabilities/' + localStorage.getItem("profileId"))
             .then(res =>{
-                setUserInfo(res.data)
+                setUserInfo(res.data);
             })
     
         },[])
 
     const disabilitiesMatching = (event) => {
         let eventDisabilities = event.event.ev_Disabilities;
-        let personDisabilities = userInfo.pr_Disabilities;
-        console.log(eventDisabilities);
-        console.log(personDisabilities);
-        return true;
+        let personDisabilities = userInfo;
+        let counter = 0;
+        let warning = "none";
+        if(eventDisabilities !== null){
+            eventDisabilities.forEach(element => {
+                if(personDisabilities.includes(element.dis_Id)){
+                    counter++;
+                }
+            });
+        }
+
+        if(personDisabilities.length !== 0){   
+
+            if(personDisabilities.length > counter){
+                warning = "small";
+            }
+            if(counter === 0){
+                warning = "large";
+            }
+        }
+        return warning;
     }
 
     return (
@@ -107,7 +122,9 @@ function EventCard({event,state}) {
                 <span>
                     <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
 
-                    {disabilitiesMatching({event}) ? <h3>{event.ev_Title}</h3> : <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning.svg"></img></h3> }
+                    {disabilitiesMatching({event}) === "none" ? <h3>{event.ev_Title}</h3> : ""}
+                    {disabilitiesMatching({event}) === "small" ? <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning-orange.svg"></img></h3> : ""}
+                    {disabilitiesMatching({event}) === "large" ? <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning-red.svg"></img></h3> : ""}
 
                     <div className = "event-information-block">
                         <img src="icons/location-icon.svg" id="location-icon"></img>
