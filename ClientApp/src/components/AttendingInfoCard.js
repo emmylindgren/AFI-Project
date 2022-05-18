@@ -1,54 +1,8 @@
 import axios from 'axios'
 import { API_ADRESS } from '../config';
 import '../custom.css'
-import Disability from './form/Disability';
-//Remove line below
-import eventImage from '../img/event-image.png';
 
 
-/**
- * 
- * .event-card-attendees{
-  margin-top:.5rem;
-  display: flex;
-  width: 60%;
-  max-width: 13rem;
-  align-items: center;
-}
-
-.event-card-host-image{
-  height: 2.5rem;
-  border-radius: 100%;
-}
-
-.event-card-attendees-images-1{
-  height: 2rem;
-  border-radius: 100%;
-  z-index: 1;
-  transform: translateX(50%);
-}
-
-.event-card-attendees-images-2{
-  height: 2rem;
-  border-radius: 100%;
-  z-index: 2;
-  transform: translateX(0);
-}
-
-.event-card-attendees-images-3{
-  height: 2rem;
-  border-radius: 100%;
-  z-index: 3;
-  transform: translateX(-50%);
-}
-
-.event-card-more-text{
-  font-family: 'Inter';
-  font-size: 1rem;
-  color: var(--grey-text);
-  justify-content: end;
-}
- */
 
 const pictureStyle = {
     marginTop:'.5rem',

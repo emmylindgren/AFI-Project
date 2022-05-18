@@ -36,9 +36,13 @@ function EventInformation(){
                     <div className="page-content">
                         <h3>Description</h3>
                         <p>{events.ev_Description}</p>
+                        <h3>Attending</h3>
                         <AttendingInfoCard event={events}/>
                         <SuitableForEvent event={events}/>
                         <EventInfoCat event={events}/>
+                        <div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>

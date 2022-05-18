@@ -2,7 +2,6 @@ import axios from 'axios'
 import { API_ADRESS } from '../config';
 import { useEffect, useState } from 'react';
 import '../custom.css'
-import EventDisability from './EventDisability';
 import EventCatBubbles from './EventCatBubbles';
 
 
@@ -21,7 +20,6 @@ function EventInfoCat({event}) {
     useEffect(() => {
         axios.get(API_ADRESS + '/api/category')
         .then(res => {
-            console.log(res.data)
             setCategories(res.data);
         })
     }, []);
@@ -44,7 +42,7 @@ function EventInfoCat({event}) {
     }
     
     return (
-        <div>
+        <div style={{marginTop: '15px'}}>
             <h3>Categories</h3>
             {hasCategories ? 
                 <div>
