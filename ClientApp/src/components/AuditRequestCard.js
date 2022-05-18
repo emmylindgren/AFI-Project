@@ -35,7 +35,7 @@ const textStyles = {
 }
 
 
-function AuditRequestCard({userID}) {
+function AuditRequestCard({userID, eventID}) {
 
 const [profile,setProfile] = useState();
 const [loaded,setLoaded] = useState(false);
@@ -56,7 +56,34 @@ useEffect(()=>{
 
 },[]);
 
-  
+let declineInvite = (eventID, userID) => {
+    axios.defaults.headers.common = {
+        "ApiKey": localStorage.getItem("ApiKey"),
+      };
+      //api/Event/declineRequest/{eventid}/person/{personid}
+    axios.delete(API_ADRESS + '/api/event/declineRequest/'+ eventID+'/person/'+userID)
+        .then(res => {
+            console.log(res.data);
+        })
+    .catch(function (error){
+        console.log(error);
+    });
+}
+
+let acceptInvite = (eventID, userID) => {
+    axios.defaults.headers.common = {
+        "ApiKey": localStorage.getItem("ApiKey"),
+      };
+
+    axios.post(API_ADRESS + '/api/event/acceptRequest/'+ eventID+'/person/'+userID)
+        .then(res => {
+            console.log(res.data);
+        })
+    .catch(function (error){
+        console.log(error);
+    });
+}
+
   return (
     <div>
         <div style={textandImageStyle}>
@@ -68,8 +95,8 @@ useEffect(()=>{
         </div>
 
         <div style={buttonStyles}>
-            <Button text="Decline" onclick ={() => {console.log("hej!")}} buttonColorChoice ="red" iconChoice ="decline" />
-            <Button text="Accept" onclick ={() => {console.log("hej!")}} buttonColorChoice ="green" iconChoice ="accept" />
+            <Button text="Decline" onClick ={() => {declineInvite(eventID,userID)}} buttonColorChoice ="red" iconChoice ="decline" />
+            <Button text="Accept" onClick ={() => {acceptInvite(eventID,userID)}} buttonColorChoice ="green" iconChoice ="accept" />
         </div>
     </div>
   )

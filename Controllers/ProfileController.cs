@@ -84,11 +84,9 @@ namespace AFI_Project.Controllers
 		public async Task<ActionResult<Object>> GetShortInfoProfileModel(int id)
 		{
 			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
-			List<string> hej;
 			var profileModel = await _context.Profiles
 			.Where(p => p.Pr_Id ==id)
 			.Select(p => new {p.Pr_Firstname, p.Pr_Lastname, p.Pr_City, p.Pr_Street})
-			//.Select(p => p.Pr_Id)
 			.FirstAsync();
 
 			if (profileModel == null)

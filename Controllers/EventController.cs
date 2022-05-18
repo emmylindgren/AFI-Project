@@ -88,6 +88,63 @@ namespace AFI_Project.Controllers
             return requests;
         }
 
+        // DELETE: api/Event/declineRequest/{eventid}/person/{personid}
+        [HttpDelete("declineRequest/{eventid}/person/{personid}")]
+        public async Task<IActionResult> DeleteRequestModel(int eventid, int personid)
+        {
+            var rim = await _context.RequestedInvites
+            .Where(r => r.Ev_Id == eventid && r.Pr_Id == personid)
+            .FirstAsync();
+
+            if (rim == null)
+            {
+                return NotFound();
+            }
+
+            _context.RequestedInvites.Remove(rim);
+            await _context.SaveChangesAsync();
+
+            DeclinedInviteModel dim = new DeclinedInviteModel();
+            dim.Pr_Id = personid;
+            dim.Ev_Id = eventid;
+            dim.Dec_Event = await _context.Events.FindAsync(eventid);
+            dim.Dec_Profile = await _context.Profiles.FindAsync(personid);
+
+            _context.DeclinedInvites.Add(dim);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // POST: api/Event/acceptRequest/{eventid}/person/{personid}
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("acceptRequest/{eventid}/person/{personid}")]
+		public async Task<ActionResult> AcceptRequestInvite(int eventid, int personid)
+		{
+            var rim = await _context.RequestedInvites
+            .Where(r => r.Ev_Id == eventid && r.Pr_Id == personid)
+            .FirstAsync();
+
+            if (rim == null)
+            {
+                return NotFound();
+            }
+
+            _context.RequestedInvites.Remove(rim);
+            await _context.SaveChangesAsync();
+
+            AttendingModel am = new AttendingModel();
+            am.Pr_Id = personid;
+            am.Ev_Id = eventid;
+            am.At_Event = await _context.Events.FindAsync(eventid);
+            am.At_Profile = await _context.Profiles.FindAsync(personid);
+
+			 _context.Attendees.Add(am);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+		}
+
         // GET: api/Event/latest/5
         [HttpGet("latest/{personID}")]
         public async Task<ActionResult<EventModel>> GetLatestEvent(int personID)

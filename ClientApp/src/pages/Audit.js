@@ -5,7 +5,13 @@ import axios from 'axios';
 import { API_ADRESS } from '../config';
 import AuditRequestCard from '../components/AuditRequestCard';
 
-function Audit() {
+
+const requestcardStyle = {
+    marginBottom:'2rem',
+}
+//TODO: Update eventID, take away =1. 
+// Fix so when button is pressed, page autoupdates and the request is removed. 
+function Audit({eventID=1}) {
     const [requests, setRequests] = useState([]);
     const [state, setState] = useState('loading');
 
@@ -13,7 +19,7 @@ function Audit() {
         axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
           };
-        axios.get(API_ADRESS + '/api/event/requests/'+ 1)
+        axios.get(API_ADRESS + '/api/event/requests/'+ eventID)
         .then(res =>{
             setState('loaded')
             setRequests(res.data)
@@ -27,11 +33,10 @@ function Audit() {
     let renderRequests = (requests) =>{
 
         return requests.map(request => {
-            
                return (
                 <div>
-                        <div key={request}><AuditRequestCard userID={request}/></div>
-                    </div>
+                    <div key={request} style={requestcardStyle}><AuditRequestCard userID={request} eventID={eventID}/></div>
+                </div>
                 )
         })
     }
