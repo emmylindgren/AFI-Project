@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useImperativeHandle, forwardRef } from 'react';
 import '../../custom.css';
 
+
 const style = {
     display: 'flex',
     flexDirection: 'row',
@@ -33,12 +34,14 @@ const Disability = forwardRef((props, _ref) =>{
         },
     }));
 
+   
     return (
         <div
             style={selected ? {...style, ...selectedStyle}: style}
             onClick={() =>{setSelected(!selected)}}
         >
             <img src='icons/addIconBlack.svg'/>
+            
             <p style={{marginBottom: 0, marginLeft: '10px'}}>{props.name}</p>
         </div>
     )

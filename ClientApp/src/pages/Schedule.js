@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../custom.css'
-import ScheduleEventCard from './ScheduleEventCard'
+import ScheduleEventCard from '../components/ScheduleEventCard'
 import axios from 'axios'
 import { API_ADRESS } from '../config'
+import TabBar from '../components/TabBar'
+import LoadingCard from '../components/LoadingCard'
+import ErrorCard from '../components/ErrorCard'
 
 
 const eventCardStyle = {
@@ -29,8 +32,7 @@ const noEventStyle = {
 
 /**
  * TODO: 
- * Update so events for the logged in person is showing. Right now for person with 
- * id of 1. Also add so that eventcards route to eventinfo for that event. 
+ * add so that eventcards route to eventinfo for that event. 
  * 
  */
 function Schedule() {
@@ -40,10 +42,16 @@ function Schedule() {
     let todayhasbeen = false;
 
     const [events, setEvents] = useState([]);
-    useEffect(()=>{
-        axios.get(API_ADRESS + '/api/event/profileID/'+ 1)
+    const [state, setState] = useState('loading');
+
+    useEffect(async ()=>{
+        axios.get(API_ADRESS + '/api/event/profileID/'+ localStorage.getItem("profileId"))
         .then(res =>{
+            setState('loaded')
             setEvents(res.data)
+        })
+        .catch(err =>{
+            setState('error')
         })
     },[])
 
@@ -75,17 +83,31 @@ function Schedule() {
                 // Another day than the last one
                 currentDate = eventDate;
                 return (
-                    <div>
+                    <div key={event.ev_Id}>
                         <div style={dateTextStyle}>
                             <h2 style = {{textAlign:'left', fontSize:'1.3rem',}}>{days[(eventDate.getDay())]}</h2>
                             <h2 style={{fontWeight:'200', fontSize:'1.3rem',}}>{eventDate.getDate() + " " + months[eventDate.getMonth()]}</h2>
                         </div>
-                        <div style ={eventCardStyle} key={event.ev_Id}><ScheduleEventCard event={event}/></div>
+                        <div style ={eventCardStyle}><ScheduleEventCard event={event}/></div>
                     </div>
                 )        
             }
         })      
         return (todayhasbeen ? <div>{eventsList}</div> : <div> <div style={noEventStyle}>You have no events today</div> {eventsList} </div>)
+    }
+
+    const getCurrentState = () => {
+        switch(state){
+            case 'loading':
+                return <LoadingCard/>
+            case 'loaded':
+                return renderEvents(events)
+            case 'error':
+                return <ErrorCard
+                iconChoice={'filenotfound'} 
+                infoText={"Oops, there was a problem when fetching your data! Try again later."}
+                    />
+        }
     }
     
 
@@ -97,10 +119,11 @@ function Schedule() {
                 <h2 style = {{textAlign:'left', fontSize:'1.3rem',}}>Today</h2>
                 <h2 style={{fontWeight:'200', fontSize:'1.3rem',}}>{new Date(Date.now()).getDate() + " " + months[new Date(Date.now()).getMonth()]}</h2>
             </div>
-            
-            {renderEvents(events)}
+
+            {getCurrentState()}
            
         </div>
+        <TabBar activeTab={1}/>
     </div>
   )
 

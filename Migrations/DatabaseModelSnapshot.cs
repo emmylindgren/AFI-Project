@@ -34,6 +34,25 @@ namespace AFI_Project.Migrations
                     b.ToTable("Tbl_Attendees");
                 });
 
+            modelBuilder.Entity("AFI_Project.Models.BadgeModel", b =>
+                {
+                    b.Property<int>("Ba_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ba_Img")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Ba_Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Ba_Id");
+
+                    b.ToTable("Tbl_Badges");
+                });
+
             modelBuilder.Entity("AFI_Project.Models.CategoryModel", b =>
                 {
                     b.Property<int>("Cat_Id")
@@ -47,6 +66,49 @@ namespace AFI_Project.Migrations
                     b.HasKey("Cat_Id");
 
                     b.ToTable("Tbl_Categories");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.CommentLikeModel", b =>
+                {
+                    b.Property<int>("Co_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Pr_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Co_Id", "Pr_Id");
+
+                    b.HasIndex("Pr_Id");
+
+                    b.ToTable("Tbl_CommentLikes");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.CommentModel", b =>
+                {
+                    b.Property<int>("Co_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Co_Content")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Co_Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Co_OwnerPr_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Co_PostPo_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Co_Id");
+
+                    b.HasIndex("Co_OwnerPr_Id");
+
+                    b.HasIndex("Co_PostPo_Id");
+
+                    b.ToTable("Tbl_Comments");
                 });
 
             modelBuilder.Entity("AFI_Project.Models.DeclinedInviteModel", b =>
@@ -171,6 +233,62 @@ namespace AFI_Project.Migrations
                     b.ToTable("Tbl_Interested");
                 });
 
+            modelBuilder.Entity("AFI_Project.Models.PostLikeModel", b =>
+                {
+                    b.Property<int>("Po_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Pr_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Po_Id", "Pr_Id");
+
+                    b.HasIndex("Pr_Id");
+
+                    b.ToTable("Tbl_PostLikes");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.PostModel", b =>
+                {
+                    b.Property<int>("Po_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Po_Content")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Po_Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Po_OwnerPr_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Po_Id");
+
+                    b.HasIndex("Po_OwnerPr_Id");
+
+                    b.ToTable("Tbl_Posts");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.ProfileBadgesModel", b =>
+                {
+                    b.Property<int>("Ba_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Pr_Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Pr_Ba_DateRecieved")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Ba_Id", "Pr_Id");
+
+                    b.HasIndex("Pr_Id");
+
+                    b.ToTable("Tbl_ProfileBadges");
+                });
+
             modelBuilder.Entity("AFI_Project.Models.ProfileDisabilityModel", b =>
                 {
                     b.Property<int>("Dis_Id")
@@ -270,6 +388,44 @@ namespace AFI_Project.Migrations
                     b.Navigation("At_Profile");
                 });
 
+            modelBuilder.Entity("AFI_Project.Models.CommentLikeModel", b =>
+                {
+                    b.HasOne("AFI_Project.Models.CommentModel", "CoLi_Comment")
+                        .WithMany("Co_Likes")
+                        .HasForeignKey("Co_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AFI_Project.Models.ProfileModel", "CoLi_Profile")
+                        .WithMany("Pr_CommentLikes")
+                        .HasForeignKey("Pr_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CoLi_Comment");
+
+                    b.Navigation("CoLi_Profile");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.CommentModel", b =>
+                {
+                    b.HasOne("AFI_Project.Models.ProfileModel", "Co_Owner")
+                        .WithMany()
+                        .HasForeignKey("Co_OwnerPr_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AFI_Project.Models.PostModel", "Co_Post")
+                        .WithMany("Po_Comments")
+                        .HasForeignKey("Co_PostPo_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Co_Owner");
+
+                    b.Navigation("Co_Post");
+                });
+
             modelBuilder.Entity("AFI_Project.Models.DeclinedInviteModel", b =>
                 {
                     b.HasOne("AFI_Project.Models.EventModel", "Dec_Event")
@@ -357,6 +513,55 @@ namespace AFI_Project.Migrations
                     b.Navigation("In_Profile");
                 });
 
+            modelBuilder.Entity("AFI_Project.Models.PostLikeModel", b =>
+                {
+                    b.HasOne("AFI_Project.Models.PostModel", "PoLi_Post")
+                        .WithMany("Po_Likes")
+                        .HasForeignKey("Po_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AFI_Project.Models.ProfileModel", "PoLi_Profile")
+                        .WithMany("Pr_PostLikes")
+                        .HasForeignKey("Pr_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PoLi_Post");
+
+                    b.Navigation("PoLi_Profile");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.PostModel", b =>
+                {
+                    b.HasOne("AFI_Project.Models.ProfileModel", "Po_Owner")
+                        .WithMany()
+                        .HasForeignKey("Po_OwnerPr_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Po_Owner");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.ProfileBadgesModel", b =>
+                {
+                    b.HasOne("AFI_Project.Models.BadgeModel", "Pr_Ba_Badge")
+                        .WithMany("Ba_Profiles")
+                        .HasForeignKey("Ba_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AFI_Project.Models.ProfileModel", "Pr_Ba_Profile")
+                        .WithMany("Pr_Badges")
+                        .HasForeignKey("Pr_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pr_Ba_Badge");
+
+                    b.Navigation("Pr_Ba_Profile");
+                });
+
             modelBuilder.Entity("AFI_Project.Models.ProfileDisabilityModel", b =>
                 {
                     b.HasOne("AFI_Project.Models.DisabilityModel", "Pr_Dis_Disability")
@@ -395,9 +600,19 @@ namespace AFI_Project.Migrations
                     b.Navigation("Req_Profile");
                 });
 
+            modelBuilder.Entity("AFI_Project.Models.BadgeModel", b =>
+                {
+                    b.Navigation("Ba_Profiles");
+                });
+
             modelBuilder.Entity("AFI_Project.Models.CategoryModel", b =>
                 {
                     b.Navigation("Cat_Events");
+                });
+
+            modelBuilder.Entity("AFI_Project.Models.CommentModel", b =>
+                {
+                    b.Navigation("Co_Likes");
                 });
 
             modelBuilder.Entity("AFI_Project.Models.DisabilityModel", b =>
@@ -422,15 +637,28 @@ namespace AFI_Project.Migrations
                     b.Navigation("Ev_RequestedInviteModel");
                 });
 
+            modelBuilder.Entity("AFI_Project.Models.PostModel", b =>
+                {
+                    b.Navigation("Po_Comments");
+
+                    b.Navigation("Po_Likes");
+                });
+
             modelBuilder.Entity("AFI_Project.Models.ProfileModel", b =>
                 {
                     b.Navigation("Pr_AttendingModel");
+
+                    b.Navigation("Pr_Badges");
+
+                    b.Navigation("Pr_CommentLikes");
 
                     b.Navigation("Pr_DeclinedInviteModel");
 
                     b.Navigation("Pr_Disabilities");
 
                     b.Navigation("Pr_InterestedModel");
+
+                    b.Navigation("Pr_PostLikes");
 
                     b.Navigation("Pr_RequestedInviteModel");
                 });
