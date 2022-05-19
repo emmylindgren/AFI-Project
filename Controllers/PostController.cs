@@ -118,6 +118,7 @@ namespace AFI_Project.Controllers
         [HttpPost]
         public async Task<ActionResult<PostModel>> PostPostModel(PostModel postModel)
         {
+            postModel.Po_Date = DateTime.Now;
             _context.Posts.Add(postModel);
             await _context.SaveChangesAsync();
 

@@ -101,6 +101,7 @@ namespace AFI_Project.Controllers
         [HttpPost]
         public async Task<ActionResult<CommentModel>> PostCommentModel(CommentModel commentModel)
         {
+            commentModel.Po_Date = DateTime.Now;
             _context.Comments.Add(commentModel);
             await _context.SaveChangesAsync();
 
