@@ -14,13 +14,18 @@ import Schedule from './pages/Schedule';
 import ProfilePage from './pages/ProfilePage';
 //Ska flyttas från components till pages
 import Attendees from './components/Attendees';
+<<<<<<< HEAD
 //Ska flyttas från components till pages
 import AttendeeInfo from './components/AttendeeInfo';
+=======
+import Audit from './pages/Audit';
+import Wall from './pages/Wall';
+>>>>>>> 267112cf912ec718223a32f5a53dbafbb061cfc9
 
 
 
 import './custom.css'
-import Audit from './pages/Audit';
+
 
 export default function App(){
   return (
@@ -30,6 +35,7 @@ export default function App(){
         <Route path='/sign-up' element={<SignUp/>} />
         <Route path='/schedule' element={<Schedule/>} />
         <Route path='/explore' element={<Explore/>} />
+        <Route path='/wall' element={<Wall/>} />
         <Route path='/event-information' element={<EventInformation/>} />
 
         <Route path='/create-event' element={<TemplatePage/>} />

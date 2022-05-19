@@ -200,6 +200,148 @@ namespace AFI_Project.Controllers
             return _context.Events.Any(e => e.Ev_Id == id);
         }
 
+        
+        // POST: api/Event/addGoing/{eventid}/person/{personid}
+        [HttpPost("addGoing/{eventid}/person/{personid}")]
+		public async Task<ActionResult> AddGoing(int eventid, int personid)
+		{
+            AttendingModel am = new AttendingModel();
+            am.Ev_Id = eventid;
+            am.Pr_Id = personid;
+            am.At_Event = await _context.Events.FindAsync(eventid);
+            am.At_Profile = await _context.Profiles.FindAsync(personid);
+
+            _context.Attendees.Add(am);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+		}
+
+         // POST: api/Event/addInterested/{eventid}/person/{personid}
+        [HttpPost("addInterested/{eventid}/person/{personid}")]
+		public async Task<ActionResult> AddInterested(int eventid, int personid)
+		{
+            InterestedModel im = new InterestedModel();
+            im.Ev_Id = eventid;
+            im.Pr_Id = personid;
+            im.In_Event = await _context.Events.FindAsync(eventid);
+            im.In_Profile = await _context.Profiles.FindAsync(personid);
+
+            _context.Interested.Add(im);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+		}
+
+         // POST: api/Event/addRequest/{eventid}/person/{personid}
+        [HttpPost("addRequest/{eventid}/person/{personid}")]
+		public async Task<ActionResult> AddRequestInvite(int eventid, int personid)
+		{
+            RequestedInviteModel rim = new RequestedInviteModel();
+            rim.Ev_Id = eventid;
+            rim.Pr_Id = personid;
+            rim.Req_Event = await _context.Events.FindAsync(eventid);
+            rim.Req_Profile = await _context.Profiles.FindAsync(personid);
+
+            _context.RequestedInvites.Add(rim);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+		}
+
+        // POST: api/Event/acceptRequest/{eventid}/person/{personid}
+        [HttpPost("acceptRequest/{eventid}/person/{personid}")]
+		public async Task<ActionResult> AcceptRequestInvite(int eventid, int personid)
+		{
+            var rim = await _context.RequestedInvites
+            .Where(r => r.Ev_Id == eventid && r.Pr_Id == personid)
+            .FirstAsync();
+
+            if (rim == null)
+            {
+                return NotFound();
+            }
+
+            _context.RequestedInvites.Remove(rim);
+            await _context.SaveChangesAsync();
+
+            AttendingModel am = new AttendingModel();
+            am.Pr_Id = personid;
+            am.Ev_Id = eventid;
+            am.At_Event = await _context.Events.FindAsync(eventid);
+            am.At_Profile = await _context.Profiles.FindAsync(personid);
+
+			 _context.Attendees.Add(am);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+		}
+
+        // DELETE: api/Event/deleteAttending/{eventid}/person/{personid}
+        [HttpDelete("deleteAttending/{eventid}/person/{personid}")]
+        public async Task<IActionResult> DeleteAttendingModel (int eventid, int personid)
+        {
+            var am = await _context.Attendees
+            .Where(i => i.Ev_Id == eventid && i.Pr_Id == personid)
+            .FirstAsync();
+
+            if (am == null)
+            {
+                return NotFound();
+            }
+
+            _context.Attendees.Remove(am);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        // DELETE: api/Event/deleteInterested/{eventid}/person/{personid}
+        [HttpDelete("deleteInterested/{eventid}/person/{personid}")]
+        public async Task<IActionResult> DeleteInterestedModel (int eventid, int personid)
+        {
+            var im = await _context.Interested
+            .Where(i => i.Ev_Id == eventid && i.Pr_Id == personid)
+            .FirstAsync();
+
+            if (im == null)
+            {
+                return NotFound();
+            }
+
+            _context.Interested.Remove(im);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/Event/declineRequest/{eventid}/person/{personid}
+        [HttpDelete("declineRequest/{eventid}/person/{personid}")]
+        public async Task<IActionResult> DeleteRequestModel(int eventid, int personid)
+        {
+            var rim = await _context.RequestedInvites
+            .Where(r => r.Ev_Id == eventid && r.Pr_Id == personid)
+            .FirstAsync();
+
+            if (rim == null)
+            {
+                return NotFound();
+            }
+
+            _context.RequestedInvites.Remove(rim);
+            await _context.SaveChangesAsync();
+
+            DeclinedInviteModel dim = new DeclinedInviteModel();
+            dim.Pr_Id = personid;
+            dim.Ev_Id = eventid;
+            dim.Dec_Event = await _context.Events.FindAsync(eventid);
+            dim.Dec_Profile = await _context.Profiles.FindAsync(personid);
+
+            _context.DeclinedInvites.Add(dim);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         		/// <summary>
 		/// Saves the provided IFormFile into the directory
 		/// wwwroot/uploadedfiles and sets this file as

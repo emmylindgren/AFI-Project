@@ -84,11 +84,9 @@ namespace AFI_Project.Controllers
 		public async Task<ActionResult<Object>> GetShortInfoProfileModel(int id)
 		{
 			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
-			List<string> hej;
 			var profileModel = await _context.Profiles
 			.Where(p => p.Pr_Id ==id)
 			.Select(p => new {p.Pr_Firstname, p.Pr_Lastname, p.Pr_City, p.Pr_Street})
-			//.Select(p => p.Pr_Id)
 			.FirstAsync();
 
 			if (profileModel == null)
@@ -145,6 +143,18 @@ namespace AFI_Project.Controllers
 
 			return NoContent();
 		}
+
+		// GET: api/profile/badges/5 to get all badges corresponding to person with id 5. 
+        [HttpGet("badges/{id}")]
+        public async Task<ActionResult<IEnumerable<ProfileBadgesModel>>> GetProfileBadges(int id)
+        {
+			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+			
+            return await _context.ProfileBadges
+            .Where(b => b.Pr_Id == id)
+			.Include(b=> b.Pr_Ba_Badge.Ba_Name)
+            .ToListAsync();
+        }
 
 		// POST: api/Profile
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

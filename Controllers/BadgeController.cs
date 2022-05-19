@@ -29,14 +29,22 @@ namespace AFI_Project.Controllers
             return await _context.Badges.ToListAsync();
         }
 
-        // GET: api/Comment/fromPerson/5 to get all badges corresponding to person with id 5. 
-        [HttpGet("fromPerson/{id}")]
-        public async Task<ActionResult<IEnumerable<BadgeModel>>> GetProfileBadges(int id)
-        {
-            return await _context.Badges
-            .Where(b => b.Ba_Profiles.Any(p => p.Pr_Id == id))
-            .ToListAsync();
-        }
+        [HttpGet("image/{id}")]
+		public async Task<IActionResult> GetBadgePicture(int id)
+		{
+			//if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
+			var bm = await _context.Badges.FindAsync(id);
+
+			if (bm == null)
+			{
+				return NotFound();
+			}
+
+			var img = System.IO.File.OpenRead(System.IO.Directory.GetCurrentDirectory() + bm.Ba_Img);
+
+			return File(img, "image/jpeg");
+		}
 
         // POST: api/Badge/profile/profilid/badge/badgeid
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
