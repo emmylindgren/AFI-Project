@@ -14,11 +14,14 @@ import Schedule from './pages/Schedule';
 import ProfilePage from './pages/ProfilePage';
 //Ska flyttas från components till pages
 import Attendees from './components/Attendees';
+import Audit from './pages/Audit';
+import Wall from './pages/Wall';
+import AttendeeInfo from './components/AttendeeInfo';
 
 
 
 import './custom.css'
-import Audit from './pages/Audit';
+
 
 export default function App(){
   return (
@@ -28,6 +31,7 @@ export default function App(){
         <Route path='/sign-up' element={<SignUp/>} />
         <Route path='/schedule' element={<Schedule/>} />
         <Route path='/explore' element={<Explore/>} />
+        <Route path='/wall' element={<Wall/>} />
         <Route path='/event-information' element={<EventInformation/>} />
 
         <Route path='/create-event' element={<TemplatePage/>} />
@@ -37,6 +41,7 @@ export default function App(){
         <Route path='/new-event' element={<CreateEvent/>} />
         <Route path='/profile' element={<ProfilePage/>} />
         <Route path='/attendees' element={<Attendees/>} />
+        <Route path='/attendee-info' element={<AttendeeInfo/>} />
       </Routes>
     </Layout>
   );

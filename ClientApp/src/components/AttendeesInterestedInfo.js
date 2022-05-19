@@ -24,21 +24,17 @@ const attendeeNameText = {
 }
 
 
+function AttendeesInterestedInfo(attendeeId, attendee){
 
-function AttendeesInfo(attendee, isHost){
-
-    console.log(isHost)    
-    
     return (
         <div style={attendeeContainer}>
-            <img style={imgStyle} src={API_ADRESS + "/api/profile/image/" + 1 /*Hämta id*/} ></img>
+            <img style={imgStyle} src={API_ADRESS + "/api/profile/image/" + attendeeId.attendeeId} ></img>
             <div style={attendeeNameText}>
-                {/*renderProfiles*/}
-                <p style={{display: 'inline'}}> Namn Efternamn </p> {isHost ? <span>(Host)</span> : ""} {/*Hämta från event attendees model*/}
-                <p className='gray-body-text'>Insert Location</p>
+                <p style={{display: 'inline'}}>{attendeeId.attendee.pr_Firstname} {attendeeId.attendee.pr_Lastname}</p>  {/*Hämta från event attendees model*/}
+                <p className='gray-body-text'>{attendeeId.attendee.pr_City}</p>
             </div> 
         </div>      
     );
 }
 
-export default AttendeesInfo
+export default AttendeesInterestedInfo
