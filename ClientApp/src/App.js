@@ -13,7 +13,7 @@ import CreateEvent from './pages/CreateEvent';
 import Schedule from './pages/Schedule';
 import ProfilePage from './pages/ProfilePage';
 //Ska flyttas från components till pages
-import Attendees from './components/Attendees';
+import Attendees from './pages/Attendees';
 import Audit from './pages/Audit';
 import Wall from './pages/Wall';
 import AttendeeInfo from './components/AttendeeInfo';

@@ -82,8 +82,8 @@ function AttendingInfoCard({event}) {
 
     // HÅRDKODADE SIFFROR MÅSTE ÄNDRAS TILL DYNAMISKA
     let isAttending =  event.ev_AttendingModel.find((element) => {
-        return element.pr_Id === 1;}) != undefined;
-    let isOwner = event.ev_Owner.pr_Id == 1;
+        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) != undefined;
+    let isOwner = event.ev_Owner.pr_Id == parseInt(localStorage.getItem("profileId"));
 
     let privateInformation = () => {
         if(event.ev_Private){
@@ -116,8 +116,7 @@ function AttendingInfoCard({event}) {
                             {event.ev_AttendingModel[3] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[3].pr_Id } style={image4Style}></img>}
                             {event.ev_AttendingModel[4] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[4].pr_Id } style={image5Style}></img>}
                         </div>
-                        <h3 style={{color: 'var(--deep-green'}}>See all</h3>
-                        {/*<Link to="../see-all" style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>See all</Link> */}
+                        <Link to="../attendees" state={{ event: event  }} style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>See all</Link> 
                     </div>)
                 }
             </div>
@@ -133,7 +132,7 @@ function AttendingInfoCard({event}) {
                         {event.ev_RequestedInviteModel[3] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_RequestedInviteModel[3].pr_Id } style={image4Style}></img>}
                         {event.ev_RequestedInviteModel[4] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_RequestedInviteModel[4].pr_Id } style={image5Style}></img>}
                     </div>
-                    <Link to="../audit" style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>Audit</Link>
+                    <Link to="../audit" state={{ eventID: event.ev_Id }} style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>Audit</Link>
                 </div>
              </div>
             : ""}

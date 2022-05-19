@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { API_ADRESS } from '../config';
-import BackButton from './BackButton'
-import TabBar from './TabBar';
-import AttendeesGoingInfo from './AttendeesGoingInfo';
-import AttendeesInterestedInfo from './AttendeesInterestedInfo';
-import AttendeesHost from './AttendeesHost';
+import BackButton from '../components/BackButton'
+import TabBar from '../components/TabBar';
+import AttendeesGoingInfo from '../components/AttendeesGoingInfo';
+import AttendeesInterestedInfo from '../components/AttendeesInterestedInfo';
+import AttendeesHost from '../components/AttendeesHost';
 import '../custom.css'
+import { useLocation } from 'react-router-dom'
 
 let renderGoingProfiles = (goingList) =>{
 
@@ -42,56 +43,31 @@ let renderInterestedProfiles = (interestedList) =>{
     })
 }
 
-function Attendees(goingList, interestedList, hostId){
-
-    let fakeHostId = 1
-    let fakeGoingList = [
-        {
-            "at_Profile": null,
-            "ev_Id": 1,
-            "pr_Id": 2
-        },
-        {
-            "at_Profile": null,
-            "ev_Id": 1,
-            "pr_Id": 3
-        }  
-    ];
-    let fakeInterestedList = [
-        {
-            "at_Profile": null,
-            "ev_Id": 1,
-            "pr_Id": 4
-        },
-        {
-            "at_Profile": null,
-            "ev_Id": 1,
-            "pr_Id": 5
-        },
-        {
-            "at_Profile": null,
-            "ev_Id": 1,
-            "pr_Id": 6
-        }
-    ];
+function Attendees(){
+    const navigate = useNavigate();
+    const location = useLocation();
+    const {event} = location.state;
+    const goingList = event.ev_AttendingModel;
+    const interestedList = event.ev_InterestedModel;
+    const hostId = event.ev_Owner.pr_Id;
 
     return (
         
         <div className="page-container">
             <div className="page-content">
-                <BackButton text="Overview" onClick={""} to={""}/>   
+                <BackButton text={'Overview'} onClick ={() => {navigate("../event-information")}} to={"../event-information"}/>
                 <h1>Attendees</h1>
                 <h3>Going</h3>
                 
                 <div>
-                    <AttendeesHost attendeeId={fakeHostId}/>
+                    <AttendeesHost attendeeId={hostId}/>
                 </div>
 
-                {renderGoingProfiles(fakeGoingList)}
+                {renderGoingProfiles(goingList)}
 
                 <br></br>
                 <h3>Interested</h3>
-                {renderInterestedProfiles(fakeInterestedList)}    
+                {renderInterestedProfiles(interestedList)}    
             </div>
             <TabBar activeTab={0}/>
         </div>
