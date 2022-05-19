@@ -13,17 +13,17 @@ const style = {
     cursor: 'pointer',
 }
 const textStyle = {
-    marginBottom : '0px',
+    marginBottom: '0px',
     fontSize: '1rem',
     fontFamily: 'Inter',
     color: 'var(--deep-green)',
     userSelect: 'none',
     webkitUserSelect: 'none',
 }
-function BackButton({text, onClick,to}) {
+function BackButton({ text, to }) {
     return (
-        <div style={style} onClick={() => onClick()}>
-            <img src='/icons/chevron-green.svg' width = {'20px'} height={'20px'} alt='<'/>
+        <div style={{ style }}>
+            <img src='/icons/chevron-green.svg' width={'20px'} height={'20px'} alt='<' />
             <Link style={textStyle} to={to}>{text}</Link>
         </div>
     )
