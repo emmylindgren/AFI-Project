@@ -66,9 +66,9 @@ function TabBar({ activeTab }) {
         return (
             <div style={tabIcon} onClick={() => { navigate('/wall') }} key="2">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M24.7954 2H5.25649C3.45798 2 2 3.45798 2 5.25649V24.7954C2 26.5939 3.45798 28.0519 5.25649 28.0519H24.7954C26.5939 28.0519 28.0519 26.5939 28.0519 24.7954V5.25649C28.0519 3.45798 26.5939 2 24.7954 2Z" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M24.7954 2H5.25649C3.45798 2 2 3.45798 2 5.25649V24.7954C2 26.5939 3.45798 28.0519 5.25649 28.0519H24.7954C26.5939 28.0519 28.0519 26.5939 28.0519 24.7954V5.25649C28.0519 3.45798 26.5939 2 24.7954 2Z" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M13.3978 19.5389V27.5Z" fill={color} />
-                    <path d="M2.5 10.513H19.0001M27.5 10.5L19.0001 10.513M2.50006 19.5389H19.0001M27.5 19.5389H19.0001M10.1413 2.5V6.25649V10.513M13.3978 19.5389V27.5M19.0001 19.5389V10.513" stroke={color} stroke-width="3.5" stroke-linecap="square" stroke-linejoin="round" />
+                    <path d="M2.5 10.513H19.0001M27.5 10.5L19.0001 10.513M2.50006 19.5389H19.0001M27.5 19.5389H19.0001M10.1413 2.5V6.25649V10.513M13.3978 19.5389V27.5M19.0001 19.5389V10.513" stroke={color} strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="round" />
                 </svg>
             </div>
         )
