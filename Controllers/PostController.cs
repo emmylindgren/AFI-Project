@@ -95,9 +95,9 @@ namespace AFI_Project.Controllers
             return Ok();
         }
 
-        // POST: api/Post/unlike/postId/profileID
+        // DELETE: api/Post/unlike/postId/profileID
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("unlike/{post}/{profile}")]
+        [HttpDelete("unlike/{post}/{profile}")]
         public async Task<ActionResult<PostModel>> DeletePostLikeModel(int post, int profile)
         {
             var plm = await _context.PostLikes.Where(pl => pl.Po_Id == post && pl.Pr_Id == profile)
@@ -118,6 +118,7 @@ namespace AFI_Project.Controllers
         [HttpPost]
         public async Task<ActionResult<PostModel>> PostPostModel(PostModel postModel)
         {
+            postModel.Po_Date = DateTime.Now;
             _context.Posts.Add(postModel);
             await _context.SaveChangesAsync();
 
