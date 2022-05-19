@@ -6,10 +6,12 @@ import TimeInput from "../components/form/TimeInput";
 import FileInput from "../components/form/FileInput";
 import DateInput from "../components/form/DateInput";
 import Button from "../components/Button";
+import ToggleInput from "../components/form/ToggleInput";
 import LocationInput from "../components/form/LocationInput";
 import { Navigate, useNavigate } from "react-router-dom";
 import { API_ADRESS } from "../config";
 import axios from "axios";
+import Toggle from "../components/form/Toggle";
 
 const buttonsContainer = {
 	display: 'flex',
@@ -22,6 +24,7 @@ function CreateEvent() {
 
 	const navigate = useNavigate()
 
+	const [privateEv, setPrivateEv] = useState(false);
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
 	const [time, setTime] = useState('')
@@ -48,7 +51,7 @@ function CreateEvent() {
 		form.append('eventdata', JSON.stringify({
 			Ev_Title: title,
 			Ev_Description: description,
-			Ev_Private: false,
+			Ev_Private: privateEv,
 			Ev_Street: adress,
 			Ev_City: city,
 			Ev_DateTime: date + ' ' + time,
@@ -94,6 +97,7 @@ function CreateEvent() {
 			<div className='page-content'>
 				<BackButton text='Back' to='/create-event' />
 				<h1>Create New Event</h1>
+				<ToggleInput enabled={privateEv} onChange={setPrivateEv} label='Private event' />
 				<TextInput value={title} onChange={setTitle} label="Event name" placeholder="Walk in the park..." />
 				<TextInput value={description} onChange={setDescription} label="Description" placeholder="A walk in the park..." />
 				<TimeInput value={time} onChange={setTime} label="Time" placeholder="14:40..." />
