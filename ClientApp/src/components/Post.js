@@ -14,6 +14,7 @@ const postCard = {
     backgroundColor:'var(--white)',
     borderRadius:'10px',
     padding:'0.8rem',
+    marginBottom:'2rem',
 }
 
 const likeAndCommentStyle = {
@@ -42,20 +43,23 @@ const commentWrapper = {
     marginBottom:'1rem',
 }
 
-
 function Post({post}) {
     
     const [profile,setProfile] = useState();
     const [loaded,setLoaded] = useState(false);
     const [liked, setLiked] = useState(false);
 
-    useEffect(()=>{
+    useEffect(()=>{    
         axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
         };
-        axios.get(API_ADRESS + '/api/profile/shortdetails/' + 1 /*post.p.Po_Owner.Pr_Id*/)
+        
+        axios.get(API_ADRESS + '/api/profile/shortdetails/' + post.po_Owner.pr_Id)
             .then(res => {
                 setProfile(res.data);
+                setLiked(post.po_Likes.find((like) => {
+                    return like.pr_Id == parseInt(localStorage.getItem("profileId"));
+                }))
                 setLoaded(true);
             })
         .catch(function (error){
@@ -63,26 +67,41 @@ function Post({post}) {
         });
     },[]);
 
-    /**
-     *         if((post.Po_Likes.Pr_Id).includes(localStorage().getItem("profileId"))){
-            setLiked = true;
-        } <-- Nåt sånt också.
-        Och lägg till Add click på hela divarna som innehåller ikoner och text för like och comment.  
-     */
+    let likePost = () => {
+        axios.defaults.headers.common = {
+            "ApiKey": localStorage.getItem("ApiKey"),
+        };
+
+        if(liked){
+            axios.delete(API_ADRESS + '/api/Post/unlike/'+ post.po_Id + '/' + parseInt(localStorage.getItem("profileId")))
+            .catch(function (error){
+                console.log(error);
+            });
+
+        }
+        else{
+            axios.post(API_ADRESS + '/api/Post/like/'+ post.po_Id + '/' + parseInt(localStorage.getItem("profileId")))
+            .catch(function (error){
+                console.log(error);
+            });
+        }
+
+    }
+
   return (
     <div>
         {loaded ? 
         (
         <div style={postCard}>
             <div style={profileInfoStyle}>
-                <img style={imgStyle} src={API_ADRESS + "/api/profile/image/"+ 1} id="profile-image"/>
+                <img style={imgStyle} src={API_ADRESS + "/api/profile/image/"+ post.po_Owner.pr_Id} id="profile-image"/>
                 <h3>{profile.pr_Firstname+ ' ' + profile.pr_Lastname}</h3>
             </div>
             <div style={commentWrapper}>
-                <p>Här ska de stå textyy</p>
+                <p>{post.po_Content}</p>
             </div>
             <div style={likeAndCommentWrapper}>
-                <div style={likeAndCommentStyle}>
+                <div style={likeAndCommentStyle} onClick ={() => {likePost()}}>
                     <img src= {liked ? '../icons/LikedIcon.svg' : '../icons/LikeIcon.svg'}/> 
                     <p className='clickable-text' style={{marginBottom:'0px'}}>Like</p>
                 </div>
