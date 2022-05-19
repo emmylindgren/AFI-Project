@@ -83,12 +83,12 @@ function Schedule() {
                 // Another day than the last one
                 currentDate = eventDate;
                 return (
-                    <div>
+                    <div key={event.ev_Id}>
                         <div style={dateTextStyle}>
                             <h2 style = {{textAlign:'left', fontSize:'1.3rem',}}>{days[(eventDate.getDay())]}</h2>
                             <h2 style={{fontWeight:'200', fontSize:'1.3rem',}}>{eventDate.getDate() + " " + months[eventDate.getMonth()]}</h2>
                         </div>
-                        <div style ={eventCardStyle} key={event.ev_Id}><ScheduleEventCard event={event}/></div>
+                        <div style ={eventCardStyle}><ScheduleEventCard event={event}/></div>
                     </div>
                 )        
             }
