@@ -9,32 +9,34 @@ import AttendeesInterestedInfo from './AttendeesInterestedInfo';
 import AttendeesHost from './AttendeesHost';
 import '../custom.css'
 
-let renderInterestedProfiles = (interestedList) =>{
-    return interestedList.map(interest => {
-        const [interested, setInterested] = useState([]);
-        useEffect(()=>{
-            axios.defaults.headers.common = {
-                "ApiKey": localStorage.getItem("ApiKey"),
-            };
-            axios.get(API_ADRESS + '/api/profile/shortdetails/' + interest.pr_Id)
-            .then(res =>{
-                setInterested(res.data)
-            })
-        },[])
-        return (<div key={interest.pr_Id}><AttendeesInterestedInfo attendeeId={interest.pr_Id} attendee={interested}/></div>)
-    })
-}
+function Badge({badgeInfo, dateReceived}){
 
+    const [date, setDate] = useState({year: 'loading', month: 'loading', day: 'loading'});
 
+    useEffect( () =>{
+        let date = new Date(dateReceived);
+        let year = date.getFullYear();
+        let month = ((date.getMonth()<10?'0':'') + date.getMonth());
+        let day = date.getDate();
 
-function Badge(){
+        setDate({year: year, month: month, day: day})
+    }, [])
 
+    const centerText = {
+        textAlign: 'center'
+    }
+
+    const badgeStyle = {
+        width: '130px',
+        marginBottom: '10px',
+        marginTop: '15px'
+    }
+    
     return (      
-        <div>
-
-            <h2>Hotell{/*badgenamn*/}</h2>
-            <h3>Trivago</h3>
-            
+        <div style = {centerText}>
+            <img src={API_ADRESS + "/api/badge/image/" + badgeInfo.ba_Id} style={badgeStyle}></img>
+            <h2>{badgeInfo.ba_Name}</h2>
+            <p>{date.year}/{date.month}/{date.day}</p>
         </div>
     );
 }
