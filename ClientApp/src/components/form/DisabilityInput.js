@@ -25,12 +25,12 @@ const DisabilityInput = forwardRef((props, _ref) => {
 
     useEffect(() => {
         axios.get(API_ADRESS + '/api/disability')
-        .then(res => {
-            setDisabilities(res.data);
-            setTimeout(() => {
-                setState('loaded')
-            },1500);
-        })
+            .then(res => {
+                setDisabilities(res.data);
+                setTimeout(() => {
+                    setState('loaded')
+                }, 1500);
+            })
     }, []);
 
     // useImperativeHabdle makes "getPillStates" visible from child reference in parent component. 
@@ -45,10 +45,10 @@ const DisabilityInput = forwardRef((props, _ref) => {
             })
             let disabilities = [];
             console.log(selections);
-            for(let i = 0; i < selections.length; i++){
-                if(selections[i] === true){
+            for (let i = 0; i < selections.length; i++) {
+                if (selections[i] === true) {
                     console.log(i)
-                    disabilities.push({Dis_Id: i+1})
+                    disabilities.push({ Dis_Id: i + 1 })
                 }
             }
             return disabilities;
@@ -57,20 +57,20 @@ const DisabilityInput = forwardRef((props, _ref) => {
 
     const renderPills = (d) => {
         return d.map(disability => {
-            return (<div key={disability.di_Id}><Disability name={disability.di_Name} ref={el => pills.current[disability.di_Id] = el}/></div>)
+            return (<div key={disability.di_Id}><Disability name={disability.di_Name} ref={el => pills.current[disability.di_Id] = el} /></div>)
         })
     }
 
     return (
         <div>
-            <label>Disabilities</label>
+            <label>{props.label ? props.label : 'Disabilities'}</label>
             <div style={disabilityStyle}>
-            {state === 'loaded' ?
-            (
-                renderPills(disabilities)
-            ) : (
-                <LoadingCard/>
-            )}
+                {state === 'loaded' ?
+                    (
+                        renderPills(disabilities)
+                    ) : (
+                        <LoadingCard />
+                    )}
             </div>
         </div>
     )
