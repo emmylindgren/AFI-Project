@@ -7,7 +7,7 @@ const containerStyle = {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: 'var(--light-gray)',
+    backgroundColor: '#F6F6F6',
     height: '70px',
     position: 'fixed',
     bottom: '0',

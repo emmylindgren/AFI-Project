@@ -16,6 +16,7 @@ import ProfilePage from './pages/ProfilePage';
 import Attendees from './components/Attendees';
 import Audit from './pages/Audit';
 import Wall from './pages/Wall';
+import AttendeeInfo from './components/AttendeeInfo';
 
 
 
@@ -40,6 +41,7 @@ export default function App(){
         <Route path='/new-event' element={<CreateEvent/>} />
         <Route path='/profile' element={<ProfilePage/>} />
         <Route path='/attendees' element={<Attendees/>} />
+        <Route path='/attendee-info' element={<AttendeeInfo/>} />
       </Routes>
     </Layout>
   );

@@ -25,31 +25,31 @@ const buttonstyle = {
 }
 
 function EventInfoButtons({event}) {
-    /*
-    useEffect( () =>{
-        let isAttending =  event.ev_AttendingModel.find((element) => {
-            return element.pr_Id === localStorage.getItem("profileId");}) != undefined;
-        let isDenied = event.ev_DeclinedInviteModel.find((element) => {
-            return element.pr_Id === localStorage.getItem("profileId");}) != undefined;
-            console.log(event.ev_InterestedModel)
-        let isInterested = event.ev_InterestedModel.find((element) => {
-            return element.pr_Id === localStorage.getItem("profileId");}) != undefined;
-        let isRequested =  event.ev_RequestedInviteModel.find((element) => {
-            return element.pr_Id === localStorage.getItem("profileId");}) != undefined;
-        let isOwner = event.ev_Owner.pr_Id == localStorage.getItem("profileId");
-        let isPrivate = event.ev_Private == localStorage.getItem("profileId");
-    }, []) */
-   
-    let isAttending =  false;
-    let isDenied = true;
-    let isInterested = true;
-    let isRequested =  true;
-    let isOwner = false;
-    let isPrivate = false;
-
-
+    const [isAttending , setIsAttending] = useState(event.ev_AttendingModel.find((element) => {
+        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+    const [isDenied , setIsDenied] = useState(event.ev_DeclinedInviteModel.find((element) => {
+        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+    const [isInterested , setIsInterested] = useState(event.ev_InterestedModel.find((element) => {
+        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+    const [isRequested , setIsRequested] = useState(event.ev_RequestedInviteModel.find((element) => {
+        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+    const [isOwner , setIsOwner] = useState(event.ev_Owner.pr_Id === parseInt(localStorage.getItem("profileId")))
+    const [isPrivate , setIsPrivate] = useState(event.ev_Private)
     const navigate = useNavigate();
+   
     
+    useEffect( () =>{
+        setIsAttending(event.ev_AttendingModel.find((element) => {
+                       return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined )
+        setIsDenied(event.ev_DeclinedInviteModel.find((element) => {
+                    return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+        setIsInterested(event.ev_InterestedModel.find((element) => {
+                        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+        setIsRequested(event.ev_RequestedInviteModel.find((element) => {
+                       return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+        setIsOwner(event.ev_Owner.pr_Id === parseInt(localStorage.getItem("profileId")))
+        setIsPrivate(event.ev_Private)
+    }, []) 
 
     let displayButtons = () => {
         if(isAttending){
@@ -84,36 +84,57 @@ function EventInfoButtons({event}) {
     let apiCall = (send) => {
         if(send === "interested"){
             if(isInterested){
-                console.log("already intereseted, removes intreseted")
+                remove(API_ADRESS + '/api/event/deleteInterested/'+ event.ev_Id +'/person/'+ localStorage.getItem("profileId"))
             }
             else{
-                 console.log("adds interested")
+                 update(API_ADRESS + '/api/event/addInterested/'+ event.ev_Id +'/person/'+ localStorage.getItem("profileId"))
             }
         }
         if(send === "going"){
             if(isAttending){
-                console.log("already going, removes going")
+                remove(API_ADRESS + '/api/event/deleteAttending/'+ event.ev_Id +'/person/'+ localStorage.getItem("profileId"))
             }
             else{
-                console.log("adds going")
+                update(API_ADRESS + '/api/event/addGoing/'+ event.ev_Id +'/person/'+ localStorage.getItem("profileId"))
             }
         }
         if(send === "request"){
-            if(isDenied){
-                console.log("have been denied, does nothing")
-            }
-            else{
-                if(!isAttending && isRequested){
-                    console.log("already requested, removes request")
-                }
+            if(!isDenied){
                 if(!isAttending && !isRequested){
-                    console.log("adds request")
+                    update(API_ADRESS + '/api/event/addRequest/'+ event.ev_Id +'/person/'+ localStorage.getItem("profileId"))
                 }
             }
         }
     }
 
-    
+    let update = (url) =>{
+        axios.defaults.headers.common = {
+            "ApiKey": localStorage.getItem("ApiKey"),
+        };
+
+        axios.post(url)
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(function (error){
+            console.log(error);
+        });
+        
+         
+    }
+
+    let remove = (url) => {
+        axios.defaults.headers.common = {
+            "ApiKey": localStorage.getItem("ApiKey"),
+        };
+        axios.delete(url)
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(function (error){
+        console.log(error);
+        });
+    }
 
     return (
         <div>
