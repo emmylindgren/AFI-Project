@@ -6,6 +6,7 @@ import axios from 'axios';
 import { API_ADRESS } from '../config';
 import LoadingCard from '../components/LoadingCard';
 import ErrorCard from '../components/ErrorCard';
+import Wallheader from '../components/Wallheader';
 
 
 function Wall() {
@@ -60,12 +61,14 @@ function Wall() {
 }
 
   return (
-    <div className='page-container' style={{backgroundColor:'var(--superlight-green)',height: '100vh',}}>
-        <div className='page-content'>
-            <p>Not implemented, for testing.</p>
-            {getCurrentState()}
-        </div>
-        <TabBar activeTab={2}/>
+    <div>
+      <Wallheader/>
+      <div className='page-container' style={{backgroundColor:'var(--superlight-green)',height: '100vh',}}>
+          <div className='page-content'>
+              {getCurrentState()}
+          </div>
+          <TabBar activeTab={2}/>
+      </div>
     </div>
   )
 }
