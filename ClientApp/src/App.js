@@ -14,6 +14,8 @@ import Schedule from './pages/Schedule';
 import ProfilePage from './pages/ProfilePage';
 //Ska flyttas från components till pages
 import Attendees from './components/Attendees';
+//Ska flyttas från components till pages
+import AttendeeInfo from './components/AttendeeInfo';
 
 
 
@@ -37,6 +39,7 @@ export default function App(){
         <Route path='/new-event' element={<CreateEvent/>} />
         <Route path='/profile' element={<ProfilePage/>} />
         <Route path='/attendees' element={<Attendees/>} />
+        <Route path='/attendee-info' element={<AttendeeInfo/>} />
       </Routes>
     </Layout>
   );

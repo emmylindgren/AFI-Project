@@ -82,8 +82,13 @@ function Attendees(goingList, interestedList, hostId){
                 <BackButton text="Overview" onClick={""} to={""}/>   
                 <h1>Attendees</h1>
                 <h3>Going</h3>
-                <AttendeesHost attendeeId={fakeHostId}/>
+                
+                <div>
+                    <AttendeesHost attendeeId={fakeHostId}/>
+                </div>
+
                 {renderGoingProfiles(fakeGoingList)}
+
                 <br></br>
                 <h3>Interested</h3>
                 {renderInterestedProfiles(fakeInterestedList)}    
