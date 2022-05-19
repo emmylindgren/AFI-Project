@@ -9,7 +9,7 @@ const style = {
     paddingBottom: '10px',
     userSelect: 'none',
     lineHeight: '20px',
-    webkitUserSelect: 'none',
+    WebkitUserSelect: 'none',
     cursor: 'pointer',
 }
 const textStyle = {
@@ -18,7 +18,7 @@ const textStyle = {
     fontFamily: 'Inter',
     color: 'var(--deep-green)',
     userSelect: 'none',
-    webkitUserSelect: 'none',
+    WebkitUserSelect: 'none',
 }
 function BackButton({ text, to }) {
     return (
