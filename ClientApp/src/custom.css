@@ -12,6 +12,7 @@
     --red-button: #971818;
     --grey-text: #6A6A6A;
 }
+/*------ LAYOUT ----------------------------------------------------------------*/
 
 .container {
   padding: 0;
@@ -26,14 +27,15 @@
 .page-container {
   display: grid;
   grid-template-columns: 20px auto 20px;
-  /*We need to fix the rows, 100vh rn is not good!!*/
   grid-template-rows: 20px auto 20px;
 }
-/* All content should be place within this class. */
+/* All content should be placed within this class. */
 .page-content {
   grid-column: 2;
   grid-row: 2;
 }
+
+/*------ FONTS ----------------------------------------------------------------*/
 
 a {
   color: #0366d6;
@@ -225,7 +227,7 @@ h4{
   padding:14px 0px 0px 15px;
 }
 
-/* For PWA */
+/*------ PWA ----------------------------------------------------------------*/
 @media all and (display-mode: standalone) {
   .notch-bg{
     background-color: var(--deep-green);
@@ -244,7 +246,7 @@ h4{
   }
 }
 
-/* Animations */
+/*------ ANIMATIONS ----------------------------------------------------------------*/
 
 .loading{
   animation: spin 1s infinite;
