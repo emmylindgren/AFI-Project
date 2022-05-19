@@ -4,10 +4,13 @@ import { API_ADRESS } from '../config';
 import '../custom.css'
 import AttendingPreview from './AttendingPreview';
 import LoadingCard from './LoadingCard';
+import { useNavigate } from 'react-router-dom';
+
 
 function EventCard({event,state}) {
-
+    console.log(event)
     const [date, setDate] = useState({month: 'loading', day: 'loading', hours: 'loading', minutes: 'loading', hoursToInt: 'loading', timeVar: 'loading'});
+    const navigate = useNavigate(); 
 
     useEffect( () =>{
         let date = new Date(event.ev_DateTime);
@@ -116,6 +119,7 @@ function EventCard({event,state}) {
 
     return (
         event ? (
+            
             <div className="event-card">
                 {state === 'loaded' ?
                 (

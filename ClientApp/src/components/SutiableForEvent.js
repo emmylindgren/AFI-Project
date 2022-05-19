@@ -13,9 +13,9 @@ const displayDisability = {
 
 }
 
-function SuitableForEvent({event}) {
+function SuitableForEvent({ev_Disabilities}) {
     
-    let hasDisabilities = Object.keys(event.ev_Disabilities).length;
+    let hasDisabilities = Object.keys(ev_Disabilities).length;
     const [disabilities, setDisabilities] = useState([]);
     
     useEffect(() => {
@@ -36,7 +36,7 @@ function SuitableForEvent({event}) {
     }
 
     let showDisabilities = () => {
-        return event.ev_Disabilities.map(disability => {
+        return ev_Disabilities.map(disability => {
             return (<div key={disability.dis_Id}><EventDisability name={eventDisabilities(disability.dis_Id)} /></div>)
         })
     }

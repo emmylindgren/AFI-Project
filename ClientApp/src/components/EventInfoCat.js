@@ -12,9 +12,9 @@ const displayCategories = {
 
 }
 
-function EventInfoCat({event}) {
+function EventInfoCat({ev_Categories}) {
     
-    let hasCategories = Object.keys(event.ev_Categories).length;
+    let hasCategories = Object.keys(ev_Categories).length;
     const [categories, setCategories] = useState([]);
     
     useEffect(() => {
@@ -36,7 +36,7 @@ function EventInfoCat({event}) {
     }
 
     let showCategories = () => {
-        return event.ev_Categories.map(category => {
+        return ev_Categories.map(category => {
             return (<div key={category.cat_Id}><EventCatBubbles name={eventCategories(category.cat_Id)} /></div>)
         })
     }

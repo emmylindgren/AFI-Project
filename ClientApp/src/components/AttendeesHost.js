@@ -16,14 +16,16 @@ const imgStyle = {
 
 const attendeeContainer = {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: '0.1rem'
 }
 
 const attendeeNameText = {
-    marginLeft: '1rem'
+    marginLeft: '1rem',
+    
 }
 
-function AttendeesHostInfo(attendeeId){
+function AttendeesHostInfo({attendeeId}){
 
     const [interested, setInterested] = useState([]);
     useEffect(()=>{
@@ -31,7 +33,7 @@ function AttendeesHostInfo(attendeeId){
             "ApiKey": localStorage.getItem("ApiKey"),
         };
 
-        axios.get(API_ADRESS + '/api/profile/shortdetails/' + attendeeId.attendeeId)
+        axios.get(API_ADRESS + '/api/profile/shortdetails/' + attendeeId)
         .then(res =>{
             setInterested(res.data);
         })
@@ -39,7 +41,7 @@ function AttendeesHostInfo(attendeeId){
 
     return (
         <div style={attendeeContainer}>
-            <img style={imgStyle} src={API_ADRESS + "/api/profile/image/" + attendeeId.attendeeId} ></img>
+            <img style={imgStyle} src={API_ADRESS + "/api/profile/image/" + attendeeId} ></img>
             <div style={attendeeNameText}>
                 <p style={{display: 'inline'}}>{interested.pr_Firstname} {interested.pr_Lastname}</p> <span>(Host)</span>
                 <p className='gray-body-text'>{interested.pr_City}</p>
