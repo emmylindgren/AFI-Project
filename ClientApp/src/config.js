@@ -1,1 +1,1 @@
-export const API_ADRESS = 'https://localhost:7259'
+export const API_ADRESS = 'https://greetup.christofferbillman.se'

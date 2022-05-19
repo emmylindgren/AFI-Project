@@ -30,7 +30,7 @@ builder.Services.AddDbContext<Database>(options =>
 			new MySqlServerVersion(new Version(8, 0, 27))));
 
 // Uncomment line below to use HTTPS.
-//builder.Services.AddLettuceEncrypt();
+builder.Services.AddLettuceEncrypt();
 
 var app = builder.Build();
 
