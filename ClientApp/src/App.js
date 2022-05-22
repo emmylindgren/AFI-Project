@@ -21,27 +21,29 @@ import AttendeeInfo from './components/AttendeeInfo';
 
 
 import './custom.css'
+import EditProfile from './pages/EditProfile';
 
 
-export default function App(){
+export default function App() {
   return (
     <Layout>
       <Routes>
-        <Route exact path='/' element={<LogIn/>} />
-        <Route path='/sign-up' element={<SignUp/>} />
-        <Route path='/schedule' element={<Schedule/>} />
-        <Route path='/explore' element={<Explore/>} />
-        <Route path='/wall' element={<Wall/>} />
-        <Route path='/event-information' element={<EventInformation/>} />
+        <Route exact path='/' element={<LogIn />} />
+        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/schedule' element={<Schedule />} />
+        <Route path='/explore' element={<Explore />} />
+        <Route path='/wall' element={<Wall />} />
+        <Route path='/event-information' element={<EventInformation />} />
 
-        <Route path='/create-event' element={<TemplatePage/>} />
-        <Route path='/event-short-details' element={<EventSD/>} />
-        <Route path='/audit' element={<Audit/>} />
+        <Route path='/create-event' element={<TemplatePage />} />
+        <Route path='/event-short-details' element={<EventSD />} />
+        <Route path='/audit' element={<Audit />} />
 
-        <Route path='/new-event' element={<CreateEvent/>} />
-        <Route path='/profile' element={<ProfilePage/>} />
-        <Route path='/attendees' element={<Attendees/>} />
-        <Route path='/attendee-info' element={<AttendeeInfo/>} />
+        <Route path='/new-event' element={<CreateEvent />} />
+        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/attendees' element={<Attendees />} />
+        <Route path='/attendee-info' element={<AttendeeInfo />} />
+        <Route path='/edit-profile' element={<EditProfile />} />
       </Routes>
     </Layout>
   );
