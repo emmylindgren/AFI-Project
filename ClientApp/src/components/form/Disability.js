@@ -21,7 +21,7 @@ const selectedStyle = {
     transitionDuration: '200ms'
 }
 
-const Disability = forwardRef((props, _ref) =>{
+const Disability = forwardRef((props, _ref) => {
 
     const [selected, setSelected] = useState(false)
 
@@ -32,17 +32,20 @@ const Disability = forwardRef((props, _ref) =>{
         getSelected: () => {
             return selected
         },
+        setSelected: (selected) => {
+            setSelected(selected)
+        }
     }));
 
-   
+
     return (
         <div
-            style={selected ? {...style, ...selectedStyle}: style}
-            onClick={() =>{setSelected(!selected)}}
+            style={selected ? { ...style, ...selectedStyle } : style}
+            onClick={() => { setSelected(!selected) }}
         >
-            <img src='icons/addIconBlack.svg'/>
-            
-            <p style={{marginBottom: 0, marginLeft: '10px'}}>{props.name}</p>
+            <img src='icons/addIconBlack.svg' />
+
+            <p style={{ marginBottom: 0, marginLeft: '10px' }}>{props.name}</p>
         </div>
     )
 })
