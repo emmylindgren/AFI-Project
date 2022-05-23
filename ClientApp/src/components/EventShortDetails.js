@@ -112,7 +112,7 @@ function EventShortDetails({event, returnTo}) {
            
             <div style={textBox}>
                 <div style={{paddingBottom:'20px'}}>
-                    <BackButtonGreen text="Back" to={returnTo} onClick={() => {console.log("hej!")}}/>
+                    <BackButtonGreen text="Back" to={returnTo} onClick={() => {console.log("")}}/>
                 </div>
            
                 <div style={Box}>

@@ -17,16 +17,12 @@ function EventInformation(){
     const [loaded, setLoaded] = useState(false);
     const location = useLocation();
     const {eventInfo} = location.state;
-    console.log(eventInfo)
    
    
     
     useEffect(()=>{
-        console.log("inne")
         axios.get(API_ADRESS + '/api/event/' + eventInfo.eventId)
         .then(res =>{
-            console.log("hej")
-            console.log(res.data)
             setEvents(res.data)
             setLoaded(true)
         })

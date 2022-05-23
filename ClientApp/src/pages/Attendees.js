@@ -40,7 +40,7 @@ let renderInterestedProfiles = (interestedList, eventInfo) =>{
                 setInterested(res.data)
             })
         },[])
-        return (<div key={interest.pr_Id}><AttendeesInterestedInfo attendeeId={interest.pr_Id} attendee={interested} eventInfo={eventInfo}/></div>)
+        return (<div key={interest.pr_Id}><AttendeesInterestedInfo attendeeId={interest.pr_Id} attendee={interested} event={eventInfo}/></div>)
     })
 }
 
@@ -62,7 +62,7 @@ function Attendees(){
                 <h3>Going</h3>
                 
                 <div>
-                    <AttendeesHost attendeeId={hostId}/>
+                    <AttendeesHost attendeeId={hostId} event={eventInfo}/>
                 </div>
                 {renderGoingProfiles(goingList, eventInfo)}
 
