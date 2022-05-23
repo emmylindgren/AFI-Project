@@ -50,6 +50,13 @@ function EventInfoButtons({event}) {
         setIsOwner(event.ev_Owner.pr_Id === parseInt(localStorage.getItem("profileId")))
         setIsPrivate(event.ev_Private)
     }, []) 
+    
+    /*let isAttending =  false;
+    let isDenied = true;
+    let isInterested = true;
+    let isRequested =  true;
+    let isOwner = false;
+    let isPrivate = false;*/
 
     let displayButtons = () => {
         if(isAttending){

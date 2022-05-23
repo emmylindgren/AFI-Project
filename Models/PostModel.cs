@@ -10,6 +10,8 @@ namespace AFI_Project.Models
 
         public string Po_Content { get; set; } = String.Empty;
 
+        public DateTime Po_Date{get;set;}
+
         public ProfileModel Po_Owner {get;set;}
 
         public virtual ICollection<PostLikeModel>? Po_Likes{ get; set; }

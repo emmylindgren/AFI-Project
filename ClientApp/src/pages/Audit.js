@@ -5,6 +5,7 @@ import axios from 'axios';
 import { API_ADRESS } from '../config';
 import AuditRequestCard from '../components/AuditRequestCard';
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom'
 
 
 const requestcardStyle = {
@@ -12,10 +13,12 @@ const requestcardStyle = {
 }
 //TODO: Update eventID, take away =1. 
 // Fix so when button is pressed, page autoupdates and the request is removed. 
-function Audit({eventID=1}) {
+function Audit() {
     const [requests, setRequests] = useState([]);
     const [state, setState] = useState('loading');
     const navigate = useNavigate();
+    const location = useLocation();
+    const { eventID } = location.state;
 
     useEffect(async ()=>{
         axios.defaults.headers.common = {
@@ -49,7 +52,7 @@ function Audit({eventID=1}) {
   return (
     <div className='page-container'>
         <div className='page-content'>
-        <BackButton text={'Overview'} onClick ={() => {navigateTo()}} to={"../event-information"}/>
+        <BackButton text={'Overview'} onClick ={() => {navigate("../event-information")}} to={"../event-information"}/>
         <h1 style={{color:'var(--black)', marginTop:'1rem',}}>Audit</h1>
         <h3 style={{marginBottom:'1rem',}}>Requested invites</h3>
         {renderRequests(requests)}
