@@ -76,7 +76,7 @@ function Post({post, withComment = true}) {
                 </div>
                 {withComment ?
                 <div className='likeAndCommentStyle'>
-                  <Link to='../Comments' className='clickableEventCard' state={{postID:post.po_Id}}><span></span></Link>
+                  <Link to='../Comments' className='clickableComment' state={{postID:post.po_Id}}><span></span></Link>
                     <img src='../icons/CommentIcon.svg'/>
                     <p className='clickable-text' style={{marginBottom:'0px'}}>Comment</p>
                 </div>
