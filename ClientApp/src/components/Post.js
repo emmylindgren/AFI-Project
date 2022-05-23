@@ -8,6 +8,7 @@ const imgStyle = {
     height:'44px',
     width:'44px',
     borderRadius:'50px',
+    select:'none',
 }
 
 const postCard = {
@@ -43,7 +44,7 @@ const commentWrapper = {
     marginBottom:'1rem',
 }
 
-function Post({post}) {
+function Post({post, withComment = true, isComment=false }) {
     
     const [profile,setProfile] = useState();
     const [loaded,setLoaded] = useState(false);
@@ -77,6 +78,10 @@ function Post({post}) {
         };
 
         if(liked){
+          /*
+          if(isComment){
+            //Då ska vi ta bort en kommentars like och inte en posts. 
+          }*/
             axios.delete(API_ADRESS + '/api/Post/unlike/'+ post.po_Id + '/' + parseInt(localStorage.getItem("profileId")))
             .catch(function (error){
                 console.log(error);
@@ -114,10 +119,13 @@ function Post({post}) {
                     <img src= {liked ? '../icons/LikedIcon.svg' : '../icons/LikeIcon.svg'}/> 
                     <p className='clickable-text' style={{marginBottom:'0px'}}>Like</p>
                 </div>
+                {withComment ?
                 <div style={likeAndCommentStyle}>
                     <img src='../icons/CommentIcon.svg'/>
                     <p className='clickable-text' style={{marginBottom:'0px'}}>Comment</p>
                 </div>
+                : ""
+                }
             </div>
         </div>
         )
