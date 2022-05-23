@@ -8,25 +8,24 @@ import ErrorCard from '../components/ErrorCard';
 import BackButtonGreen from '../components/BackButtonGreen';
 import BackButton from '../components/BackButton';
 import Comment from '../components/Comment';
+import { useLocation } from 'react-router-dom';
 
 function Comments() {
-
-    const { postID } = 5;
-
     const [post, setPost] = useState([]);
     const [postState, setPostState] = useState('loading');
 
     const [comments, setComments] = useState([]);
     const [commentState, setCommentState] = useState('loading');
+    const location = useLocation();
+    const {postID} = location.state;
 
     useEffect(async ()=>{
         axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
             };
-        axios.get(API_ADRESS + '/api/Post/'+5)
+        axios.get(API_ADRESS + '/api/Post/'+postID)
         .then(res =>{
             setPost(res.data)
-            console.log(res.data)
             setPostState('loaded')
            
         })
@@ -34,14 +33,14 @@ function Comments() {
             setPostState('error')
             console.log(err)
         })
-
-        //api/Comment/fromPost/5
         
-        axios.get(API_ADRESS + '/api/Comment/fromPost/'+5)
+        axios.get(API_ADRESS + '/api/Comment/fromPost/'+postID)
         .then(res =>{
             setComments(res.data)
-            console.log(res.data)
             setCommentState('loaded')
+            if(res.data.length < 1){
+              setCommentState('nodata')
+            }
            
         })
         .catch(err =>{
@@ -61,7 +60,7 @@ function Comments() {
             case 'loading':
                 return <LoadingCard/>
             case 'loaded':
-                return <Post post={post} withComment={false}/>
+                return <div style ={{marginBottom:'2rem',}}><Post post={post} withComment={false}/></div>
             case 'error':
                 return <ErrorCard
                 iconChoice={'filenotfound'} 
@@ -76,6 +75,10 @@ function Comments() {
                 return <LoadingCard/>
             case 'loaded':
                 return renderComments(comments)
+            case 'nodata':
+                return <ErrorCard
+                infoText={"No comments yet! Maybe add one?"}
+                    />
             case 'error':
                 return <ErrorCard
                 iconChoice={'filenotfound'} 
@@ -90,9 +93,11 @@ function Comments() {
               <div style={{marginBottom:'2rem',}}>
                 <BackButton text={"Your Neighbourhood"} to={'../Wall'}/>
               </div>
-              {getCurrentPostState()}
+                {getCurrentPostState()}
+                <div style={{backgroundColor:'var(--white)'}}><p>Här ska man kunna adda en comment hihih</p></div>
               <div>
-              {getCurrentCommentState()}
+                <h1 style={{color:'var(--black)'}}>Comments</h1>
+                {getCurrentCommentState()}
               </div>
           </div>
     </div>

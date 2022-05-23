@@ -46,8 +46,6 @@ function CreateEvent() {
 
 		let form = new FormData();
 
-		axios.get(API_ADRESS + '/api/')
-
 		form.append('eventdata', JSON.stringify({
 			Ev_Title: title,
 			Ev_Description: description,

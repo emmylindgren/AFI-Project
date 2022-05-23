@@ -6,17 +6,6 @@ import AttendingPreview from './AttendingPreview';
 import LoadingCard from './LoadingCard';
 import { Link, renderMatches } from 'react-router-dom';
 
-const clickableEventCard = {
-    position: 'absolute', 
-    display: 'inline-block',
-    width: '100%',
-    height: '100%',
-    maxHeight: '130px',
-    float: 'left',
-    left: '0',
-    zIndex: '1',
-    //backgroundColor: 'red',
-}
 
 function EventCard({event,state}) {
     const [date, setDate] = useState({month: 'loading', day: 'loading', hours: 'loading', minutes: 'loading', hoursToInt: 'loading', timeVar: 'loading'});
@@ -138,7 +127,7 @@ function EventCard({event,state}) {
                 {state === 'loaded' ?
                 (
                 <span >
-                    <Link to="../event-information" style={clickableEventCard} state={{eventInfo: eventInfo}} ><span></span></Link>
+                    <Link to="../event-information" className='clickableEventCard' state={{eventInfo: eventInfo}} ><span></span></Link>
                     <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
                    
                     {disabilitiesMatching({event}) === "none" ? <h3>{event.ev_Title}</h3> : ""}

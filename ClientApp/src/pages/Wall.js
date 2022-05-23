@@ -20,8 +20,8 @@ function Wall() {
         };
       axios.get(API_ADRESS + '/api/Post')
       .then(res =>{
-          setState('loaded')
           setPosts(res.data)
+          setState('loaded')
           if(res.data.length < 1){
             setState('nodata')
           }
@@ -49,9 +49,9 @@ function Wall() {
         case 'loaded':
             return renderPosts(posts)
         case 'nodata': 
-        return <ErrorCard 
-        infoText={"Oh no, there's nothing here! No one has added any posts. Maybe be the first one to do so?"}
-            />
+          return <ErrorCard 
+          infoText={"Oh no, there's nothing here! No one has added any posts. Maybe be the first one to do so?"}
+              />
         case 'error':
             return <ErrorCard
             iconChoice={'filenotfound'} 

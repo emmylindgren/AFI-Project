@@ -5,6 +5,7 @@ import { API_ADRESS } from '../config';
 import LoadingCard from './LoadingCard';
 import TimeAgo from './TimeAgo';
 import './PostComment.css';
+import { Link } from 'react-router-dom';
 
 function Post({post, withComment = true}) {
     
@@ -75,6 +76,7 @@ function Post({post, withComment = true}) {
                 </div>
                 {withComment ?
                 <div className='likeAndCommentStyle'>
+                  <Link to='../Comments' className='clickableComment' state={{postID:post.po_Id}}><span></span></Link>
                     <img src='../icons/CommentIcon.svg'/>
                     <p className='clickable-text' style={{marginBottom:'0px'}}>Comment</p>
                 </div>

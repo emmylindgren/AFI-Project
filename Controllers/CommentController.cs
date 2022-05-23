@@ -27,16 +27,12 @@ namespace AFI_Project.Controllers
         //Task<ActionResult<IEnumerable<PostModel>>>
         public async Task<ActionResult<ICollection<CommentModel>>> GetComments(int id)
         {
-            //=> p.Po_Id == id
             //if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
 
             return await _context.Comments.Where(p => p.Co_Post.Po_Id == id)
             .Include(c => c.Co_Owner).Include(c => c.Co_Likes)
+            .OrderByDescending(c => c.Co_Date)
             .ToListAsync();
-/*
-            var models = await _context.Posts.Where(p => p.Po_Id == id)
-            .Include(p=> p.Po_Comments).Select(p => p.Po_Comments).FirstAsync();
-            return (ActionResult)models;*/
         }
 
         // POST: api/Comment/like/commentId/profileID
