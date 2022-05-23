@@ -24,7 +24,7 @@ const Box = {
 }
 
 const dateAndTime = {
-    width: '40%',
+    width: '48%',
 }
 
 
@@ -54,9 +54,9 @@ function EventShortDetails({event, returnTo}) {
 
     //BYT UT SIFFROR MOT DYNAMISKT
     let isAttending =  event.ev_AttendingModel.find((element) => {
-        return element.pr_Id === 1;}) != undefined;
+        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) != undefined;
 
-    let isOwner = event.ev_Owner.pr_Id == 1;
+    let isOwner = event.ev_Owner.pr_Id == parseInt(localStorage.getItem("profileId"));
 
     if(hoursToInt > 12 && hoursToInt < 24) {
         hours = hoursToInt % 12;
@@ -69,29 +69,29 @@ function EventShortDetails({event, returnTo}) {
 
     const functionWithSwitch = (month) => {
         switch(month){
-            case "01":
+            case "00":
                 return "January"
-            case "02": 
+            case "01": 
                 return "February"
-            case "03":
+            case "02":
                 return "March"
-            case "04":
+            case "03":
                 return "April"
-            case "05":
+            case "04":
                 return "May"
-            case "06":
+            case "05":
                 return "June"
-            case "07":
+            case "06":
                 return "July"
-            case "08": 
+            case "07": 
                 return "August"
-            case "09":
+            case "08":
                 return "September"
-            case "10":
+            case "09":
                 return "October"
-            case "11":
+            case "10":
                 return "November"
-            case "12":
+            case "11":
                 return "December"
         }        
     }
@@ -103,7 +103,6 @@ function EventShortDetails({event, returnTo}) {
             if(isAttending || isOwner){
                 return false;
             }
-            
             return true;
         }
         return false;
@@ -117,7 +116,7 @@ function EventShortDetails({event, returnTo}) {
                 </div>
            
                 <div style={Box}>
-                    <h1>Stroll in the park</h1>
+                    <h1>{event.ev_Title}</h1>
                 </div>
                 <div style={Box}>
                     <img src={locationIcon} id="location-icon"></img>

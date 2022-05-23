@@ -1,22 +1,20 @@
 import React from 'react'
 import { useState , useRef} from "react";
-import TextInput from "../components/form/TextInput";
+import WallPost from "../components/form/WallPost";
 import { API_ADRESS } from "../config";
 import axios from "axios";
 
 const headerWrapperStyle = {
-    height: '50vw',
+    height: '40vw',
     maxHeight: '200px',
     
 }
 
 const prImgStyle = {
   borderRadius: '100%',
-  width: '50px',
-}
-
-const textInputStyle = {
-  backgroundColor: 'red'
+  margin:'32px 15px 0 0',
+  width: '45px',
+  height: '45px'
 }
 
 function Wallheader() {
@@ -56,15 +54,15 @@ function Wallheader() {
 
   return (
     <div className='page-container'>
-          <div className='page-content'>
-            <div style={headerWrapperStyle} >
-              <h1>Your neighbourhood</h1>
-                <span>
-                  <img src={API_ADRESS + "/api/profile/image/" + localStorage.getItem("profileId")} style={prImgStyle}></img>  
-                  <TextInput value={content} onChange={setContent} label="Post something" placeholder="What have you been up to lately..."/>
-                </span>
-            </div>
+      <div className='page-content'>
+        <div style={headerWrapperStyle} >
+          <h1>Your neighbourhood</h1>
+          <div style={{display:'flex'}}>
+            <img src={API_ADRESS + "/api/profile/image/" + localStorage.getItem("profileId")} style={prImgStyle}></img>  
+            <WallPost value={content} onChange={setContent} label="Post something" placeholder="What have you been up to lately..."/>
+          </div>
         </div>
+      </div>
     </div>
 
   )

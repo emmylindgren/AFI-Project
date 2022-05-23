@@ -9,36 +9,42 @@ import { API_ADRESS } from '../config';
 import DisabilityInput from '../components/form/DisabilityInput';
 import TextInput from '../components/form/TextInput';
 import DateInput from '../components/form/DateInput';
-import TabBar from '../components/TabBar';
 
 const style = {
     backgroundColor: 'rgb(240,240,240)',
 }
 
-function SignUp() {
+function EditProfile() {
 
-    const location = useLocation();
+    const { state } = useLocation();
     const navigate = useNavigate();
 
-    const [firstname, setFirstname] = useState(location.state ? location.state.firstname : '');
-    const [lastname, setLastname] = useState(location.state ? location.state.lastname : '');
-    const [birthdate, setBirthdate] = useState('');
-    const [adress, setAdress] = useState('');
-    const [postalcode, setPostalCode] = useState('');
-    const [city, setCity] = useState('');
+    const [firstname, setFirstname] = useState(state.pr_Firstname ? state.pr_Firstname : '');
+    const [lastname, setLastname] = useState(state.pr_Lastname ? state.pr_Lastname : '');
+    const [birthdate, setBirthdate] = useState(state.pr_BirthDate ? state.pr_BirthDate.split('T')[0] : '');
+    const [adress, setAdress] = useState(state.pr_Street ? state.pr_Street : '');
+    const [postalcode, setPostalCode] = useState(state.pr_PostalCode ? state.pr_PostalCode : '');
+    const [city, setCity] = useState(state.pr_City ? state.pr_City : '');
 
-    const [profilePicture, setProfilePicture] = useState(location.state ? location.state.imgUrl : 'plant.png');
+    const [profilePicture, setProfilePicture] = useState(API_ADRESS + '/api/profile/image/' + localStorage.getItem('profileId'));
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const [fileChanged, setFileChanged] = useState(false);
 
     const disabilityRef = useRef(null);
 
     useEffect(() => {
         const filepicker = document.getElementById('propicker');
         filepicker.addEventListener('change', (e) => {
+            setFileChanged(true)
             setProfilePicture(URL.createObjectURL(e.target.files[0]));
         })
+
+        setTimeout(() => {
+            disabilityRef.current.setPillStates(state.pr_Disabilities);
+        }, 2000)
     }, [])
 
     const submitProfile = async () => {
@@ -48,38 +54,40 @@ function SignUp() {
         const propicker = document.getElementById('propicker');
 
         form.append('userdata', JSON.stringify({
+            Pr_Id: localStorage.getItem('profileId'),
             Pr_Firstname: firstname,
             Pr_Lastname: lastname,
             Pr_BirthDate: birthdate,
             Pr_Street: adress,
             Pr_PostalCode: postalcode,
             Pr_City: city,
-            GoogleId: location.state ? location.state.googleId : null,
+            GoogleId: state ? state.googleId : null,
             Pr_Disabilities: disabilityRef.current.getPillStates()
         }));
 
-        let blob
-        // If a file is selected
-        if (propicker.files[0]) {
-            // Get from user selection.
-            blob = await FileReaderPromised(propicker.files[0])
+        if (fileChanged) {
+            let blob
+            // If a file is selected
+            if (propicker.files[0]) {
+                // Get from user selection.
+                blob = await FileReaderPromised(propicker.files[0])
+            }
+            else {
+                // Get from Google/default.
+                blob = await fetch(profilePicture).then(r => r.blob())
+            }
+            let binaryImg = new File([blob], 'uploadFile.jpg', { type: 'image/jpeg' })
+            form.append('uploadFile', binaryImg);
         }
-        else {
-            // Get from Google/default.
-            blob = await fetch(profilePicture).then(r => r.blob())
-        }
-        let binaryImg = new File([blob], 'uploadFile.jpg', { type: 'image/jpeg' })
-        form.append('uploadFile', binaryImg);
 
-        axios.post(API_ADRESS + '/api/profile', form)
+        axios.put(API_ADRESS + '/api/profile', form)
             .then(res => {
                 if (res.status >= 200 && res.status < 300) {
                     setError('');
-                    setSuccess('Successfully created profile.');
+                    setSuccess('Profile updated');
                     //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
                     // Be post att returnera den nya användarens profilId samt API nyckel.
-                    localStorage.setItem("profileId", res.data.pr_Id);
-                    navigate('/explore')
+                    navigate('/profile')
                 }
                 else {
                     setError('Something went wrong. Try again later.');
@@ -96,8 +104,8 @@ function SignUp() {
     return (
         <div style={style} className='page-container'>
             <div className='page-content'>
-                <BackButton text="Back" to='/' onClick={() => { console.log("hej!") }} />
-                <h1>Create New Profile</h1>
+                <BackButton text="Back" to='/profile' />
+                <h1>Edit Profile</h1>
 
                 {renderProfilePicture(profilePicture)}
 
@@ -110,7 +118,7 @@ function SignUp() {
 
                 <DisabilityInput ref={disabilityRef} />
 
-                <Button text='Sign up' buttonColorChoice='green' onClick={() => submitProfile()} />
+                <Button text='Apply changes' buttonColorChoice='green' onClick={() => submitProfile()} />
 
                 <div style={{ margin: '20px 0 20px 0' }}></div>
                 <p className='err-text'>{error}</p>
@@ -146,4 +154,4 @@ function FileReaderPromised(file) {
     );
 }
 
-export default SignUp;
+export default EditProfile;

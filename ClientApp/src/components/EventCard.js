@@ -4,13 +4,23 @@ import { API_ADRESS } from '../config';
 import '../custom.css'
 import AttendingPreview from './AttendingPreview';
 import LoadingCard from './LoadingCard';
-import { useNavigate } from 'react-router-dom';
+import { Link, renderMatches } from 'react-router-dom';
 
+const clickableEventCard = {
+    position: 'absolute', 
+    display: 'inline-block',
+    width: '100%',
+    height: '100%',
+    maxHeight: '130px',
+    float: 'left',
+    left: '0',
+    zIndex: '1',
+    //backgroundColor: 'red',
+}
 
 function EventCard({event,state}) {
-    console.log(event)
     const [date, setDate] = useState({month: 'loading', day: 'loading', hours: 'loading', minutes: 'loading', hoursToInt: 'loading', timeVar: 'loading'});
-    const navigate = useNavigate(); 
+    const [eventInfo, setEventInfo] = useState({eventId: 'loading', returnTo: 'loading'});
 
     useEffect( () =>{
         let date = new Date(event.ev_DateTime);
@@ -20,6 +30,8 @@ function EventCard({event,state}) {
         let minutes = ((date.getMinutes()<10?'0':'') + date.getMinutes());
         let hoursToInt = parseInt(hours);
         let timeVar = "AM";
+        let eventId = event.ev_Id;
+        let returnTo = "/explore";
 
         if(hoursToInt > 12 && hoursToInt < 24) {
             hours = hoursToInt % 12;
@@ -30,33 +42,35 @@ function EventCard({event,state}) {
             timeVar = "PM";
         }
         setDate({month: month, day: day, hours: hours, minutes: minutes, hoursToInt: hoursToInt, timeVar: timeVar})
+        setEventInfo({eventId: eventId, returnTo: returnTo});
     }, [])
 
     const functionWithSwitch = (month) => {
+        
         switch(month){
-            case "01":
+            case "00":
                 return "January"
-            case "02": 
+            case "01": 
                 return "February"
-            case "03":
+            case "02":
                 return "March"
-            case "04":
+            case "03":
                 return "April"
-            case "05":
+            case "04":
                 return "May"
-            case "06":
+            case "05":
                 return "June"
-            case "07":
+            case "06":
                 return "July"
-            case "08": 
+            case "07": 
                 return "August"
-            case "09":
+            case "08":
                 return "September"
-            case "10":
+            case "09":
                 return "October"
-            case "11":
+            case "10":
                 return "November"
-            case "12":
+            case "11":
                 return "December"
         }        
     }
@@ -120,12 +134,13 @@ function EventCard({event,state}) {
     return (
         event ? (
             
-            <div className="event-card">
+            <div className="event-card" >
                 {state === 'loaded' ?
                 (
-                <span>
+                <span >
+                    <Link to="../event-information" style={clickableEventCard} state={{eventInfo: eventInfo}} ><span></span></Link>
                     <img src={API_ADRESS + "/api/event/image/" + event.ev_Id} id="event-image"></img>
-
+                   
                     {disabilitiesMatching({event}) === "none" ? <h3>{event.ev_Title}</h3> : ""}
                     {disabilitiesMatching({event}) === "small" ? <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning-orange.svg"></img></h3> : ""}
                     {disabilitiesMatching({event}) === "large" ? <h3>{event.ev_Title}<img id="warning-icon" src="icons/warning-red.svg"></img></h3> : ""}

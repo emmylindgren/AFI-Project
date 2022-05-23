@@ -50,7 +50,7 @@ function SuitableForEvent({ev_Disabilities}) {
                         {showDisabilities()}
                     </div>
                 </div>
-                : <p>Suitable for everyone</p>
+                : <p>No suitables chosen</p>
             }
         </div>
     );
