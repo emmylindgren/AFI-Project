@@ -8,21 +8,22 @@ import ErrorCard from '../components/ErrorCard';
 import BackButtonGreen from '../components/BackButtonGreen';
 import BackButton from '../components/BackButton';
 import Comment from '../components/Comment';
+import { useLocation } from 'react-router-dom';
 
 function Comments() {
-    const { postID } = 5;
-
     const [post, setPost] = useState([]);
     const [postState, setPostState] = useState('loading');
 
     const [comments, setComments] = useState([]);
     const [commentState, setCommentState] = useState('loading');
+    const location = useLocation();
+    const {postID} = location.state;
 
     useEffect(async ()=>{
         axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
             };
-        axios.get(API_ADRESS + '/api/Post/'+5)
+        axios.get(API_ADRESS + '/api/Post/'+postID)
         .then(res =>{
             setPost(res.data)
             setPostState('loaded')
@@ -33,7 +34,7 @@ function Comments() {
             console.log(err)
         })
         
-        axios.get(API_ADRESS + '/api/Comment/fromPost/'+5)
+        axios.get(API_ADRESS + '/api/Comment/fromPost/'+postID)
         .then(res =>{
             setComments(res.data)
             setCommentState('loaded')
