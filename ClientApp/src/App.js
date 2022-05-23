@@ -22,6 +22,7 @@ import AttendeeInfo from './components/AttendeeInfo';
 
 import './custom.css'
 import EditProfile from './pages/EditProfile';
+import Comments from './pages/Comments';
 
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/attendees' element={<Attendees />} />
         <Route path='/attendee-info' element={<AttendeeInfo />} />
+        <Route path='/comments' element={<Comments />} />
         <Route path='/edit-profile' element={<EditProfile />} />
       </Routes>
     </Layout>

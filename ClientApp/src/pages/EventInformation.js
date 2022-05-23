@@ -15,13 +15,14 @@ function EventInformation(){
 
     const [events, setEvents] = useState();
     const [loaded, setLoaded] = useState(false);
-  
+    const location = useLocation();
+    const {eventInfo} = location.state;
    
    
     
     useEffect(()=>{
         console.log("inne")
-        axios.get(API_ADRESS + '/api/event/' + 1)
+        axios.get(API_ADRESS + '/api/event/' + eventInfo.eventId)
         .then(res =>{
             console.log("hej")
             console.log(res.data)
@@ -36,13 +37,13 @@ function EventInformation(){
        <div>
            {loaded ? (
             <div>
-                <EventShortDetails event={events} returnTo={"/explore"}/>
+                <EventShortDetails event={events} returnTo={eventInfo.returnTo}/>
                 <div className="page-container">
                     <div className="page-content">
                         <h3>Description</h3>
                         <p>{events.ev_Description}</p>
                         <h3>Attending</h3>
-                        <AttendingInfoCard event={events}/>
+                        <AttendingInfoCard event={events} returnTo={eventInfo.returnTo}/>
                         <SuitableForEvent ev_Disabilities={events.ev_Disabilities}/>
                         <EventInfoCat ev_Categories={events.ev_Categories}/>
                         <EventInfoButtons event={events}/>

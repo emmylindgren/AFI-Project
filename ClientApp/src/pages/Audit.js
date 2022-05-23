@@ -18,13 +18,14 @@ function Audit() {
     const [state, setState] = useState('loading');
     const navigate = useNavigate();
     const location = useLocation();
-    const { eventID } = location.state;
+    const { stateInfo } = location.state;
+    const sendState = ({eventId : stateInfo.eventId, returnTo: stateInfo.returnTo});
 
     useEffect(async ()=>{
         axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
           };
-        axios.get(API_ADRESS + '/api/event/requests/'+ eventID)
+        axios.get(API_ADRESS + '/api/event/requests/'+ stateInfo.eventId)
         .then(res =>{
             setState('loaded')
             setRequests(res.data)
@@ -40,7 +41,7 @@ function Audit() {
         return requests.map(request => {
                return (
                 <div>
-                    <div key={request} style={requestcardStyle}><AuditRequestCard userID={request} eventID={eventID}/></div>
+                    <div key={request} style={requestcardStyle}><AuditRequestCard userID={request} eventID={stateInfo.eventId}/></div>
                 </div>
                 )
         })
@@ -52,7 +53,7 @@ function Audit() {
   return (
     <div className='page-container'>
         <div className='page-content'>
-        <BackButton text={'Overview'} onClick ={() => {navigate("../event-information")}} to={"../event-information"}/>
+        <BackButton text={'Overview'} onClick ={() => {navigate("../event-information")}} state={sendState} to={"../event-information"}/>
         <h1 style={{color:'var(--black)', marginTop:'1rem',}}>Audit</h1>
         <h3 style={{marginBottom:'1rem',}}>Requested invites</h3>
         {renderRequests(requests)}

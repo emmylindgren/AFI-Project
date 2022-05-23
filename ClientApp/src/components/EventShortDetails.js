@@ -54,9 +54,9 @@ function EventShortDetails({event, returnTo}) {
 
     //BYT UT SIFFROR MOT DYNAMISKT
     let isAttending =  event.ev_AttendingModel.find((element) => {
-        return element.pr_Id === 1;}) != undefined;
+        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) != undefined;
 
-    let isOwner = event.ev_Owner.pr_Id == 1;
+    let isOwner = event.ev_Owner.pr_Id == parseInt(localStorage.getItem("profileId"));
 
     if(hoursToInt > 12 && hoursToInt < 24) {
         hours = hoursToInt % 12;
@@ -103,7 +103,6 @@ function EventShortDetails({event, returnTo}) {
             if(isAttending || isOwner){
                 return false;
             }
-            
             return true;
         }
         return false;
@@ -117,7 +116,7 @@ function EventShortDetails({event, returnTo}) {
                 </div>
            
                 <div style={Box}>
-                    <h1>Stroll in the park</h1>
+                    <h1>{event.ev_Title}</h1>
                 </div>
                 <div style={Box}>
                     <img src={locationIcon} id="location-icon"></img>

@@ -15,6 +15,7 @@ function Explore(){
 
     const [events, setEvents] = useState([]);
     const [state, setState] = useState('loading');  
+    
     useEffect(()=>{
         axios.get(API_ADRESS + '/api/event')
         .then(res =>{
@@ -49,6 +50,7 @@ function Explore(){
 
 
     let renderNextEvent = (event) =>{
+        console.log(event);
         return (<div key={event.ev_Id}><EventCard event={event} state={state}/></div>)
     }
     
