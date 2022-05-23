@@ -49,6 +49,7 @@ function ProfilePage() {
             case 'loaded':
                 return (
                     <>
+                        <h1>Your Profile</h1>
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                             <img src={API_ADRESS + '/api/profile/image/' + localStorage.getItem('profileId')} id='propic' alt='propic' style={propicStyle} />
                             <Link
@@ -61,8 +62,8 @@ function ProfilePage() {
                         </div>
 
                         <ProfileDataBox text={userInfo.pr_Firstname + ' ' + userInfo.pr_Lastname} label='Name' />
-                        <ProfileDataBox text={userInfo.pr_Street} label='Adress' />
                         <ProfileDataBox text={userInfo.pr_BirthDate.split('T')[0]} label='Date of Birth' />
+                        <ProfileDataBox text={userInfo.pr_Street + ', ' + userInfo.pr_PostalCode + ', ' + userInfo.pr_City} label='Adress' />
 
                         <label>Disabilities</label>
                         {userInfo.pr_Disabilities === null ? (

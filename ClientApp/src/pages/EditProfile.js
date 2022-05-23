@@ -19,16 +19,14 @@ function EditProfile() {
     const { state } = useLocation();
     const navigate = useNavigate();
 
-    console.log(state)
-
     const [firstname, setFirstname] = useState(state.pr_Firstname ? state.pr_Firstname : '');
     const [lastname, setLastname] = useState(state.pr_Lastname ? state.pr_Lastname : '');
-    const [birthdate, setBirthdate] = useState(state.pr_Birthdate ? state.pr_Birthdate : '');
+    const [birthdate, setBirthdate] = useState(state.pr_BirthDate ? state.pr_BirthDate.split('T')[0] : '');
     const [adress, setAdress] = useState(state.pr_Street ? state.pr_Street : '');
     const [postalcode, setPostalCode] = useState(state.pr_PostalCode ? state.pr_PostalCode : '');
     const [city, setCity] = useState(state.pr_City ? state.pr_City : '');
 
-    const [profilePicture, setProfilePicture] = useState(state.pr_ProfilePicture ? state.pr_ProfilePicture : 'plant.png');
+    const [profilePicture, setProfilePicture] = useState(API_ADRESS + '/api/profile/image/' + localStorage.getItem('profileId'));
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -57,7 +55,7 @@ function EditProfile() {
             Pr_Firstname: firstname,
             Pr_Lastname: lastname,
             Pr_BirthDate: birthdate,
-            Pr_Adress: adress,
+            Pr_Street: adress,
             Pr_PostalCode: postalcode,
             Pr_City: city,
             GoogleId: state ? state.googleId : null,
@@ -101,7 +99,7 @@ function EditProfile() {
     return (
         <div style={style} className='page-container'>
             <div className='page-content'>
-                <BackButton text="Back" to='/' onClick={() => { console.log("hej!") }} />
+                <BackButton text="Back" to='/profile' />
                 <h1>Edit Profile</h1>
 
                 {renderProfilePicture(profilePicture)}
@@ -126,8 +124,8 @@ function EditProfile() {
 }
 
 const propicStyle = {
-    width: '20rem',
-    height: '20rem',
+    width: '15rem',
+    height: '15rem',
     borderRadius: '500px',
     objectFit: 'cover',
 }

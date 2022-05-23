@@ -121,8 +121,8 @@ function SignUp() {
 }
 
 const propicStyle = {
-    width: '20rem',
-    height: '20rem',
+    width: '15rem',
+    height: '15rem',
     borderRadius: '500px',
     objectFit: 'cover',
 }
