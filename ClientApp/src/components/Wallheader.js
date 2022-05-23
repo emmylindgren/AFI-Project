@@ -56,7 +56,6 @@ function Wallheader() {
     <div className='page-container'>
       <div className='page-content'>
         <div style={headerWrapperStyle} >
-          <br></br>
           <h1>Your neighbourhood</h1>
           <div style={{display:'flex'}}>
             <img src={API_ADRESS + "/api/profile/image/" + localStorage.getItem("profileId")} style={prImgStyle}></img>  
