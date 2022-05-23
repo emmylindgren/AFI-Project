@@ -31,16 +31,19 @@ function EditProfile() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const [fileChanged, setFileChanged] = useState(false);
+
     const disabilityRef = useRef(null);
 
     useEffect(() => {
         const filepicker = document.getElementById('propicker');
         filepicker.addEventListener('change', (e) => {
+            setFileChanged(true)
             setProfilePicture(URL.createObjectURL(e.target.files[0]));
         })
 
         setTimeout(() => {
-            disabilityRef.current.setPillStates(state);
+            disabilityRef.current.setPillStates(state.pr_Disabilities);
         }, 2000)
     }, [])
 
@@ -62,18 +65,20 @@ function EditProfile() {
             Pr_Disabilities: disabilityRef.current.getPillStates()
         }));
 
-        let blob
-        // If a file is selected
-        if (propicker.files[0]) {
-            // Get from user selection.
-            blob = await FileReaderPromised(propicker.files[0])
+        if (fileChanged) {
+            let blob
+            // If a file is selected
+            if (propicker.files[0]) {
+                // Get from user selection.
+                blob = await FileReaderPromised(propicker.files[0])
+            }
+            else {
+                // Get from Google/default.
+                blob = await fetch(profilePicture).then(r => r.blob())
+            }
+            let binaryImg = new File([blob], 'uploadFile.jpg', { type: 'image/jpeg' })
+            form.append('uploadFile', binaryImg);
         }
-        else {
-            // Get from Google/default.
-            blob = await fetch(profilePicture).then(r => r.blob())
-        }
-        let binaryImg = new File([blob], 'uploadFile.jpg', { type: 'image/jpeg' })
-        form.append('uploadFile', binaryImg);
 
         axios.put(API_ADRESS + '/api/profile', form)
             .then(res => {

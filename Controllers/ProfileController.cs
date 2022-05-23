@@ -115,17 +115,36 @@ namespace AFI_Project.Controllers
 
 		// PUT: api/Profile/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPut("{id}")]
-		public async Task<IActionResult> PutProfileModel(int id, ProfileModel profileModel)
+		[HttpPut]
+		public async Task<IActionResult> PutProfileModel([FromForm] IFormFile uploadFile, [FromForm] string userdata)
 		{
 			if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
 
-			if (id != profileModel.Pr_Id)
+			ProfileModel pm = JsonConvert.DeserializeObject<ProfileModel>(userdata);
+
+			ProfileModel dbPm = await _context.Profiles
+				.Include(p => p.Pr_Disabilities)
+				.FirstOrDefaultAsync(p => p.Pr_Id == pm.Pr_Id);
+
+			if (dbPm == null)
 			{
-				return BadRequest();
+				return NotFound();
 			}
 
-			_context.Entry(profileModel).State = EntityState.Modified;
+			if (uploadFile != null)
+			{
+				await RecieveFile(uploadFile, dbPm);
+			}
+
+			dbPm.Pr_Firstname = pm.Pr_Firstname;
+			dbPm.Pr_Lastname = pm.Pr_Lastname;
+			dbPm.Pr_Street = pm.Pr_Street;
+			dbPm.Pr_City = pm.Pr_City;
+			dbPm.Pr_PostalCode = pm.Pr_PostalCode;
+			dbPm.Pr_Disabilities = pm.Pr_Disabilities;
+			dbPm.Pr_BirthDate = pm.Pr_BirthDate;
+
+			_context.Entry(dbPm).State = EntityState.Modified;
 
 			try
 			{
@@ -133,7 +152,7 @@ namespace AFI_Project.Controllers
 			}
 			catch (DbUpdateConcurrencyException)
 			{
-				if (!ProfileModelExists(id))
+				if (!ProfileModelExists(pm.Pr_Id))
 				{
 					return NotFound();
 				}
