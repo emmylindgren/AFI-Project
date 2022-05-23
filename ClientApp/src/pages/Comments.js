@@ -38,6 +38,9 @@ function Comments() {
         .then(res =>{
             setComments(res.data)
             setCommentState('loaded')
+            if(res.data.length < 1){
+              setCommentState('nodata')
+            }
            
         })
         .catch(err =>{
@@ -72,6 +75,10 @@ function Comments() {
                 return <LoadingCard/>
             case 'loaded':
                 return renderComments(comments)
+            case 'nodata':
+                return <ErrorCard
+                infoText={"No comments yet! Maybe add one?"}
+                    />
             case 'error':
                 return <ErrorCard
                 iconChoice={'filenotfound'} 
