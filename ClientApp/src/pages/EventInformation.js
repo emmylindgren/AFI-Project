@@ -22,11 +22,8 @@ function EventInformation(){
    
     
     useEffect(()=>{
-        console.log("inne")
         axios.get(API_ADRESS + '/api/event/' + eventInfo.eventId)
         .then(res =>{
-            console.log("hej")
-            console.log(res.data)
             setEvents(res.data)
             setLoaded(true)
         })

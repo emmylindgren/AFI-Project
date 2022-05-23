@@ -12,9 +12,9 @@ function AttendeeInfo(){
     const navigate = useNavigate();
     const location = useLocation();
     const {stateInfo} = location.state;
-    console.log(stateInfo.event)
     const sendState = ({
-        eventInfo: stateInfo.event
+        event: stateInfo.event.event,
+        returnTo: stateInfo.event.returnTo
     })
     const profilePicture = {
         width: '10rem',
