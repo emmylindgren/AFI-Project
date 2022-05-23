@@ -122,7 +122,7 @@ function AttendingInfoCard({event, returnTo}) {
                     </div>)
                 }
             </div>
-            {isOwner ? 
+            {isOwner && event.ev_Private ? 
             <div>
                 <h3>{nrOfRequests} people have requested invites</h3>
                 <div style={attendeeInformation}>
