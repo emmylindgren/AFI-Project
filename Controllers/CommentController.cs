@@ -53,10 +53,10 @@ namespace AFI_Project.Controllers
             return Ok();
         }
 
-        // POST: api/Comment/unlike/commentId/profileID
+        // Delete: api/Comment/unlike/commentId/profileID
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("unlike/{comment}/{profile}")]
-        public async Task<ActionResult<PostModel>> DeletePostLikeModel(int comment, int profile)
+        [HttpDelete("unlike/{comment}/{profile}")]
+        public async Task<ActionResult<PostModel>> DeleteCommentLikeModel(int comment, int profile)
         {
             var clm = await _context.CommentLikes.Where(cl => cl.Co_Id == comment && cl.Pr_Id == profile)
             .FirstAsync();
