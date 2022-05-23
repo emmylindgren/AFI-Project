@@ -6,7 +6,7 @@ const style = {
     width: '200px',
     display: 'flex',
     flexDirection: 'row',
-    paddingBottom: '10px',
+    paddingBottom: '20px',
     userSelect: 'none',
     lineHeight: '20px',
     WebkitUserSelect: 'none',
@@ -24,7 +24,7 @@ const textStyle = {
 function BackButton({ text, to, state }) {
 
     return (
-        <div style={{ style }}>
+        <div style={style}>
             <img src='/icons/chevron-green.svg' width={'20px'} height={'20px'} alt='<' />
             <Link style={textStyle} to={to} state={{ eventInfo: state }}>{text}</Link>
         </div>
