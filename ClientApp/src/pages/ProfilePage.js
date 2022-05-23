@@ -8,6 +8,7 @@ import ProfileDataBox from "../components/ProfileDataBox";
 import SuitableForEvent from "../components/SutiableForEvent";
 import ErrorCard from '../components/ErrorCard'
 import { Link } from 'react-router-dom'
+import SmallBadges from "../components/SmallBadges";
 
 const propicStyle = {
     width: '15rem',
@@ -65,14 +66,13 @@ function ProfilePage() {
                         <ProfileDataBox text={userInfo.pr_BirthDate.split('T')[0]} label='Date of Birth' />
                         <ProfileDataBox text={userInfo.pr_Street + ', ' + userInfo.pr_PostalCode + ', ' + userInfo.pr_City} label='Adress' />
 
-                        <label>Disabilities</label>
                         {userInfo.pr_Disabilities === null ? (
                             <p>None</p>
                         ) : (
                             <SuitableForEvent ev_Disabilities={userInfo.pr_Disabilities} />
                         )}
 
-                        <p> Coming back to badges later..</p>
+                        <SmallBadges />
                     </>)
         }
     }

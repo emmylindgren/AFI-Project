@@ -23,6 +23,7 @@ import AttendeeInfo from './pages/AttendeeInfo';
 import './custom.css'
 import EditProfile from './pages/EditProfile';
 import Comments from './pages/Comments';
+import Badges from './pages/Badges';
 
 
 export default function App() {
@@ -46,6 +47,7 @@ export default function App() {
         <Route path='/attendee-info' element={<AttendeeInfo />} />
         <Route path='/comments' element={<Comments />} />
         <Route path='/edit-profile' element={<EditProfile />} />
+        <Route path='/badges' element={<Badges />} />
       </Routes>
     </Layout>
   );
