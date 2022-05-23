@@ -12,6 +12,7 @@ const containerStyle = {
     position: 'fixed',
     bottom: '0',
     left: '0',
+    zIndex: '99',
 }
 const tabIcon = {
     padding: '10px',

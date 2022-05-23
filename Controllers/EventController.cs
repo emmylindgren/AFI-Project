@@ -96,6 +96,7 @@ namespace AFI_Project.Controllers
             .OrderBy(e => e.Ev_DateTime)
             .Include(e => e.Ev_Owner)
             .Include(e => e.Ev_AttendingModel)
+            .Include(e => e.Ev_Disabilities)
             .FirstOrDefaultAsync();
 
             if (eventModel == null)
