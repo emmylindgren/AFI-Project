@@ -41,14 +41,17 @@ function Wallheader() {
     let form = new FormData();
 
     form.append('postdata', JSON.stringify({
-      Po_Content: content
+      Po_Content: content,
     }));
+
+    form.append('id', localStorage.getItem('profileId'))
 
     axios.post(API_ADRESS + '/api/post', form)
       .then(res => {
         if (res.status >= 200 && res.status < 300) {
           setError('');
           setSuccess('Successfully posted.');
+          setContent('');
         }
         else {
           setError('Something went wrong. Try again later.');
