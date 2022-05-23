@@ -24,7 +24,7 @@ const Box = {
 }
 
 const dateAndTime = {
-    width: '40%',
+    width: '48%',
 }
 
 
