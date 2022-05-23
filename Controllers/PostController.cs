@@ -29,6 +29,7 @@ namespace AFI_Project.Controllers
             return await _context.Posts
             .Include(p => p.Po_Owner)
             .Include(p => p.Po_Likes)
+            .OrderBy(p => p.Po_Date)
             .ToListAsync();
         }
 

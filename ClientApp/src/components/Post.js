@@ -81,6 +81,7 @@ function Post({post}) {
             .catch(function (error){
                 console.log(error);
             });
+            setLiked(false);
 
         }
         else{
@@ -88,6 +89,7 @@ function Post({post}) {
             .catch(function (error){
                 console.log(error);
             });
+            setLiked(true);
         }
 
     }
