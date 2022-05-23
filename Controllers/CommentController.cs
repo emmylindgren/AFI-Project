@@ -24,12 +24,19 @@ namespace AFI_Project.Controllers
 
         // GET: api/Comment/fromPost/5 to get all comments corresponding to post with id 5. 
         [HttpGet("fromPost/{id}")]
-        public async Task<ActionResult<IEnumerable<CommentModel>>> GetComments(int id)
+        //Task<ActionResult<IEnumerable<PostModel>>>
+        public async Task<ActionResult<ICollection<CommentModel>>> GetComments(int id)
         {
-            return await _context.Comments.Where(c => c.Co_Post.Po_Id == id)
-            .Include(c => c.Co_Owner)
-            .Include(c => c.Co_Likes)
+            //=> p.Po_Id == id
+            //if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
+            return await _context.Comments.Where(p => p.Co_Post.Po_Id == id)
+            .Include(c => c.Co_Owner).Include(c => c.Co_Likes)
             .ToListAsync();
+/*
+            var models = await _context.Posts.Where(p => p.Po_Id == id)
+            .Include(p=> p.Po_Comments).Select(p => p.Po_Comments).FirstAsync();
+            return (ActionResult)models;*/
         }
 
         // POST: api/Comment/like/commentId/profileID
@@ -101,7 +108,7 @@ namespace AFI_Project.Controllers
         [HttpPost]
         public async Task<ActionResult<CommentModel>> PostCommentModel(CommentModel commentModel)
         {
-            commentModel.Po_Date = DateTime.Now;
+            commentModel.Co_Date = DateTime.Now;
             _context.Comments.Add(commentModel);
             await _context.SaveChangesAsync();
 
