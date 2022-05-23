@@ -12,7 +12,7 @@ namespace AFI_Project.Models
 
         public ProfileModel Co_Owner {get;set;}
 
-        public DateTime Po_Date{get;set;}
+        public DateTime Co_Date{get;set;}
 
         public virtual ICollection<CommentLikeModel>? Co_Likes{ get; set; }
 

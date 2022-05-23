@@ -58,11 +58,11 @@ function Schedule() {
     let renderEvents = (events) =>{
 
         let currentDate = new Date(Date.now());
-        console.log("events: " + events)
+       
 
         let eventsList = events.map(event => {
             
-            console.log("hej" + event);
+            
             let eventDate = new Date(event.ev_DateTime);
 
             if(currentDate.toDateString() == eventDate.toDateString()){

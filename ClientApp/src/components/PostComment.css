@@ -1,0 +1,39 @@
+.imgStyle {
+    height:44px;
+    width: 44px;
+    border-radius:50px;
+    user-select:none;
+}
+
+.postCard{
+    background-color:var(--white);
+    border-radius:10px;
+    padding:0.8rem;
+    margin-bottom: 2rem;
+}
+
+.likeAndCommentStyle{
+    display:flex;
+    align-content:center;
+    padding-bottom:1rem;
+    gap:0.5rem;
+    cursor:pointer;
+}
+
+.likeAndCommentWrapper{
+    display:flex;
+    justify-content:left;
+    gap:6rem;
+}
+
+.profileInfoStyle{
+    display:flex;
+    justify-content:left;
+    align-items:center;
+    gap:1rem;
+}
+
+.commentWrapper{
+    margin-top:1rem;
+    margin-bottom:1rem;
+}

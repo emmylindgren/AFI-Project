@@ -7,13 +7,16 @@ import LoadingCard from '../components/LoadingCard';
 import ErrorCard from '../components/ErrorCard';
 import BackButtonGreen from '../components/BackButtonGreen';
 import BackButton from '../components/BackButton';
+import Comment from '../components/Comment';
 
 function Comments() {
-
     const { postID } = 5;
 
     const [post, setPost] = useState([]);
-    const [state, setState] = useState('loading');
+    const [postState, setPostState] = useState('loading');
+
+    const [comments, setComments] = useState([]);
+    const [commentState, setCommentState] = useState('loading');
 
     useEffect(async ()=>{
         axios.defaults.headers.common = {
@@ -22,21 +25,52 @@ function Comments() {
         axios.get(API_ADRESS + '/api/Post/'+5)
         .then(res =>{
             setPost(res.data)
-            setState('loaded')
-            console.log(res.data)
+            setPostState('loaded')
+           
         })
         .catch(err =>{
-            setState('error')
+            setPostState('error')
             console.log(err)
         })
+        
+        axios.get(API_ADRESS + '/api/Comment/fromPost/'+5)
+        .then(res =>{
+            setComments(res.data)
+            setCommentState('loaded')
+           
+        })
+        .catch(err =>{
+            setCommentState('error')
+            console.log(err)
+        })
+
     },[])
 
-    const getCurrentState = () => {
-        switch(state){
+    let renderComments = (comments) =>{
+        return comments.map(comment => {
+            return <div key={comment.co_Id}><Comment comment={comment}/></div>
+        })
+    }
+    const getCurrentPostState = () => {
+        switch(postState){
             case 'loading':
                 return <LoadingCard/>
             case 'loaded':
-                return <Post post={post} withComment={false}/>
+                return <div style ={{marginBottom:'2rem',}}><Post post={post} withComment={false}/></div>
+            case 'error':
+                return <ErrorCard
+                iconChoice={'filenotfound'} 
+                infoText={"Oops, there was a problem when fetching your data! Try again later."}
+                    />
+        }
+    }
+
+    const getCurrentCommentState = () => {
+        switch(commentState){
+            case 'loading':
+                return <LoadingCard/>
+            case 'loaded':
+                return renderComments(comments)
             case 'error':
                 return <ErrorCard
                 iconChoice={'filenotfound'} 
@@ -51,7 +85,12 @@ function Comments() {
               <div style={{marginBottom:'2rem',}}>
                 <BackButton text={"Your Neighbourhood"} to={'../Wall'}/>
               </div>
-              {getCurrentState()}
+                {getCurrentPostState()}
+                <div style={{backgroundColor:'var(--white)'}}><p>Här ska man kunna adda en comment hihih</p></div>
+              <div>
+                <h1 style={{color:'var(--black)'}}>Comments</h1>
+                {getCurrentCommentState()}
+              </div>
           </div>
     </div>
   )

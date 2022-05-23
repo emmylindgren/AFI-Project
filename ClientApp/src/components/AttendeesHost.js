@@ -6,7 +6,8 @@ import EventCard from './EventCard';
 import Button from './Button'
 import Search from './Search'
 import TabBar from './TabBar';
-import '../custom.css'
+import '../custom.css';
+import { Link} from 'react-router-dom';
 
 const imgStyle = {
     width: '3rem',
@@ -24,10 +25,26 @@ const attendeeNameText = {
     marginLeft: '1rem',
     
 }
+const clickableEventCard = {
+    position: 'absolute', 
+    display: 'inline-block',
+    width: '100%',
+    height: '100%',
+    maxHeight: '6rem',
+    float: 'left',
+    left: '0',
+    zIndex: '1',
+}
 
-function AttendeesHostInfo({attendeeId}){
+function AttendeesHostInfo({attendeeId, event}){
 
     const [interested, setInterested] = useState([]);
+    const stateInfo = ({
+        id: attendeeId,
+        event: event,
+        returnTo: "/attendees"
+    })
+
     useEffect(()=>{
         axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
@@ -41,6 +58,7 @@ function AttendeesHostInfo({attendeeId}){
 
     return (
         <div style={attendeeContainer}>
+            <Link to="../attendee-info" style={clickableEventCard} state={{stateInfo: stateInfo}} ><span></span></Link>
             <img style={imgStyle} src={API_ADRESS + "/api/profile/image/" + attendeeId} ></img>
             <div style={attendeeNameText}>
                 <p style={{display: 'inline'}}>{interested.pr_Firstname} {interested.pr_Lastname}</p> <span>(Host)</span>

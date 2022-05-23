@@ -24,11 +24,14 @@ namespace AFI_Project.Controllers
 
         // GET: api/Comment/fromPost/5 to get all comments corresponding to post with id 5. 
         [HttpGet("fromPost/{id}")]
-        public async Task<ActionResult<IEnumerable<CommentModel>>> GetComments(int id)
+        //Task<ActionResult<IEnumerable<PostModel>>>
+        public async Task<ActionResult<ICollection<CommentModel>>> GetComments(int id)
         {
-            return await _context.Comments.Where(c => c.Co_Post.Po_Id == id)
-            .Include(c => c.Co_Owner)
-            .Include(c => c.Co_Likes)
+            //if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
+            return await _context.Comments.Where(p => p.Co_Post.Po_Id == id)
+            .Include(c => c.Co_Owner).Include(c => c.Co_Likes)
+            .OrderByDescending(c => c.Co_Date)
             .ToListAsync();
         }
 
@@ -46,10 +49,10 @@ namespace AFI_Project.Controllers
             return Ok();
         }
 
-        // POST: api/Comment/unlike/commentId/profileID
+        // Delete: api/Comment/unlike/commentId/profileID
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("unlike/{comment}/{profile}")]
-        public async Task<ActionResult<PostModel>> DeletePostLikeModel(int comment, int profile)
+        [HttpDelete("unlike/{comment}/{profile}")]
+        public async Task<ActionResult<PostModel>> DeleteCommentLikeModel(int comment, int profile)
         {
             var clm = await _context.CommentLikes.Where(cl => cl.Co_Id == comment && cl.Pr_Id == profile)
             .FirstAsync();
@@ -101,7 +104,7 @@ namespace AFI_Project.Controllers
         [HttpPost]
         public async Task<ActionResult<CommentModel>> PostCommentModel(CommentModel commentModel)
         {
-            commentModel.Po_Date = DateTime.Now;
+            commentModel.Co_Date = DateTime.Now;
             _context.Comments.Add(commentModel);
             await _context.SaveChangesAsync();
 
