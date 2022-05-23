@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { API_ADRESS } from '../config'
 import { useState } from 'react'
+import { Link, renderMatches } from 'react-router-dom';
 /**
  * Format: 
  * <ScheduleEventCard {eventId=5}/>
@@ -38,13 +39,28 @@ const textStyle ={
     marginBottom:'0px',
 }
 
+const clickableEventCard = {
+    position: 'absolute', 
+    display: 'inline-block',
+    width: '100%',
+    height: '100%',
+    maxHeight: '6rem',
+    float: 'left',
+    left: '0',
+    zIndex: '1',
+}
+
 // TODO:  
 // first div onlick go to that event information site! 
 function ScheduleEventCard({event}) {
 
-    const [eventInfo, setEventInfo] = useState([]);
-    var date = new Date(event.ev_DateTime);
+    const eventInfo = ({
+        eventId: event.ev_Id,
+        returnTo: "/schedule"
+    });
 
+
+    var date = new Date(event.ev_DateTime);
     let hours = date.getHours();
     let minutes = ((date.getMinutes()<10?'0':'') + date.getMinutes());
     let hoursToInt = parseInt(hours);
@@ -61,6 +77,7 @@ function ScheduleEventCard({event}) {
 
   return (
     <div style={wrapperScheduleEventStyle}>
+        <Link to="../event-information" style={clickableEventCard} state={{eventInfo: eventInfo}} ><span></span></Link>
         <div style={timeWrapper}>
             <h4 style={textStyle}>{hours}:{minutes}</h4>
             <p style={textStyle}>{timeVar}</p>
