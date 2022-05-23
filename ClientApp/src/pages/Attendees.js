@@ -57,7 +57,7 @@ function Attendees(){
         <div className="page-container">
             <div className="page-content">
                 <BackButton text={'Overview'} onClick ={() => {navigate("../event-information")}} state={sendState} to={"../event-information"}/>
-                <h1>Attendees</h1>
+                <h1 style={{marginTop:'1rem', color:'var(--black)'}}>Attendees</h1>
                 <h3>Going</h3>
                 
                 <div>
