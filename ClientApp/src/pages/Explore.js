@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { API_ADRESS } from '../config';
-import EventCard from './EventCard';
-import Button from './Button'
-import Search from './Search'
-import TabBar from './TabBar';
+import EventCard from '../components/EventCard';
+import Button from '../components/Button'
+import Search from '../components/Search'
+import TabBar from '../components/TabBar';
 import '../custom.css'
 
 
@@ -50,7 +50,6 @@ function Explore(){
 
 
     let renderNextEvent = (event) =>{
-        console.log(event);
         return (<div key={event.ev_Id}><EventCard event={event} state={state}/></div>)
     }
     

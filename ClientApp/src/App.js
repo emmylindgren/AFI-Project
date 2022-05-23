@@ -5,8 +5,8 @@ import { Layout } from './components/Layout';
 import { LogIn } from './pages/LogIn';
 import SignUp from './pages/SignUp';
 //Ska flyttas från components till pages
-import Explore from './components/Explore'
-import EventSD from './components/EventShortDetails'
+import Explore from './pages/Explore';
+import EventSD from './components/EventShortDetails';
 import EventInformation from './pages/EventInformation';
 import TemplatePage from './pages/TemplatePage';
 import CreateEvent from './pages/CreateEvent';
@@ -16,7 +16,7 @@ import ProfilePage from './pages/ProfilePage';
 import Attendees from './pages/Attendees';
 import Audit from './pages/Audit';
 import Wall from './pages/Wall';
-import AttendeeInfo from './components/AttendeeInfo';
+import AttendeeInfo from './pages/AttendeeInfo';
 
 
 

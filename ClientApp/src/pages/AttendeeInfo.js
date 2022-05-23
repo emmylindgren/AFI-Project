@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { API_ADRESS } from '../config';
-import TabBar from './TabBar';
-import BackButton from './BackButton'
-import Badge from './Badge'
+import TabBar from '../components/TabBar';
+import BackButton from '../components/BackButton'
+import Badge from '../components/Badge'
 import '../custom.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 

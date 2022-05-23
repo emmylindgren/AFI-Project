@@ -17,7 +17,6 @@ const imgStyle = {
 const attendeeContainer = {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'red',
 }
 
 const attendeeNameText = {
