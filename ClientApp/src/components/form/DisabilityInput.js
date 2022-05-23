@@ -52,6 +52,11 @@ const DisabilityInput = forwardRef((props, _ref) => {
                 }
             }
             return disabilities;
+        },
+        setPillStates: (disabilities) => {
+            pills.current.forEach((pill, index) => {
+                pill.setSelected(disabilities[index])
+            });
         }
     }));
 

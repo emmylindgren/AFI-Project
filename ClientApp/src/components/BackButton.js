@@ -19,6 +19,7 @@ const textStyle = {
     color: 'var(--deep-green)',
     userSelect: 'none',
     WebkitUserSelect: 'none',
+    textDecoration: 'none',
 }
 function BackButton({ text, to, state }) {
 
