@@ -47,15 +47,16 @@ function Attendees(){
     const navigate = useNavigate();
     const location = useLocation();
     const {event} = location.state;
-    const goingList = event.ev_AttendingModel;
-    const interestedList = event.ev_InterestedModel;
-    const hostId = event.ev_Owner.pr_Id;
+    const goingList = event.event.ev_AttendingModel;
+    const interestedList = event.event.ev_InterestedModel;
+    const hostId = event.event.ev_Owner.pr_Id;
+    const sendState = ({eventId : event.event.ev_Id, returnTo: event.returnTo});
 
     return (
         
         <div className="page-container">
             <div className="page-content">
-                <BackButton text={'Overview'} onClick ={() => {navigate("../event-information")}} to={"../event-information"}/>
+                <BackButton text={'Overview'} onClick ={() => {navigate("../event-information")}} state={sendState} to={"../event-information"}/>
                 <h1>Attendees</h1>
                 <h3>Going</h3>
                 

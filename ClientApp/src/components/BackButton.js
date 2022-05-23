@@ -20,11 +20,12 @@ const textStyle = {
     userSelect: 'none',
     WebkitUserSelect: 'none',
 }
-function BackButton({ text, to }) {
+function BackButton({ text, to, state }) {
+
     return (
         <div style={{ style }}>
             <img src='/icons/chevron-green.svg' width={'20px'} height={'20px'} alt='<' />
-            <Link style={textStyle} to={to}>{text}</Link>
+            <Link style={textStyle} to={to} state={{eventInfo: state}}>{text}</Link>
         </div>
     )
 }
