@@ -69,29 +69,29 @@ function EventShortDetails({event, returnTo}) {
 
     const functionWithSwitch = (month) => {
         switch(month){
-            case "01":
+            case "00":
                 return "January"
-            case "02": 
+            case "01": 
                 return "February"
-            case "03":
+            case "02":
                 return "March"
-            case "04":
+            case "03":
                 return "April"
-            case "05":
+            case "04":
                 return "May"
-            case "06":
+            case "05":
                 return "June"
-            case "07":
+            case "06":
                 return "July"
-            case "08": 
+            case "07": 
                 return "August"
-            case "09":
+            case "08":
                 return "September"
-            case "10":
+            case "09":
                 return "October"
-            case "11":
+            case "10":
                 return "November"
-            case "12":
+            case "11":
                 return "December"
         }        
     }
