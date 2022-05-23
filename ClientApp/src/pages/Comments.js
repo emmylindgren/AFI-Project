@@ -7,6 +7,7 @@ import LoadingCard from '../components/LoadingCard';
 import ErrorCard from '../components/ErrorCard';
 import BackButtonGreen from '../components/BackButtonGreen';
 import BackButton from '../components/BackButton';
+import Comment from '../components/Comment';
 
 function Comments() {
 
@@ -25,8 +26,9 @@ function Comments() {
         axios.get(API_ADRESS + '/api/Post/'+5)
         .then(res =>{
             setPost(res.data)
-            setPostState('loaded')
             console.log(res.data)
+            setPostState('loaded')
+           
         })
         .catch(err =>{
             setPostState('error')
@@ -38,8 +40,9 @@ function Comments() {
         axios.get(API_ADRESS + '/api/Comment/fromPost/'+5)
         .then(res =>{
             setComments(res.data)
-            setCommentState('loaded')
             console.log(res.data)
+            setCommentState('loaded')
+           
         })
         .catch(err =>{
             setCommentState('error')
@@ -49,10 +52,9 @@ function Comments() {
     },[])
 
     let renderComments = (comments) =>{
-        comments.map(comment => {
-            return <Post post={comment} isComment={true} withComment={false}/>
+        return comments.map(comment => {
+            return <div key={comment.co_Id}><Comment comment={comment}/></div>
         })
-
     }
     const getCurrentPostState = () => {
         switch(postState){
@@ -74,7 +76,6 @@ function Comments() {
                 return <LoadingCard/>
             case 'loaded':
                 return renderComments(comments)
-
             case 'error':
                 return <ErrorCard
                 iconChoice={'filenotfound'} 
@@ -90,7 +91,9 @@ function Comments() {
                 <BackButton text={"Your Neighbourhood"} to={'../Wall'}/>
               </div>
               {getCurrentPostState()}
-              {/*getCurrentCommentState()*/}
+              <div>
+              {getCurrentCommentState()}
+              </div>
           </div>
     </div>
   )

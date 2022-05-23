@@ -2,7 +2,6 @@ import React from 'react'
 // --- Main function
 function TimeAgo({dateParam}) {
 
-    console.log(dateParam)
     if (!dateParam) {
       return null;
     }
