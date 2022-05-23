@@ -1,15 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
 import { API_ADRESS } from '../config';
 import TabBar from './TabBar';
 import BackButton from './BackButton'
 import Badge from './Badge'
 import '../custom.css'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-function AttendeeInfo({attendeeId}){
+function AttendeeInfo(){
 
-    attendeeId = 2;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const {stateInfo} = location.state;
+    console.log(stateInfo.event)
+    const sendState = ({
+        eventInfo: stateInfo.event
+    })
     const profilePicture = {
         width: '10rem',
         height: '10rem'
@@ -39,11 +45,11 @@ function AttendeeInfo({attendeeId}){
     axios.defaults.headers.common = {
         "ApiKey": localStorage.getItem("ApiKey"),
     };
-    axios.get(API_ADRESS + '/api/profile/badges/' + attendeeId)
+    axios.get(API_ADRESS + '/api/profile/badges/' + stateInfo.id)
     .then(res =>{
         setBadges(res.data);
     })
-    axios.get(API_ADRESS + '/api/profile/shortdetails/' + attendeeId)
+    axios.get(API_ADRESS + '/api/profile/shortdetails/' + stateInfo.id)
     .then( res =>{
         setUser(res.data);
     })
@@ -52,9 +58,9 @@ function AttendeeInfo({attendeeId}){
     return (
         <div className="page-container">
             <div className="page-content">
-                <BackButton text="Overview" onClick={""} to={""}/><br></br>   
+                <BackButton text={'Attendees'} onClick ={() => {navigate("../attendees")}} state={sendState} to={"../attendees"}/><br></br>   
                 <div style={centerContainer}>
-                    <img src={API_ADRESS + "/api/profile/image/" + attendeeId} style={profilePicture}></img>
+                    <img src={API_ADRESS + "/api/profile/image/" + stateInfo.id} style={profilePicture}></img>
                 </div> <br></br>
                 <h1 style={centerContainer}>{user.pr_Firstname} {user.pr_Lastname}</h1>
 

@@ -118,7 +118,7 @@ function AttendingInfoCard({event, returnTo}) {
                             {event.ev_AttendingModel[3] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[3].pr_Id } style={image4Style}></img>}
                             {event.ev_AttendingModel[4] === undefined  ? "" : <img src={API_ADRESS + "/api/profile/image/" + event.ev_AttendingModel[4].pr_Id } style={image5Style}></img>}
                         </div>
-                        <Link to="../attendees" state={{event:sendState}} style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>See all</Link> 
+                        <Link to="../attendees" state={{eventInfo:sendState}} style={{color: 'var(--deep-green', textDecoration: 'none', fontWeight: '700' }}>See all</Link> 
                     </div>)
                 }
             </div>

@@ -10,7 +10,7 @@ import AttendeesHost from '../components/AttendeesHost';
 import '../custom.css'
 import { useLocation } from 'react-router-dom'
 
-let renderGoingProfiles = (goingList) =>{
+let renderGoingProfiles = (goingList, eventInfo) =>{
 
     return goingList.map(goes => {
         const [going, setGoing] = useState([]);
@@ -23,11 +23,12 @@ let renderGoingProfiles = (goingList) =>{
                 setGoing(res.data);
             })
         },[])
-        return (<div key={goes.pr_Id}><AttendeesGoingInfo attendeeId={goes.pr_Id} attendee={{going}}/></div>)
+        return (<div key={goes.pr_Id}><AttendeesGoingInfo attendeeId={goes.pr_Id} attendee={{going}} event={eventInfo}/></div>)
+        
     })
 }
 
-let renderInterestedProfiles = (interestedList) =>{
+let renderInterestedProfiles = (interestedList, eventInfo) =>{
     return interestedList.map(interest => {
         const [interested, setInterested] = useState([]);
         useEffect(()=>{
@@ -39,18 +40,18 @@ let renderInterestedProfiles = (interestedList) =>{
                 setInterested(res.data)
             })
         },[])
-        return (<div key={interest.pr_Id}><AttendeesInterestedInfo attendeeId={interest.pr_Id} attendee={interested}/></div>)
+        return (<div key={interest.pr_Id}><AttendeesInterestedInfo attendeeId={interest.pr_Id} attendee={interested} eventInfo={eventInfo}/></div>)
     })
 }
 
 function Attendees(){
     const navigate = useNavigate();
     const location = useLocation();
-    const {event} = location.state;
-    const goingList = event.event.ev_AttendingModel;
-    const interestedList = event.event.ev_InterestedModel;
-    const hostId = event.event.ev_Owner.pr_Id;
-    const sendState = ({eventId : event.event.ev_Id, returnTo: event.returnTo});
+    const {eventInfo} = location.state;
+    const goingList = eventInfo.event.ev_AttendingModel;
+    const interestedList = eventInfo.event.ev_InterestedModel;
+    const hostId = eventInfo.event.ev_Owner.pr_Id;
+    const sendState = ({eventId : eventInfo.event.ev_Id, returnTo: eventInfo.returnTo});
 
     return (
         
@@ -63,12 +64,11 @@ function Attendees(){
                 <div>
                     <AttendeesHost attendeeId={hostId}/>
                 </div>
-
-                {renderGoingProfiles(goingList)}
+                {renderGoingProfiles(goingList, eventInfo)}
 
                 <br></br>
                 <h3>Interested</h3>
-                {renderInterestedProfiles(interestedList)}    
+                {renderInterestedProfiles(interestedList, eventInfo)}    
             </div>
             <TabBar activeTab={0}/>
         </div>

@@ -24,14 +24,14 @@ const attendeeNameText = {
 }
 
 
-function AttendeesInterestedInfo(attendeeId, attendee){
+function AttendeesInterestedInfo({attendeeId, attendee, event}){
 
     return (
         <div style={attendeeContainer}>
-            <img style={imgStyle} src={API_ADRESS + "/api/profile/image/" + attendeeId.attendeeId} ></img>
+            <img style={imgStyle} src={API_ADRESS + "/api/profile/image/" + attendeeId} ></img>
             <div style={attendeeNameText}>
-                <p style={{display: 'inline'}}>{attendeeId.attendee.pr_Firstname} {attendeeId.attendee.pr_Lastname}</p>  {/*Hämta från event attendees model*/}
-                <p className='gray-body-text'>{attendeeId.attendee.pr_City}</p>
+                <p style={{display: 'inline'}}>{attendee.pr_Firstname} {attendee.pr_Lastname}</p>
+                <p className='gray-body-text'>{attendee.pr_City}</p>
             </div> 
         </div>      
     );

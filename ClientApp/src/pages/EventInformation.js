@@ -17,6 +17,7 @@ function EventInformation(){
     const [loaded, setLoaded] = useState(false);
     const location = useLocation();
     const {eventInfo} = location.state;
+    console.log(eventInfo)
    
    
     
