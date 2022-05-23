@@ -66,7 +66,7 @@ function EventCard({event,state}) {
 
     const privateAndAttending = () => {
         
-        if(event.ev_Private){
+        if(event.ev_Private && !(event.ev_Owner.pr_Id == localStorage.getItem("profileId"))){
             
             let attending = false;
             
