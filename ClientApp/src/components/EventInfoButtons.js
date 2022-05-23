@@ -37,7 +37,7 @@ function EventInfoButtons({event}) {
     const [isPrivate , setIsPrivate] = useState(event.ev_Private)
     const navigate = useNavigate();
    
-    
+    /*
     useEffect( () =>{
         setIsAttending(event.ev_AttendingModel.find((element) => {
                        return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined )
@@ -50,6 +50,20 @@ function EventInfoButtons({event}) {
         setIsOwner(event.ev_Owner.pr_Id === parseInt(localStorage.getItem("profileId")))
         setIsPrivate(event.ev_Private)
     }, []) 
+
+    /*
+    let setState = () => {
+        setIsAttending(event.ev_AttendingModel.find((element) => {
+            return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined )
+        setIsDenied(event.ev_DeclinedInviteModel.find((element) => {
+                return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+        setIsInterested(event.ev_InterestedModel.find((element) => {
+                    return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+        setIsRequested(event.ev_RequestedInviteModel.find((element) => {
+                    return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
+        setIsOwner(event.ev_Owner.pr_Id === parseInt(localStorage.getItem("profileId")))
+        setIsPrivate(event.ev_Private)
+    }*/
     
     /*let isAttending =  false;
     let isDenied = true;
@@ -59,6 +73,7 @@ function EventInfoButtons({event}) {
     let isPrivate = false;*/
 
     let displayButtons = () => {
+        //setState();
         if(isAttending){
             
             return  (<div style={buttonstyle} >
