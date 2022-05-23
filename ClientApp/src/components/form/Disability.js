@@ -23,25 +23,25 @@ const selectedStyle = {
 
 const Disability = forwardRef((props, _ref) => {
 
-    const [selected, setSelected] = useState(false)
+    const [selection, setSelection] = useState(false)
 
     // useImperativeHandle makes "getSelected" visible from child reference in parent component.
     // from: ref.current.getSelected()
     useImperativeHandle(_ref, () => ({
         // Toss child state into parent component
         getSelected: () => {
-            return selected
+            return selection;
         },
         setSelected: (selected) => {
-            setSelected(selected)
+            setSelection(selected)
         }
     }));
 
 
     return (
         <div
-            style={selected ? { ...style, ...selectedStyle } : style}
-            onClick={() => { setSelected(!selected) }}
+            style={selection ? { ...style, ...selectedStyle } : style}
+            onClick={() => { setSelection(!selection) }}
         >
             <img src='icons/addIconBlack.svg' />
 
