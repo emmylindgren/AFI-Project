@@ -35,7 +35,7 @@ const textStyles = {
 }
 
 
-function AuditRequestCard({userID, eventID}) {
+function AuditRequestCard({userID, eventID, states}) {
 
 const [profile,setProfile] = useState();
 const [loaded,setLoaded] = useState(false);
@@ -63,6 +63,7 @@ let declineInvite = (eventID, userID) => {
       //api/Event/declineRequest/{eventid}/person/{personid}
     axios.delete(API_ADRESS + '/api/event/declineRequest/'+ eventID+'/person/'+userID)
         .then(res => {
+            states(true)
             console.log(res.data);
         })
     .catch(function (error){
@@ -77,6 +78,7 @@ let acceptInvite = (eventID, userID) => {
 
     axios.post(API_ADRESS + '/api/event/acceptRequest/'+ eventID+'/person/'+userID)
         .then(res => {
+            states(true)
             console.log(res.data);
         })
     .catch(function (error){
