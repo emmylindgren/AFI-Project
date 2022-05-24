@@ -110,7 +110,7 @@ function EditProfile() {
                 {renderProfilePicture(profilePicture)}
 
                 <TextInput value={firstname} onChange={setFirstname} label="Firstname" placeholder="Emma..." />
-                <TextInput value={lastname} onChange={setLastname} label="Lastname" placeholder="Emma..." />
+                <TextInput value={lastname} onChange={setLastname} label="Lastname" placeholder="Johnson..." />
                 <DateInput value={birthdate} onChange={setBirthdate} label='Birthday' placeholder='2022-02-02' />
                 <TextInput value={adress} onChange={setAdress} label="Adress" placeholder="Gnejsvägen 1..." />
                 <TextInput value={postalcode} onChange={setPostalCode} label="Postal Code" placeholder="12345..." />

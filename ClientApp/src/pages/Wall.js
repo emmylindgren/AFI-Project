@@ -58,12 +58,18 @@ function Wall() {
             infoText={"Oops, there was a problem when fetching your data! Try again later."}
                 />
     }
-}
+  }
+
+  const style = {
+    backgroundColor:'var(--superlight-green)', 
+    height: 'fit-content',
+    minHeight: '100vh'
+  }
 
   return (
-    <div>
+    <div style={style}>
       <Wallheader/>
-      <div className='page-container' style={{backgroundColor:'var(--superlight-green)',height: '100vh',}}>
+      <div className='page-container'>
           <div className='page-content'>
               {getCurrentState()}
           </div>
