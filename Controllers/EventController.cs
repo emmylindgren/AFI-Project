@@ -27,6 +27,7 @@ namespace AFI_Project.Controllers
         [HttpGet("{disabilities?}")]
         public async Task<ActionResult<IEnumerable<EventModel>>> GetEvents([FromQuery] string disabilities)
         {
+            //csvList.Where(x => x.Grp == "DEFAULT").OrderBy(x => x.Date);
             if (disabilities is not null)
             {
                 // Make disabilities into a list of int
@@ -41,6 +42,7 @@ namespace AFI_Project.Controllers
             else
             {
                 return await _context.Events
+                .Where(e => e.Ev_DateTime > (DateTime.Now.AddHours(-12)))
                 .Include(e => e.Ev_AttendingModel)
                 .Include(e => e.Ev_Owner)
                 .Include(e => e.Ev_Disabilities)
@@ -92,7 +94,10 @@ namespace AFI_Project.Controllers
         [HttpGet("latest/{personID}")]
         public async Task<ActionResult<EventModel>> GetLatestEvent(int personID)
         {
-            var eventModel = await _context.Events.Where(e => e.Ev_Owner.Pr_Id == personID || e.Ev_AttendingModel.Any(a => a.Pr_Id == personID))
+            //Add something to sort out events that has been. Something like:  && e.Ev_DateTime > (DateTime.Now.AddMinutes(-15)) 
+            //but that did not work. 
+            var eventModel = await _context.Events
+            .Where(e => e.Ev_Owner.Pr_Id == personID || e.Ev_AttendingModel.Any(a => a.Pr_Id == personID))
             .OrderBy(e => e.Ev_DateTime)
             .Include(e => e.Ev_Owner)
             .Include(e => e.Ev_AttendingModel)
@@ -128,8 +133,9 @@ namespace AFI_Project.Controllers
         [HttpGet("profileID/{profileID}")]
         public async Task<ActionResult<IEnumerable<EventModel>>> GetAttendingEvent(int profileID)
         {
+            //.Where(e => e.Ev_DateTime > (DateTime.Now.AddHours(-12)))
             return await _context.Events
-            .Where(e => e.Ev_Owner.Pr_Id == profileID || e.Ev_AttendingModel.Any(a => a.Pr_Id == profileID))
+            .Where(e => e.Ev_Owner.Pr_Id == profileID || e.Ev_AttendingModel.Any(a => a.Pr_Id == profileID) && e.Ev_DateTime > (DateTime.Now.AddHours(-12)))
             .OrderBy(e => e.Ev_DateTime)
             .ToListAsync();
         }
