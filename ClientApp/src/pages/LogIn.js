@@ -12,11 +12,11 @@ export class LogIn extends Component {
         return (
             <div id="login-page">
                 <img src={logo} id="logo"></img>
-                <h4 id="login-text">Explore your neighbourhood today!</h4>
+                <h5 id="login-text">Explore your neighbourhood today!</h5>
                 <div className="google-button"><GoogleLogInButton /></div>
 
                 <div id="sign-up-text">
-                    <p>Not a member yet?</p>
+                    <p style={{margin: 0}}>Not a member yet?</p>
                     <div className="google-button"><GoogleSignInButton /></div>
                 </div>
             </div>

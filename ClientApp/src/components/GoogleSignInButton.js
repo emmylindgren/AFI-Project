@@ -51,7 +51,7 @@ function GoogleSignInComponent (){
   };
 
     return (
-      <div className="row mt-5">
+
         <div className="col-md-12">
             <p className='err-text'>{error}</p>
             <GoogleLogin
@@ -64,7 +64,7 @@ function GoogleSignInComponent (){
             />
           
         </div>
-      </div>
+
     );
   }
 

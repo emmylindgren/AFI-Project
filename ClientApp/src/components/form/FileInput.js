@@ -20,14 +20,17 @@ const inputStyle = {
     top: '0px',
     top: '5px',
 }
-function FileInput({label, id}) {
+function FileInput({ label, id }) {
     return (
-        <div style={style}>
-            <label style={inputStyle}>
-                <input type='file' name='filename' id={id}/>
-                <p style={{color: 'var(--deep-green)', fontWeight: '700', margin: '0 20px 0 0', float: 'right'}}>Pick a file</p>
-            </label>
-        </div>
+        <>
+            <label>{label}</label>
+            <div style={style}>
+                <label style={inputStyle}>
+                    <input type='file' name='filename' id={id} />
+                    <p style={{ color: 'var(--deep-green)', fontWeight: '700', margin: '0 20px 0 0', float: 'right' }}>Pick a file</p>
+                </label>
+            </div>
+        </>
     );
 }
 
