@@ -6,19 +6,18 @@ const style = {
     borderRadius: '10px',
     boxShadow: 'none',
     paddingLeft: '20px',
-    marginBottom: '20px',
 }
 
-function TextInput({value, onChange,label,placeholder}) {
+function TextInput({ value, onChange, label, placeholder }) {
     return (
         <div>
             <label>{label}</label>
-                <input
-                    style={style}
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={(e) =>{onChange(e.target.value)}}
-                />
+            <input
+                style={style}
+                placeholder={placeholder}
+                value={value}
+                onChange={(e) => { onChange(e.target.value) }}
+            />
         </div>
     );
 }
