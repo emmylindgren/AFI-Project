@@ -12,6 +12,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { API_ADRESS } from "../config";
 import axios from "axios";
 import Toggle from "../components/form/Toggle";
+import CategoryInput from "../components/form/CategoryInput";
 
 const buttonsContainer = {
 	display: 'flex',
@@ -39,6 +40,7 @@ function CreateEvent() {
 	const [success, setSuccess] = useState('')
 
 	const disabilityRef = useRef(null)
+	const categoryRef = useRef(null)
 
 	const submitEvent = async () => {
 
@@ -55,6 +57,7 @@ function CreateEvent() {
 			Ev_DateTime: date + ' ' + time,
 			Ev_Disabilities: disabilityRef.current.getPillStates(),
 			Ev_PostalCode: postalCode,
+			Ev_Categories: categoryRef.current.getPillStates(),
 		}));
 
 		let blob
@@ -101,11 +104,13 @@ function CreateEvent() {
 				<TimeInput value={time} onChange={setTime} label="Time" placeholder="14:40..." />
 				<DateInput value={date} onChange={setDate} label="Date" placeholder="2022-04-05..." />
 				<DisabilityInput ref={disabilityRef} label="Suitable for" />
+
 				<FileInput label="Images" id='propicker' />
 
 				<TextInput value={adress} onChange={setAdress} label="Adress" placeholder="Gnejsvägen 1..." />
 				<TextInput value={postalCode} onChange={setPostalCode} label="Postal Code" placeholder="907 40..." />
 				<TextInput value={city} onChange={setCity} label="City" placeholder="Stockholm..." />
+				<CategoryInput ref={categoryRef} />
 
 				<div style={buttonsContainer}>
 					<Button text='Cancel' buttonColorChoice='red' onClick={() => navigate('/create-event')} />
