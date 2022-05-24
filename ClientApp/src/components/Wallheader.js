@@ -20,7 +20,7 @@ const prImgStyle = {
   height: '45px'
 }
 
-function Wallheader() {
+function Wallheader({ onSubmitSuccess }) {
 
 
   const [content, setContent] = useState('')
@@ -49,9 +49,9 @@ function Wallheader() {
     axios.post(API_ADRESS + '/api/post', form)
       .then(res => {
         if (res.status >= 200 && res.status < 300) {
-          setError('');
-          setSuccess('Successfully posted.');
-          setContent('');
+          setError('')
+          onSubmitSuccess()
+          setContent('')
         }
         else {
           setError('Something went wrong. Try again later.');
