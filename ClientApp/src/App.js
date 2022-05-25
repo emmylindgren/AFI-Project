@@ -24,6 +24,7 @@ import './custom.css'
 import EditProfile from './pages/EditProfile';
 import Comments from './pages/Comments';
 import Badges from './pages/Badges';
+import EditEvent from './pages/EditEvent';
 
 
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
         <Route path='/comments' element={<Comments />} />
         <Route path='/edit-profile' element={<EditProfile />} />
         <Route path='/badges' element={<Badges />} />
+        <Route path='/edit-event' element={<EditEvent/>}/>
       </Routes>
     </Layout>
   );

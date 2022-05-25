@@ -26,38 +26,37 @@ function Comments() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-
-        async function fetchData() {
-            axios.defaults.headers.common = {
-                "ApiKey": localStorage.getItem("ApiKey"),
-            };
-            axios.get(API_ADRESS + '/api/Post/' + postID)
-                .then(res => {
-                    setPost(res.data)
-                    setPostState('loaded')
-
-                })
-                .catch(err => {
-                    setPostState('error')
-                    console.log(err)
-                })
-
-            axios.get(API_ADRESS + '/api/Comment/fromPost/' + postID)
-                .then(res => {
-                    setComments(res.data)
-                    setCommentState('loaded')
-                    if (res.data.length < 1) {
-                        setCommentState('nodata')
-                    }
-
-                })
-                .catch(err => {
-                    setCommentState('error')
-                    console.log(err)
-                })
-        }
         fetchData()
     }, [])
+
+    async function fetchData() {
+        axios.defaults.headers.common = {
+            "ApiKey": localStorage.getItem("ApiKey"),
+        };
+        axios.get(API_ADRESS + '/api/Comment/fromPost/' + postID)
+            .then(res => {
+                setComments(res.data)
+                setCommentState('loaded')
+                if (res.data.length < 1) {
+                    setCommentState('nodata')
+                }
+
+            })
+            .catch(err => {
+                setCommentState('error')
+                console.log(err)
+            })
+        axios.get(API_ADRESS + '/api/Post/' + postID)
+            .then(res => {
+                setPost(res.data)
+                setPostState('loaded')
+
+            })
+            .catch(err => {
+                setPostState('error')
+                console.log(err)
+            })
+        }
 
     let renderComments = (comments) => {
         return comments.map(comment => {
@@ -111,6 +110,7 @@ function Comments() {
                 if (res.status >= 200 && res.status < 300) {
                     setError('');
                     setSuccess('Successfully commented.');
+                    fetchData();
                     setComment('');
                 }
                 else {
