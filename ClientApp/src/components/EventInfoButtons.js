@@ -24,7 +24,7 @@ const buttonstyle = {
     flexDirection: 'row'
 }
 
-function EventInfoButtons({event}) {
+function EventInfoButtons({event, fetchData}) {
     const [isAttending , setIsAttending] = useState(event.ev_AttendingModel.find((element) => {
         return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
     const [isDenied , setIsDenied] = useState(event.ev_DeclinedInviteModel.find((element) => {
@@ -108,6 +108,7 @@ function EventInfoButtons({event}) {
                 }
             }
         }
+        
     }
 
     let update = (url) =>{
@@ -118,6 +119,7 @@ function EventInfoButtons({event}) {
         axios.post(url)
         .then(res => {
             console.log(res.data);
+            fetchData();
         })
         .catch(function (error){
             console.log(error);
@@ -133,6 +135,7 @@ function EventInfoButtons({event}) {
         axios.delete(url)
         .then(res => {
             console.log(res.data);
+            fetchData();
         })
         .catch(function (error){
         console.log(error);
