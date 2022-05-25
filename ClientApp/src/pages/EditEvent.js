@@ -140,7 +140,7 @@ function EditEvent() {
 
 				<div style={buttonsContainer}>
 					<Button text='Cancel' buttonColorChoice='red' onClick={() => navigate('/create-event')} />
-					<Button text='Post event' buttonColorChoice='green' onClick={() => submitEvent()} />
+					<Button text='Apply Changes' buttonColorChoice='green' onClick={() => submitEvent()} />
 				</div>
 
 				<p className='err-text'>{error}</p>
