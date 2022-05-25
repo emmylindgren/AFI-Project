@@ -37,6 +37,7 @@ function Explore(){
         axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
           };
+          console.log("localstorage i explore: "+ localStorage.getItem("ApiKey"));
         axios.get(API_ADRESS + '/api/profile/' + localStorage.getItem("profileId"))
         .then(res =>{
             setUserInfo(res.data)
