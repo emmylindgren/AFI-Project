@@ -143,7 +143,15 @@ function EventInfoButtons({event}) {
         <div>
             {isOwner ? 
             <div style={buttonstyle} >
-                <div style={{width: '50%', marginRight: '15px' }}><Button text="Edit event" onClick ={() => {navigate("../explore")}} buttonColorChoice ="green" /> </div>
+                <div style={{width: '50%', marginRight: '15px' }}>
+                    <Button
+                        text="Edit event"
+                        onClick ={() => {
+                            navigate("/edit-event",{state: event})
+                        }}
+                        buttonColorChoice ="green"
+                    />
+                </div>
                 <div style={{width: '50%'}}> </div>
             </div>
             : 

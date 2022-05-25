@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import BackButton from "../components/BackButton";
 import DisabilityInput from "../components/form/DisabilityInput";
 import TextInput from "../components/form/TextInput";
@@ -11,8 +11,8 @@ import LocationInput from "../components/form/LocationInput";
 import { Navigate, useNavigate } from "react-router-dom";
 import { API_ADRESS } from "../config";
 import axios from "axios";
-import Toggle from "../components/form/Toggle";
 import CategoryInput from "../components/form/CategoryInput";
+import { useLocation } from "react-router-dom";
 
 const buttonsContainer = {
 	display: 'flex',
@@ -21,26 +21,44 @@ const buttonsContainer = {
 	gap: '20px',
 }
 
-function CreateEvent() {
+function EditEvent() {
 
 	const navigate = useNavigate()
+	const location = useLocation()
 
-	const [privateEv, setPrivateEv] = useState(false);
-	const [title, setTitle] = useState('')
-	const [description, setDescription] = useState('')
-	const [time, setTime] = useState('')
-	const [date, setDate] = useState('')
-	const [adress, setAdress] = useState('')
-	const [postalCode, setPostalCode] = useState('')
-	const [city, setCity] = useState('')
+	const [privateEv, setPrivateEv] = useState(location.state ? location.state.ev_Private : false);
+	const [title, setTitle] = useState(location.state ? location.state.ev_Title : '')
+	const [description, setDescription] = useState(location.state ? location.state.ev_Description : '')
+	const [time, setTime] = useState()
+	const [date, setDate] = useState()
+	const [adress, setAdress] = useState(location.state ? location.state.ev_Street : '')
+	const [postalCode, setPostalCode] = useState(location.state ? location.state.ev_PostalCode : '')
+	const [city, setCity] = useState(location.state ? location.state.ev_City : '')
 
-	const [img, setImg] = useState()
+	const [img, setImg] = useState(location.state ? API_ADRESS + '/api/event/image/' + location.state.ev_Id : '')
+	const [fileChanged, setFileChanged] = useState(false);
 
 	const [error, setError] = useState('')
 	const [success, setSuccess] = useState('')
 
 	const disabilityRef = useRef(null)
 	const categoryRef = useRef(null)
+
+	useEffect(() => {
+		if(location.state) {
+			setTime(location.state.ev_DateTime.substring(11, 16))
+			setDate(location.state.ev_DateTime.substring(0, 10))
+		}
+		const filepicker = document.getElementById('propicker');
+		filepicker.addEventListener('change', (e) => {
+			setFileChanged(true)
+			setImg(URL.createObjectURL(e.target.files[0]));
+		})
+		setTimeout(() => {
+			disabilityRef.current.setPillStates(location.state.ev_Disabilities);
+			categoryRef.current.setPillStates(location.state.ev_Categories);
+		}, 2000)
+	}, [])
 
 	const submitEvent = async () => {
 
@@ -60,30 +78,35 @@ function CreateEvent() {
 			Ev_Categories: categoryRef.current.getPillStates(),
 		}));
 
-		let blob
-		// If a file is selected
-		if (propicker.files[0]) {
-			// Get from user selection.
-			blob = await FileReaderPromised(propicker.files[0])
-		}
-		else {
-			setError('No image selected.')
+		if (fileChanged) {
+			let blob
+			// If a file is selected
+			if (propicker.files[0]) {
+				// Get from user selection.
+				blob = await FileReaderPromised(propicker.files[0])
+			}
+			else {
+				setError('No image selected.')
+			}
+
+			// Create and append img to form.
+			let binaryImg = new File([blob], 'uploadFile.jpg', { type: 'image/jpeg' })
+			form.append('uploadFile', binaryImg);
 		}
 
-		// Create and append img to form.
-		let binaryImg = new File([blob], 'uploadFile.jpg', { type: 'image/jpeg' })
-		form.append('uploadFile', binaryImg);
-
-		form.append('id', localStorage.getItem('profileId'))
+		form.append('profileId', localStorage.getItem('profileId'))
+		form.append('eventId', location.state.ev_Id)
 
 		axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
           };
-		axios.post(API_ADRESS + '/api/event', form)
+
+		axios.put(API_ADRESS + '/api/event', form)
 			.then(res => {
 				if (res.status >= 200 && res.status < 300) {
 					setError('');
-					setSuccess('Successfully created event.');
+					setSuccess('Successfully edited event.');
+					navigate('/explore')
 				}
 				else {
 					setError('Something went wrong. Try again later.');
@@ -99,8 +122,8 @@ function CreateEvent() {
 	return (
 		<div className='page-container' style={{ backgroundColor: 'rgb(240,240,240)', }}>
 			<div className='page-content'>
-				<BackButton text='Back' to='/create-event' />
-				<h1>Create New Event</h1>
+				<BackButton text='Back' to='/explore' />
+				<h1>Edit Event</h1>
 				<ToggleInput enabled={privateEv} onChange={setPrivateEv} label='Private event' />
 				<TextInput value={title} onChange={setTitle} label="Event name" placeholder="Walk in the park..." />
 				<TextInput value={description} onChange={setDescription} label="Description" placeholder="A walk in the park..." />
@@ -137,4 +160,4 @@ function FileReaderPromised(file) {
 	);
 }
 
-export default CreateEvent;
+export default EditEvent;

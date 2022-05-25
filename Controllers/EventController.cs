@@ -17,10 +17,12 @@ namespace AFI_Project.Controllers
     public class EventController : ControllerBase
     {
         private readonly Database _context;
+        private readonly AuthHandler _authHandler;
 
         public EventController(Database context)
         {
             _context = context;
+            _authHandler = new AuthHandler(context);
         }
 
         // GET: api/Event
@@ -134,22 +136,62 @@ namespace AFI_Project.Controllers
         {
             //.Where(e => e.Ev_DateTime > (DateTime.Now.AddHours(-12)))
             return await _context.Events
-            .Where(e => e.Ev_Owner.Pr_Id == profileID || e.Ev_AttendingModel.Any(a => a.Pr_Id == profileID) && e.Ev_DateTime > (DateTime.Now.AddHours(-12)))
+            .Where(e => (e.Ev_Owner.Pr_Id == profileID || e.Ev_AttendingModel.Any(a => a.Pr_Id == profileID)) && e.Ev_DateTime > (DateTime.Now.AddHours(-12)))
             .OrderBy(e => e.Ev_DateTime)
             .ToListAsync();
         }
 
         // PUT: api/Event/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEventModel(int id, EventModel eventModel)
+        [HttpPut]
+        public async Task<IActionResult> PutEventModel(
+            [FromForm] string eventdata,
+            [FromForm] int profileId,
+            [FromForm] int eventId,
+            [FromForm] IFormFile uploadFile)
         {
-            if (id != eventModel.Ev_Id)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(eventModel).State = EntityState.Modified;
+            if (!(await _authHandler.Authenticate(HttpContext))) return new EmptyResult();
+
+            EventModel em = JsonConvert.DeserializeObject<EventModel>(eventdata);
+            EventModel dbEm = await _context.Events
+                .Include(e => e.Ev_Disabilities)
+                .Include(e => e.Ev_Categories)
+                .Include(e => e.Ev_RequestedInviteModel)
+                .Include(e => e.Ev_DeclinedInviteModel)
+                .Include(e => e.Ev_InterestedModel)
+                .Include(e => e.Ev_AttendingModel)
+                .FirstOrDefaultAsync(e => e.Ev_Id == eventId);
+
+            if(dbEm is null) return NotFound();
+
+            if(uploadFile is not null) await RecieveFile(uploadFile, dbEm);
+
+            if(em.Ev_Private != dbEm.Ev_Private) {
+                if(em.Ev_Private){
+                    foreach(var request in dbEm.Ev_RequestedInviteModel){
+                        dbEm.Ev_AttendingModel.Add(
+                            new AttendingModel{
+                                Pr_Id = request.Pr_Id,
+                                Ev_Id = dbEm.Ev_Id
+                            });
+                    }
+                }
+            }
+            
+			dbEm.Ev_Title = em.Ev_Title;
+            dbEm.Ev_Description = em.Ev_Description;
+            dbEm.Ev_DateTime = em.Ev_DateTime;
+            dbEm.Ev_Private = em.Ev_Private;
+            dbEm.Ev_Street = em.Ev_Street;
+            dbEm.Ev_City = em.Ev_City;
+            dbEm.Ev_PostalCode = em.Ev_PostalCode;
+            dbEm.Ev_Disabilities = em.Ev_Disabilities;
+            dbEm.Ev_Categories = em.Ev_Categories;
+
+            await _context.SaveChangesAsync();
+
+            _context.Entry(dbEm).State = EntityState.Modified;
 
             try
             {
@@ -157,7 +199,7 @@ namespace AFI_Project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventModelExists(id))
+                if (!EventModelExists(eventId))
                 {
                     return NotFound();
                 }
