@@ -22,7 +22,6 @@ function Comments() {
 
     const [comment, setComment] = useState('');
 
-    const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -109,24 +108,23 @@ function Comments() {
             .then(res => {
                 if (res.status >= 200 && res.status < 300) {
                     setError('');
-                    setSuccess('Successfully commented.');
                     fetchData();
                     setComment('');
                 }
                 else {
                     setError('Something went wrong. Try again later.');
-                    setSuccess('');
+                  
                 }
             })
             .catch(err => {
-                setSuccess('')
+              
                 setError('Something went REALLY wrong! Try again later.')
                 console.error(err);
             });
     }
 
     return (
-        <div className='page-container' style={{ backgroundColor: 'var(--light-gray)', height: '100vh', }}>
+        <div className='page-container' style={{ backgroundColor: 'var(--light-gray)', minheight: '100vh', height:'fit-content' }}>
             <div className='page-content'>
                 <div style={{ marginBottom: '2rem', }}>
                     <BackButton text={"Your Neighbourhood"} to={'../Wall'} />
@@ -145,7 +143,6 @@ function Comments() {
                     </div>
                 </div>
                 <p className='err-text'>{error}</p>
-                <p className='success-text'>{success}</p>
                 <div>
                     <h1 style={{ color: 'var(--black)' }}>Comments</h1>
                     {getCurrentCommentState()}

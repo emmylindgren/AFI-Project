@@ -99,7 +99,6 @@ function Wallheader({ onSubmitSuccess }) {
             ''
           )}
           <p className='err-text'>{error}</p>
-          <p className='success-text'>{success}</p>
         </div>
 
       </div>

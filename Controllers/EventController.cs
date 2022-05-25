@@ -47,6 +47,7 @@ namespace AFI_Project.Controllers
                 .Include(e => e.Ev_AttendingModel)
                 .Include(e => e.Ev_Owner)
                 .Include(e => e.Ev_Disabilities)
+                .OrderBy(e => e.Ev_DateTime)
                 .ToListAsync();
             }
         }
