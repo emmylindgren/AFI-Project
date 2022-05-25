@@ -19,13 +19,15 @@ function EventInformation(){
     const {eventInfo} = location.state;
    
    
-    
-    useEffect(()=>{
+    async function fetchData(){
         axios.get(API_ADRESS + '/api/event/' + eventInfo.eventId)
         .then(res =>{
             setEvents(res.data)
             setLoaded(true)
         })
+    }
+    useEffect(()=>{
+        fetchData()
     },[])
 
 
@@ -43,7 +45,7 @@ function EventInformation(){
                         <AttendingInfoCard event={events} returnTo={eventInfo.returnTo}/>
                         <SuitableForEvent ev_Disabilities={events.ev_Disabilities}/>
                         <EventInfoCat ev_Categories={events.ev_Categories}/>
-                        <EventInfoButtons event={events}/>
+                        <EventInfoButtons event={events} fetchData={fetchData}/>
                     </div>
                 </div>
             </div>
