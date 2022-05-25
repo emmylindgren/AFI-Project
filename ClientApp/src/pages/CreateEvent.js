@@ -84,6 +84,7 @@ function CreateEvent() {
 				if (res.status >= 200 && res.status < 300) {
 					setError('');
 					setSuccess('Successfully created event.');
+					navigate('/explore')
 				}
 				else {
 					setError('Something went wrong. Try again later.');
@@ -117,7 +118,7 @@ function CreateEvent() {
 
 				<div style={buttonsContainer}>
 					<Button text='Cancel' buttonColorChoice='red' onClick={() => navigate('/create-event')} />
-					<Button text='Post event' buttonColorChoice='green' onClick={() => submitEvent()} />
+					<Button text='Post event' buttonColorChoice='green' onClick={() => {submitEvent()}} />
 				</div>
 
 				<p className='err-text'>{error}</p>
