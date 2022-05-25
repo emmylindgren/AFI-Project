@@ -29,7 +29,7 @@ function AttendingPreview({event}) {
     const canSeeAttending = () => {   
         if(event.ev_Private){ 
             let canSeeAttending = false; 
-            if(event.ev_Owner.pr_id == localStorage.getItem("profileId")){
+            if(event.ev_Owner.pr_Id == localStorage.getItem("profileId")){
                 canSeeAttending = true;
             }         
             event.ev_AttendingModel.forEach(element => {
