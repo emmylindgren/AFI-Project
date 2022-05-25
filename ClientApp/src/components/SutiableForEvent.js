@@ -13,7 +13,7 @@ const displayDisability = {
 
 }
 
-function SuitableForEvent({ev_Disabilities}) {
+function SuitableForEvent({ev_Disabilities, isProfile=false}) {
     
     let hasDisabilities = Object.keys(ev_Disabilities).length;
     const [disabilities, setDisabilities] = useState([]);
@@ -43,7 +43,7 @@ function SuitableForEvent({ev_Disabilities}) {
     
     return (
         <div style={{marginTop: '10px'}}>
-            <h3>Suitable for</h3>
+            <h3>{isProfile? 'Disabilites' : 'Suitable for'}</h3>
             {hasDisabilities ? 
                 <div>
                     <div style={displayDisability}>
