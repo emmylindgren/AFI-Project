@@ -76,9 +76,9 @@ function SignUp() {
                 if (res.status >= 200 && res.status < 300) {
                     setError('');
                     setSuccess('Successfully created profile.');
-                    //SÄTT API NYCKEL I LOCAL STORAGE OCKSÅ!!!!
-                    // Be post att returnera den nya användarens profilId samt API nyckel.
+
                     localStorage.setItem("profileId", res.data.pr_Id);
+                    localStorage.setItem("ApiKey",res.data.pr_Id + "_" +res.data.apiKey);
                     navigate('/explore')
                 }
                 else {

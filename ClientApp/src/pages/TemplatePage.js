@@ -26,17 +26,17 @@ function TemplatePage() {
             <h3>Presets</h3>
             <Preset title='Promenade'
                 infotext='A stroll in the park.'
-                suitableFor={["Test", "Test3"]}
+                suitableFor={["Hearing impared, Sight Impaired"]}
                 iconSrc='icons/PromenadeIcon.svg'
             />
             <Preset title='Knitting party'
                 infotext='Hang on to your knitting skills!'
-                suitableFor={["Test", "Test3"]}
+                suitableFor={["Hearing impared, Limited mobility"]}
                 iconSrc='icons/KnittingIcon.svg'
             />
             <Preset title='Card Game'
                 infotext='Play a card game with your friends!'
-                suitableFor={["Test", "Test3"]}
+                suitableFor={["Limited mobility, Hearing impared"]}
                 iconSrc='icons/CardGameIcon.svg'
             />
             </div>

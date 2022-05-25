@@ -69,7 +69,7 @@ function ProfilePage() {
                         {userInfo.pr_Disabilities === null ? (
                             <p>None</p>
                         ) : (
-                            <SuitableForEvent ev_Disabilities={userInfo.pr_Disabilities} />
+                            <SuitableForEvent isProfile ={true} ev_Disabilities={userInfo.pr_Disabilities} />
                         )}
 
                         <SmallBadges />
