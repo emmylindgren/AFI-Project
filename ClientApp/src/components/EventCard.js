@@ -5,6 +5,7 @@ import '../custom.css'
 import AttendingPreview from './AttendingPreview';
 import LoadingCard from './LoadingCard';
 import { Link, renderMatches } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 function EventCard({event,state}) {
@@ -123,7 +124,13 @@ function EventCard({event,state}) {
     return (
         event ? (
             
-            <div className="event-card" >
+            <motion.div
+                className="event-card"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: [0.6, 0.05, -0.01, 0.9] }}
+            >
                 {state === 'loaded' ?
                 (
                 <span >
@@ -148,7 +155,7 @@ function EventCard({event,state}) {
                 ) : (
                     <LoadingCard/>
                 )}
-            </div>
+            </motion.div>
         ) : (
             <LoadingCard/>
         )
