@@ -16,9 +16,10 @@ function Badge({ badgeInfo, dateReceived }) {
     useEffect(() => {
         let date = new Date(dateReceived);
         let year = date.getFullYear();
-        let month = ((date.getMonth() < 10 ? '0' : '') + date.getMonth());
+        let monthint = parseInt(date.getMonth())+1;
+        let month = ((monthint < 10 ? '0' : '') + monthint);
         let day = date.getDate();
-
+        console.log(monthint)
         setDate({ year: year, month: month, day: day })
     }, [])
 
