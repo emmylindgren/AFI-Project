@@ -32,7 +32,7 @@ namespace AFI_Project.Controllers
 
 			return await _context.Comments.Where(p => p.Co_Post.Po_Id == id)
 			.Include(c => c.Co_Owner).Include(c => c.Co_Likes)
-			.OrderByDescending(c => c.Co_Date)
+			.OrderBy(c => c.Co_Date)
 			.ToListAsync();
 		}
 
