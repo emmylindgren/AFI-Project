@@ -18,7 +18,8 @@ function AttendeeInfo(){
     })
     const profilePicture = {
         width: '10rem',
-        height: '10rem'
+        height: '10rem',
+        borderRadius:'100%',
     }
     
     const centerContainer = {
@@ -28,14 +29,17 @@ function AttendeeInfo(){
     
     const renderBadges = (badges) => {
         return badges.map(badge => {
-            return (<div key={badge}><Badge badgeInfo={badge.pr_Ba_Badge} dateReceived={badge.pr_Ba_DateRecieved}/></div>)
+            return (<div key={badge} style={{ width: '50%' }}><Badge badgeInfo={badge.pr_Ba_Badge} dateReceived={badge.pr_Ba_DateRecieved}/></div>)
         })
     }
     
     const badgeContainer = {
         display: 'flex',
-        justifyContent: 'space-around',
-        flexWrap: 'wrap'
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     }
 
     const [badges, setBadges] = useState([]);
