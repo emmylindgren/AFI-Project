@@ -16,8 +16,7 @@ function EventInformation(){
     const [events, setEvents] = useState();
     const [loaded, setLoaded] = useState(false);
     const location = useLocation();
-    const {eventInfo} = location.state;
-   
+    const {eventInfo} = location.state; 
    
     async function fetchData(){
         axios.get(API_ADRESS + '/api/event/' + eventInfo.eventId)
@@ -45,7 +44,7 @@ function EventInformation(){
                         <AttendingInfoCard event={events} returnTo={eventInfo.returnTo}/>
                         <SuitableForEvent ev_Disabilities={events.ev_Disabilities}/>
                         <EventInfoCat ev_Categories={events.ev_Categories}/>
-                        <EventInfoButtons event={events} fetchData={fetchData}/>
+                        <EventInfoButtons event={events} fetchData={fetchData} returnTo={eventInfo.returnTo}/>
                     </div>
                 </div>
             </div>

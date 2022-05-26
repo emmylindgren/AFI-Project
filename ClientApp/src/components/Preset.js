@@ -24,6 +24,7 @@ const roundIconBackground = {
     display:'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: '15px',
 }
 
 const textInfo = {
@@ -37,7 +38,7 @@ const buttonStyle ={
 }
 
 const suitableTextStyle = {
-    color:'var(--grey-text)',
+    fontSize: '1rem'
 }
 
 function Preset({title, infotext, iconSrc, suitableFor, onClick}) {
@@ -47,7 +48,7 @@ function Preset({title, infotext, iconSrc, suitableFor, onClick}) {
         <img height={'30px'} src={iconSrc}/>
       </div>
       <div style={textInfo}>
-        <h3>{title}</h3>
+        <h3 style={{fontSize: '1.2rem'}}>{title}</h3>
         <p>{infotext}</p>
         <h4 style={suitableTextStyle}>Suitable for:</h4>
         <p>{suitableFor}</p>

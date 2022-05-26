@@ -26,16 +26,16 @@ function EditEvent() {
 	const navigate = useNavigate()
 	const location = useLocation()
 
-	const [privateEv, setPrivateEv] = useState(location.state ? location.state.ev_Private : false);
-	const [title, setTitle] = useState(location.state ? location.state.ev_Title : '')
-	const [description, setDescription] = useState(location.state ? location.state.ev_Description : '')
+	const [privateEv, setPrivateEv] = useState(location.state ? location.state.event.ev_Private : false);
+	const [title, setTitle] = useState(location.state ? location.state.event.ev_Title : '')
+	const [description, setDescription] = useState(location.state ? location.state.event.ev_Description : '')
 	const [time, setTime] = useState()
 	const [date, setDate] = useState()
-	const [adress, setAdress] = useState(location.state ? location.state.ev_Street : '')
-	const [postalCode, setPostalCode] = useState(location.state ? location.state.ev_PostalCode : '')
-	const [city, setCity] = useState(location.state ? location.state.ev_City : '')
+	const [adress, setAdress] = useState(location.state ? location.state.event.ev_Street : '')
+	const [postalCode, setPostalCode] = useState(location.state ? location.state.event.ev_PostalCode : '')
+	const [city, setCity] = useState(location.state ? location.state.event.ev_City : '')
 
-	const [img, setImg] = useState(location.state ? API_ADRESS + '/api/event/image/' + location.state.ev_Id : '')
+	const [img, setImg] = useState(location.state ? API_ADRESS + '/api/event/image/' + location.state.event.ev_Id : '')
 	const [fileChanged, setFileChanged] = useState(false);
 
 	const [error, setError] = useState('')
@@ -44,10 +44,12 @@ function EditEvent() {
 	const disabilityRef = useRef(null)
 	const categoryRef = useRef(null)
 
+	const sendState= ({eventId : location.state.event.ev_Id, returnTo: location.state.returnTo})
+
 	useEffect(() => {
 		if(location.state) {
-			setTime(location.state.ev_DateTime.substring(11, 16))
-			setDate(location.state.ev_DateTime.substring(0, 10))
+			setTime(location.state.event.ev_DateTime.substring(11, 16))
+			setDate(location.state.event.ev_DateTime.substring(0, 10))
 		}
 		const filepicker = document.getElementById('propicker');
 		filepicker.addEventListener('change', (e) => {
@@ -55,8 +57,8 @@ function EditEvent() {
 			setImg(URL.createObjectURL(e.target.files[0]));
 		})
 		setTimeout(() => {
-			disabilityRef.current.setPillStates(location.state.ev_Disabilities);
-			categoryRef.current.setPillStates(location.state.ev_Categories);
+			disabilityRef.current.setPillStates(location.state.event.ev_Disabilities);
+			categoryRef.current.setPillStates(location.state.event.ev_Categories);
 		}, 2000)
 	}, [])
 
@@ -95,7 +97,7 @@ function EditEvent() {
 		}
 
 		form.append('profileId', localStorage.getItem('profileId'))
-		form.append('eventId', location.state.ev_Id)
+		form.append('eventId', location.state.event.ev_Id)
 
 		axios.defaults.headers.common = {
             "ApiKey": localStorage.getItem("ApiKey"),
@@ -106,7 +108,7 @@ function EditEvent() {
 				if (res.status >= 200 && res.status < 300) {
 					setError('');
 					setSuccess('Successfully edited event.');
-					navigate('/explore')
+					navigate('/event-information', {state:{eventInfo:sendState}})
 				}
 				else {
 					setError('Something went wrong. Try again later.');
@@ -122,7 +124,7 @@ function EditEvent() {
 	return (
 		<div className='page-container' style={{ backgroundColor: 'rgb(240,240,240)', }}>
 			<div className='page-content'>
-				<BackButton text='Back' to='/explore' />
+				<BackButton text='Back' to='/event-information' state={sendState} />
 				<h1>Edit Event</h1>
 				<ToggleInput enabled={privateEv} onChange={setPrivateEv} label='Private event' />
 				<TextInput value={title} onChange={setTitle} label="Event name" placeholder="Walk in the park..." />
@@ -139,7 +141,7 @@ function EditEvent() {
 				<CategoryInput ref={categoryRef} />
 
 				<div style={buttonsContainer}>
-					<Button text='Cancel' buttonColorChoice='red' onClick={() => navigate('/create-event')} />
+					<Button text='Cancel' buttonColorChoice='red' onClick={() => navigate('/event-information', {state:{eventInfo:sendState}})} />
 					<Button text='Apply Changes' buttonColorChoice='green' onClick={() => submitEvent()} />
 				</div>
 

@@ -9,6 +9,8 @@ import SuitableForEvent from "../components/SutiableForEvent";
 import ErrorCard from '../components/ErrorCard'
 import { Link } from 'react-router-dom'
 import SmallBadges from "../components/SmallBadges";
+import GoogleLogOut from "../components/GoogleLogOut";
+
 
 const propicStyle = {
     width: '15rem',
@@ -73,6 +75,7 @@ function ProfilePage() {
                         )}
 
                         <SmallBadges />
+                        <GoogleLogOut />
                     </>)
         }
     }

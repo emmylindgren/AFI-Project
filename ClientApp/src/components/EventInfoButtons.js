@@ -24,7 +24,7 @@ const buttonstyle = {
     flexDirection: 'row'
 }
 
-function EventInfoButtons({event, fetchData}) {
+function EventInfoButtons({event, fetchData, returnTo}) {
     const [isAttending , setIsAttending] = useState(event.ev_AttendingModel.find((element) => {
         return element.pr_Id === parseInt(localStorage.getItem("profileId"));}) !== undefined)
     const [isDenied , setIsDenied] = useState(event.ev_DeclinedInviteModel.find((element) => {
@@ -36,7 +36,7 @@ function EventInfoButtons({event, fetchData}) {
     const [isOwner , setIsOwner] = useState(event.ev_Owner.pr_Id === parseInt(localStorage.getItem("profileId")))
     const [isPrivate , setIsPrivate] = useState(event.ev_Private)
     const navigate = useNavigate();
-   
+    const sendState=({event:event, returnTo:returnTo});
     
     useEffect( () =>{
         setIsAttending(event.ev_AttendingModel.find((element) => {
@@ -150,7 +150,7 @@ function EventInfoButtons({event, fetchData}) {
                     <Button
                         text="Edit event"
                         onClick ={() => {
-                            navigate("/edit-event",{state: event})
+                            navigate("/edit-event",{state: sendState})
                         }}
                         buttonColorChoice ="green"
                     />
