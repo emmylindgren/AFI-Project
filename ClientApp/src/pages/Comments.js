@@ -136,7 +136,7 @@ function Comments() {
                             src={`${API_ADRESS}/api/profile/image/${localStorage.getItem('profileId')}`}
                             className='imgStyle'
                         />
-                        <TextInput placeholder='Write a comment...' value={comment} onChange={setComment} />
+                        <TextInput placeholder='Write a comment...' value={comment} onChange={setComment} style={{margin: '0'}} />
                     </div>
                     <div style={{ width: '100px' }}>
                         <Button text="Post" onClick={submitComment} buttonColorChoice="green" iconChoice="post" />

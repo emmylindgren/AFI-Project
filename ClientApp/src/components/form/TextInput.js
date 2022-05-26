@@ -1,4 +1,4 @@
-const style = {
+const inputStyle = {
     backgroundColor: '#fff',
     width: '100%',
     height: '50px',
@@ -6,14 +6,15 @@ const style = {
     borderRadius: '10px',
     boxShadow: 'none',
     paddingLeft: '20px',
+    marginBottom: '20px',
 }
 
-function TextInput({ value, onChange, label, placeholder }) {
+function TextInput({ value, onChange, label, placeholder, style }) {
     return (
         <div>
             <label>{label}</label>
             <input
-                style={style}
+                style={{...inputStyle, ...style}}
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => { onChange(e.target.value) }}
