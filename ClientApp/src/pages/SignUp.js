@@ -109,8 +109,10 @@ function SignUp() {
                 <TextInput value={city} onChange={setCity} label="City" placeholder="Stockholm..." />
 
                 <DisabilityInput ref={disabilityRef} />
+                <p className='muted-text'>Information about your disabilities will never be shown or shared with anyone but yourself. It will only be used to sort and filter events for you.</p>
 
-                <Button text='Sign up' buttonColorChoice='green' onClick={() => submitProfile()} />
+                <Button text='Sign Up' buttonColorChoice='green' onClick={() => submitProfile()} />
+                <p className='muted-text' style={{marginTop: '10px'}}>By pressing 'Sign Up' you agree to our terms and conditions.</p>
 
                 <div style={{ margin: '20px 0 20px 0' }}></div>
                 <p className='err-text'>{error}</p>
