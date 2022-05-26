@@ -4,7 +4,8 @@ const boxStyle = {
 	borderRadius: '10px',
 	display: 'flex',
 	alignItems: 'center',
-	padding: '0 0 0 20px'
+	padding: '0 0 0 20px',
+	marginBottom: '20px'
 }
 
 function ProfileDataBox({ text, label }) {
