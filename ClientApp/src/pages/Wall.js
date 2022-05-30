@@ -19,6 +19,7 @@ function Wall() {
   }, [])
 
   const fetchPosts = async () => {
+    setPosts([])
     axios.defaults.headers.common = {
       "ApiKey": localStorage.getItem("ApiKey"),
     };

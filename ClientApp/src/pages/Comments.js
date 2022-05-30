@@ -124,7 +124,7 @@ function Comments() {
     }
 
     return (
-        <div className='page-container' style={{ backgroundColor: 'var(--light-gray)', minheight: '100vh', height:'fit-content' }}>
+        <div className='page-container' style={{ backgroundColor: 'var(--light-gray)', minHeight: '100vh', height:'fit-content' }}>
             <div className='page-content'>
                 <div style={{ marginBottom: '2rem', }}>
                     <BackButton text={"Your Neighbourhood"} to={'../Wall'} />
