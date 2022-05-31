@@ -17,7 +17,7 @@ function AttendingPreview({event}) {
             }
             return <span className="event-card-more-text">&nbsp; &nbsp;+{nrOfAttendees} more</span>
         }
-        else if(event.ev_Private === true){
+        else if(event.ev_Private === true && !canSeeAttending()){
             if(nrOfAttendees === 0 ){
                 return <span style={{opacity: 0}}></span>
             }
